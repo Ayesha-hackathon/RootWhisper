@@ -1,15 +1,15 @@
 # RootWhisper Render Infrastructure-as-Code Blueprint
-# Automatically sets up:
-# 1. FastAPI Python Backend Web Service with persistent SQLite storage
-# 2. React Vite Static Site Frontend with HTTPS
+# Automatically provisions:
+# 1. FastAPI Python Backend Web Service with persistent SSD SQLite storage
+# 2. React Vite Static Site Frontend (Global Edge CDN)
 services:
   # --------------------------------------------------------------------------
-  # 1. FastAPI Backend Service
+  # 1. FastAPI Backend Service (Requires Starter plan for Persistent SSD Disk)
   # --------------------------------------------------------------------------
   - type: web
     name: rootwhisper-api
     runtime: python
-    plan: free
+    plan: starter
     region: oregon
     buildCommand: "pip install -r requirements.txt"
     startCommand: "python -m uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT"
@@ -39,13 +39,12 @@ services:
         sync: false
 
   # --------------------------------------------------------------------------
-  # 2. React Vite Static Frontend
+  # 2. React Vite Static Frontend (Global Edge CDN - Free Tier)
   # --------------------------------------------------------------------------
   - type: web
     name: rootwhisper-web
     runtime: static
     plan: free
-    region: oregon
     rootDir: frontend
     buildCommand: "npm install && npm run build"
     staticPublishPath: dist
@@ -55,8 +54,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_ANTIGRAVITY_API_URL
-        fromService:
-          type: web
-          name: rootwhisper-api
-          property: host
         value: "https://rootwhisper-api.onrender.com/api/v1"
