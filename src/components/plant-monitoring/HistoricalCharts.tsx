@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ResponsiveContainer,
   LineChart,
@@ -16,6 +16,7 @@ import {
   ReferenceLine,
 } from 'recharts';
 import { getPlantSensorHistory, PlantSensorHistoryPoint } from '../../data/sampleData';
+import { antigravityApi } from '../../services/antigravityApi';
 import { Droplet, Thermometer, Flame, CloudRain, Sun, Calendar } from 'lucide-react';
 
 interface HistoricalChartsProps {
@@ -28,8 +29,32 @@ type TimeframeOption = '1h' | '24h' | '7d' | '30d';
 export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({ plantId }) => {
   const [timeframe, setTimeframe] = useState<TimeframeOption>('24h');
   const [activeMetric, setActiveMetric] = useState<ChartMetric>('temperatures');
+  const [historyData, setHistoryData] = useState<PlantSensorHistoryPoint[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const historyData: PlantSensorHistoryPoint[] = getPlantSensorHistory(plantId, timeframe);
+  useEffect(() => {
+    let mounted = true;
+    setLoading(true);
+    antigravityApi
+      .fetchPlantSensorHistory(plantId, timeframe)
+      .then((realPoints) => {
+        if (mounted) {
+          setHistoryData(realPoints || []);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.warn('[RootWhisper] Historical chart error:', err);
+        if (mounted) {
+          setHistoryData([]);
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, [plantId, timeframe]);
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -149,8 +174,17 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({ plantId }) =
       </div>
 
       {/* Main Chart Canvas */}
-      <div className="h-72 w-full pt-2">
-        <ResponsiveContainer width="100%" height="100%">
+      {historyData.length === 0 ? (
+        <div className="h-72 w-full flex flex-col items-center justify-center rounded-lg bg-[#FAF9F3] border border-dashed border-[#D4E7E1] p-6 text-center">
+          <Calendar className="w-8 h-8 text-[#A8C3A0] mb-2" />
+          <p className="text-xs font-semibold text-[#123B36]">No historical sensor data available yet.</p>
+          <p className="text-[11px] text-[#78847C] mt-1 max-w-sm">
+            Waiting for sensor data. Connect your ESP32 node to start logging high-resolution telemetry.
+          </p>
+        </div>
+      ) : (
+        <div className="h-72 w-full pt-2">
+          <ResponsiveContainer width="100%" height="100%">
           <LineChart data={historyData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#D9F0EA" vertical={false} />
             <XAxis
@@ -287,13 +321,14 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({ plantId }) =
           </LineChart>
         </ResponsiveContainer>
       </div>
+      )}
 
       <div className="pt-2 border-t border-[#D9F0EA] flex items-center justify-between text-[11px] text-[#78847C]">
         <span>
           Viewing {timeframe.toUpperCase()} window for species calibration.
         </span>
         <span className="font-mono text-[#087E75]">
-          Sample Telemetry Dataset
+          Live Telemetry Records
         </span>
       </div>
     </div>

@@ -24,37 +24,8 @@ interface PlantComparisonSectionProps {
 export const PlantComparisonSection: React.FC<PlantComparisonSectionProps> = ({
   metrics = PLANT_COMPARISON_MATRIX,
 }) => {
-  // Chart data formatted for Recharts
-  const chartData = [
-    {
-      metric: 'Soil Moisture (%)',
-      tulsi: 34.2,
-      hibiscus: 62.8,
-      moneyPlant: 48.6,
-      unit: '%',
-    },
-    {
-      metric: 'Leaf Temp (°C)',
-      tulsi: 26.8,
-      hibiscus: 23.4,
-      moneyPlant: 24.1,
-      unit: '°C',
-    },
-    {
-      metric: 'Ambient Temp (°C)',
-      tulsi: 24.2,
-      hibiscus: 24.0,
-      moneyPlant: 24.2,
-      unit: '°C',
-    },
-    {
-      metric: 'Humidity (%)',
-      tulsi: 58.4,
-      hibiscus: 61.2,
-      moneyPlant: 59.0,
-      unit: '%',
-    },
-  ];
+  // Chart data formatted for Recharts (empty when awaiting genuine hardware telemetry)
+  const chartData: any[] = [];
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -100,7 +71,7 @@ export const PlantComparisonSection: React.FC<PlantComparisonSectionProps> = ({
           </p>
         </div>
         <span className="text-xs font-mono text-[#78847C]">
-          Dataset: SAMPLE DATA
+          Hardware: ESP32 Clustered Fleet
         </span>
       </div>
 
@@ -110,70 +81,86 @@ export const PlantComparisonSection: React.FC<PlantComparisonSectionProps> = ({
           <BarChart3 className="w-3.5 h-3.5 text-[#087E75]" />
           Sensor Telemetry Distribution Comparison
         </h3>
-        <div className="h-60 w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#D9F0EA" vertical={false} />
-              <XAxis
-                dataKey="metric"
-                tickLine={false}
-                stroke="#55B6A3"
-                tick={{ fill: '#78847C', fontSize: 11 }}
-              />
-              <YAxis
-                tickLine={false}
-                stroke="#55B6A3"
-                tick={{ fill: '#78847C', fontSize: 11, fontFamily: 'monospace' }}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '11px', color: '#78847C' }} />
-              <Bar dataKey="tulsi" name="Tulsi (TULSI_01)" fill="#C95D58" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="hibiscus" name="Hibiscus (HIBISCUS_01)" fill="#087E75" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="moneyPlant" name="Money Plant (MONEYPLANT_01)" fill="#55B6A3" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+        {chartData.length === 0 ? (
+          <div className="h-60 w-full flex flex-col items-center justify-center rounded-lg bg-[#FAF9F3] border border-dashed border-[#D4E7E1] p-6 text-center">
+            <BarChart3 className="w-8 h-8 text-[#A8C3A0] mb-2" />
+            <p className="text-xs font-semibold text-[#123B36]">No historical sensor data available yet.</p>
+            <p className="text-[11px] text-[#78847C] mt-1 max-w-sm">
+              Waiting for sensor data. Connect your ESP32 node to start live monitoring.
+            </p>
+          </div>
+        ) : (
+          <div className="h-60 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#D9F0EA" vertical={false} />
+                <XAxis
+                  dataKey="metric"
+                  tickLine={false}
+                  stroke="#55B6A3"
+                  tick={{ fill: '#78847C', fontSize: 11 }}
+                />
+                <YAxis
+                  tickLine={false}
+                  stroke="#55B6A3"
+                  tick={{ fill: '#78847C', fontSize: 11, fontFamily: 'monospace' }}
+                />
+                <Tooltip content={<CustomTooltip />} />
+                <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '11px', color: '#78847C' }} />
+                <Bar dataKey="tulsi" name="Tulsi (TULSI_01)" fill="#C95D58" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="hibiscus" name="Hibiscus (HIBISCUS_01)" fill="#087E75" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="moneyPlant" name="Money Plant (MONEYPLANT_01)" fill="#55B6A3" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        )}
       </div>
 
       {/* High-Density Cross-Species Telemetry Table */}
-      <div className="border border-[#D4E7E1] rounded-lg overflow-x-auto">
-        <table className="w-full text-left text-xs min-w-[650px]">
-          <thead className="bg-[#F5FAF8] border-b border-[#D4E7E1] text-[#78847C] font-mono text-[11px]">
-            <tr>
-              <th className="p-3">Measurement</th>
-              <th className="p-3">Sensor Model</th>
-              <th className="p-3 text-right">Tulsi (TULSI_01)</th>
-              <th className="p-3 text-right">Hibiscus (HIBISCUS_01)</th>
-              <th className="p-3 text-right">Money Plant (MONEYPLANT_01)</th>
-              <th className="p-3">Physiological Variance Note</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-[#D9F0EA] text-[#26342D]">
-            {metrics.map((row, idx) => (
-              <tr key={idx} className="hover:bg-[#EEF7F4] transition-colors">
-                <td className="p-3 font-semibold text-[#123B36]">
-                  {row.sensorName} <span className="font-mono text-[#78847C] font-normal">({row.unit})</span>
-                </td>
-                <td className="p-3 font-mono text-[11px] text-[#78847C]">
-                  {row.sensorModel}
-                </td>
-                <td className="p-3 text-right font-mono font-bold tabular-nums text-[#C95D58]">
-                  {row.tulsiVal.toLocaleString()} {row.unit}
-                </td>
-                <td className="p-3 text-right font-mono font-bold tabular-nums text-[#087E75]">
-                  {row.hibiscusVal.toLocaleString()} {row.unit}
-                </td>
-                <td className="p-3 text-right font-mono font-bold tabular-nums text-[#123B36]">
-                  {row.moneyPlantVal.toLocaleString()} {row.unit}
-                </td>
-                <td className="p-3 text-[11px] text-[#78847C]">
-                  {row.varianceNote}
-                </td>
+      {metrics.length === 0 ? (
+        <div className="p-8 text-center text-xs text-[#78847C] font-mono border border-[#D4E7E1] rounded-lg bg-[#FAF9F3]">
+          No cross-species comparison data available yet. Connect ESP32 nodes to start telemetry stream.
+        </div>
+      ) : (
+        <div className="border border-[#D4E7E1] rounded-lg overflow-x-auto">
+          <table className="w-full text-left text-xs min-w-[650px]">
+            <thead className="bg-[#F5FAF8] border-b border-[#D4E7E1] text-[#78847C] font-mono text-[11px]">
+              <tr>
+                <th className="p-3">Measurement</th>
+                <th className="p-3">Sensor Model</th>
+                <th className="p-3 text-right">Tulsi (TULSI_01)</th>
+                <th className="p-3 text-right">Hibiscus (HIBISCUS_01)</th>
+                <th className="p-3 text-right">Money Plant (MONEYPLANT_01)</th>
+                <th className="p-3">Physiological Variance Note</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody className="divide-y divide-[#D9F0EA] text-[#26342D]">
+              {metrics.map((row, idx) => (
+                <tr key={idx} className="hover:bg-[#EEF7F4] transition-colors">
+                  <td className="p-3 font-semibold text-[#123B36]">
+                    {row.sensorName} <span className="font-mono text-[#78847C] font-normal">({row.unit})</span>
+                  </td>
+                  <td className="p-3 font-mono text-[11px] text-[#78847C]">
+                    {row.sensorModel}
+                  </td>
+                  <td className="p-3 text-right font-mono font-bold tabular-nums text-[#C95D58]">
+                    {row.tulsiVal.toLocaleString()} {row.unit}
+                  </td>
+                  <td className="p-3 text-right font-mono font-bold tabular-nums text-[#087E75]">
+                    {row.hibiscusVal.toLocaleString()} {row.unit}
+                  </td>
+                  <td className="p-3 text-right font-mono font-bold tabular-nums text-[#123B36]">
+                    {row.moneyPlantVal.toLocaleString()} {row.unit}
+                  </td>
+                  <td className="p-3 text-[11px] text-[#78847C]">
+                    {row.varianceNote}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       {/* Comparative Insight Notice */}
       <div className="p-3 bg-[#D9F0EA]/70 rounded-lg border border-[#55B6A3]/30 flex items-start gap-2 text-xs text-[#26342D]">

@@ -32,11 +32,16 @@ export const PlantMonitoringView: React.FC<PlantMonitoringViewProps> = ({
   onTriggerScreening,
   onTriggerIrrigation,
 }) => {
-  const [dataState, setDataState] = useState<'normal' | 'stale' | 'invalid' | 'offline'>('normal');
   const [isScreening, setIsScreening] = useState(false);
   const [isIrrigating, setIsIrrigating] = useState(false);
 
   const selectedPlant = plants.find((p) => p.id === selectedPlantId) || plants[0];
+
+  const dataState: 'normal' | 'stale' | 'invalid' | 'offline' = !selectedPlant.hasReceivedData
+    ? 'offline'
+    : selectedPlant.isStale
+    ? 'stale'
+    : 'normal';
 
   const handleScreening = async () => {
     setIsScreening(true);
@@ -90,7 +95,7 @@ export const PlantMonitoringView: React.FC<PlantMonitoringViewProps> = ({
             className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold text-white bg-[#123B36] hover:bg-[#087E75] transition-colors cursor-pointer disabled:opacity-50 shadow-xs"
           >
             <Droplets className="w-3.5 h-3.5" />
-            <span>{isIrrigating ? 'Pulsing...' : 'Simulate Micro-Irrigation'}</span>
+            <span>{isIrrigating ? 'Pulsing...' : 'Pulse Micro-Irrigation'}</span>
           </button>
         </div>
       </div>
@@ -106,7 +111,6 @@ export const PlantMonitoringView: React.FC<PlantMonitoringViewProps> = ({
       <PlantProfileHeader
         plant={selectedPlant}
         dataState={dataState}
-        onDataStateChange={setDataState}
       />
 
       {/* 3. Sensor Monitoring: 5 Elegant Sensor Cards */}

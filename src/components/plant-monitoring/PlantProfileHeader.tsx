@@ -23,20 +23,18 @@ import {
 interface PlantProfileHeaderProps {
   plant: PlantTelemetry;
   dataState: 'normal' | 'stale' | 'invalid' | 'offline';
-  onDataStateChange: (state: 'normal' | 'stale' | 'invalid' | 'offline') => void;
 }
 
 export const PlantProfileHeader: React.FC<PlantProfileHeaderProps> = ({
   plant,
   dataState,
-  onDataStateChange,
 }) => {
-  const isOffline = dataState === 'offline';
+  const isOffline = dataState === 'offline' || !plant.hasReceivedData;
   const isStale = dataState === 'stale';
   const isInvalid = dataState === 'invalid';
 
   const connectionStatus = isOffline
-    ? 'Disconnected'
+    ? 'Disconnected (Node Offline)'
     : isStale
     ? 'Degraded (Stale)'
     : isInvalid
@@ -44,11 +42,11 @@ export const PlantProfileHeader: React.FC<PlantProfileHeaderProps> = ({
     : 'Connected & Streaming';
 
   const lastReceived = isOffline
-    ? 'Connection Lost (2h 14m ago)'
+    ? 'Awaiting first telemetry packet'
     : isStale
     ? '42 minutes ago (Stale heartbeat)'
     : isInvalid
-    ? '8 seconds ago (CRC Mismatch)'
+    ? 'CRC Mismatch'
     : plant.lastUpdated;
 
   return (
@@ -155,35 +153,25 @@ export const PlantProfileHeader: React.FC<PlantProfileHeaderProps> = ({
             </div>
           </div>
 
-          {/* Interactive State Simulator (Testing Unavailable, Stale, Invalid, Offline) */}
-          <div className="p-2.5 rounded-lg bg-white border border-[#D4E7E1]">
-            <div className="flex items-center justify-between text-[11px] font-medium text-[#78847C] mb-1.5">
-              <span>Telemetry Diagnostic State:</span>
-              <span className="font-mono text-[10px] text-[#123B36] font-semibold">
-                Simulated Test Harness
+          {/* Physical Edge Node Integration Status */}
+          <div className="p-3 rounded-lg bg-white border border-[#D4E7E1] space-y-1.5">
+            <div className="flex items-center justify-between text-[11px] font-medium text-[#78847C]">
+              <span>Hardware Fleet Channel:</span>
+              <span className="font-mono text-[10px] text-[#087E75] font-semibold bg-[#EDF7F4] px-1.5 py-0.5 rounded border border-[#55B6A3]/30">
+                802.11 b/g/n Mesh
               </span>
             </div>
-            <div className="grid grid-cols-4 gap-1">
-              {(
-                [
-                  { id: 'normal', label: 'Valid' },
-                  { id: 'stale', label: 'Stale' },
-                  { id: 'invalid', label: 'Invalid' },
-                  { id: 'offline', label: 'Offline' },
-                ] as const
-              ).map((state) => (
-                <button
-                  key={state.id}
-                  onClick={() => onDataStateChange(state.id)}
-                  className={`py-1 text-[10px] font-medium rounded transition-colors text-center cursor-pointer ${
-                    dataState === state.id
-                      ? 'bg-[#123B36] text-white font-semibold'
-                      : 'bg-[#EDF7F4] text-[#78847C] hover:text-[#26342D]'
-                  }`}
-                >
-                  {state.label}
-                </button>
-              ))}
+            <div className="flex items-center justify-between text-xs font-mono">
+              <span className="text-[#26342D] font-semibold">Node {plant.nodeId}</span>
+              <span
+                className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                  plant.hasReceivedData
+                    ? 'bg-[#D9F0EA] text-[#087E75]'
+                    : 'bg-[#FFF8EB] text-[#C58A35] border border-[#C58A35]/30'
+                }`}
+              >
+                {plant.hardwareStatus || 'WAITING FOR FIRST DATA'}
+              </span>
             </div>
           </div>
         </div>

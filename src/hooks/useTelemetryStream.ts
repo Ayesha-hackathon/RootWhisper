@@ -3,41 +3,40 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PlantTelemetry } from '../types';
 import { APP_CONFIG } from '../config/appConfig';
+import { antigravityApi } from '../services/antigravityApi';
 
 export function useTelemetryStream(
   initialPlants: PlantTelemetry[],
   isStreaming: boolean
 ) {
   const [plants, setPlants] = useState<PlantTelemetry[]>(initialPlants);
+  const isFetchingRef = useRef(false);
 
   useEffect(() => {
+    // Initial fetch on mount
+    const pollBackend = async () => {
+      if (isFetchingRef.current) return;
+      isFetchingRef.current = true;
+      try {
+        const livePlants = await antigravityApi.fetchPlants();
+        if (livePlants && livePlants.length > 0) {
+          setPlants(livePlants);
+        }
+      } catch (err) {
+        console.warn('[RootWhisper Stream] Polling failed:', err);
+      } finally {
+        isFetchingRef.current = false;
+      }
+    };
+
+    pollBackend();
+
     if (!isStreaming) return;
 
-    const interval = setInterval(() => {
-      setPlants((prev) =>
-        prev.map((plant) => {
-          // Living plant micro-variations
-          const jitterTemp = (Math.random() - 0.5) * 0.15;
-          const jitterMoist = (Math.random() - 0.5) * 0.1;
-          const newLeafTemp = Number((plant.leafTemperature + jitterTemp).toFixed(1));
-          const newMoisture = Math.max(10, Number((plant.soilMoisture + jitterMoist).toFixed(1)));
-          const newDelta = Number((newLeafTemp - plant.ambientTemperature).toFixed(1));
-
-          return {
-            ...plant,
-            leafTemperature: newLeafTemp,
-            soilMoisture: newMoisture,
-            temperatureDelta: newDelta,
-            lastUpdated: 'A few seconds ago',
-            lastUpdatedSecondsAgo: Math.floor(Math.random() * 5 + 1),
-          };
-        })
-      );
-    }, APP_CONFIG.uiRefreshIntervalMs);
-
+    const interval = setInterval(pollBackend, APP_CONFIG.uiRefreshIntervalMs);
     return () => clearInterval(interval);
   }, [isStreaming]);
 

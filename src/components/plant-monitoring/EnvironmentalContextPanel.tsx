@@ -16,10 +16,13 @@ export const EnvironmentalContextPanel: React.FC<EnvironmentalContextPanelProps>
   plant,
   environment,
 }) => {
+  const vpdVal = plant.vpd;
   const vpdState =
-    plant.vpd < 0.8
+    vpdVal === null
+      ? 'Awaiting Sensor Telemetry'
+      : vpdVal < 0.8
       ? 'Low (High humidity/reduced transpiration)'
-      : plant.vpd > 1.4
+      : vpdVal > 1.4
       ? 'High (High transpiration demand)'
       : 'Optimal (0.8–1.4 kPa)';
 
@@ -48,7 +51,7 @@ export const EnvironmentalContextPanel: React.FC<EnvironmentalContextPanelProps>
               Vapor Pressure Deficit
             </span>
             <span className="font-mono font-semibold text-xs text-[#123B36]">
-              {plant.vpd.toFixed(2)} kPa
+              {vpdVal !== null ? `${vpdVal.toFixed(2)} kPa` : 'N/A'}
             </span>
           </div>
           <p className="text-xs font-semibold text-[#26342D] mt-2">

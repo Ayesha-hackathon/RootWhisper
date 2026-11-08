@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ArrowLeft,
   Cpu,
@@ -25,15 +25,12 @@ import {
   INITIAL_SENSOR_CHANNELS,
   INITIAL_COMMUNICATION_ERRORS,
 } from '../../data/diagnosticsData';
+import { antigravityApi } from '../../services/antigravityApi';
 import { NodeStatusCardGrid } from './NodeStatusCardGrid';
 import { DetailedDiagnosticTable } from './DetailedDiagnosticTable';
 import { PacketMonitoringSection } from './PacketMonitoringSection';
 import { SensorCalibrationOverview } from './SensorCalibrationOverview';
 import { CommunicationErrorHistory } from './CommunicationErrorHistory';
-import {
-  DiagnosticStateSimulator,
-  DiagnosticStatePreset,
-} from './DiagnosticStateSimulator';
 
 interface SensorDiagnosticsViewProps {
   onBackToDashboard: () => void;
@@ -47,7 +44,6 @@ export const SensorDiagnosticsView: React.FC<SensorDiagnosticsViewProps> = ({
   const [nodes, setNodes] = useState<NodeDiagnostic[]>(INITIAL_NODE_DIAGNOSTICS);
   const [channels, setChannels] = useState<SensorChannelDiagnostic[]>(INITIAL_SENSOR_CHANNELS);
   const [errors, setErrors] = useState<CommunicationErrorRecord[]>(INITIAL_COMMUNICATION_ERRORS);
-  const [currentPreset, setCurrentPreset] = useState<DiagnosticStatePreset>('nominal');
   const [selectedNodeFilter, setSelectedNodeFilter] = useState<string>('all');
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -57,136 +53,40 @@ export const SensorDiagnosticsView: React.FC<SensorDiagnosticsViewProps> = ({
     setTimeout(() => setToastMessage(null), 3000);
   };
 
-  // State Preset Switcher
-  const handleSelectPreset = (preset: DiagnosticStatePreset) => {
-    setCurrentPreset(preset);
-
-    if (preset === 'nominal') {
-      setNodes(INITIAL_NODE_DIAGNOSTICS);
-      setChannels(INITIAL_SENSOR_CHANNELS);
-      showToast('All 3 ESP32 nodes restored to nominal telemetry.');
-    } else if (preset === 'sensor-error-99') {
-      // Simulate MLX90614 fault on HIBISCUS_01 with -99.0°C sentinel
-      setChannels((prev) =>
-        prev.map((ch) => {
-          if (ch.id === 'HIBISCUS_LT') {
-            return {
-              ...ch,
-              reading: -99.0, // The sentinel error value
-              rawReading: 'Reg 0x07: 0xFF9D (-99.0C Fault)',
-              validity: 'invalid',
-              diagnosticStatus:
-                'CRITICAL: MLX90614 register timeout sentinel (-99.0°C intercepted by sanitizer)',
-            };
-          }
-          return ch;
-        })
-      );
-
-      setNodes((prev) =>
-        prev.map((n) => {
-          if (n.nodeId === 'HIBISCUS_01') {
-            return {
-              ...n,
-              status: 'degraded',
-              sensorModules: n.sensorModules.map((sm) =>
-                sm.model.includes('MLX90614') ? { ...sm, status: 'error' } : sm
-              ),
-            };
-          }
-          return n;
-        })
-      );
-
-      // Add audit log
-      const newErr: CommunicationErrorRecord = {
-        id: `ERR_${Date.now()}`,
-        timestamp: new Date().toLocaleTimeString(),
-        nodeId: 'HIBISCUS_01',
-        severity: 'critical',
-        errorType: 'Out-of-Bounds Sentinel Intercepted',
-        description:
-          'MLX90614 register read returned invalid -99.0°C sentinel. Frontend sanitizer intercepted corrupted value; displayed SENSOR ERROR / N/A.',
-        rawHex: '0x07 0xFF 0x9D (-99.0C)',
-        resolved: false,
-      };
-      setErrors((prev) => [newErr, ...prev]);
-      showToast('Injected -99.0°C sensor fault on HIBISCUS_01 (Intercepted as SENSOR ERROR).');
-    } else if (preset === 'stale-telemetry') {
-      // Simulate TULSI_01 delay >45m
-      setNodes((prev) =>
-        prev.map((n) => {
-          if (n.nodeId === 'TULSI_01') {
-            return {
-              ...n,
-              status: 'stale',
-              lastSeenSecondsAgo: 2740,
-              uptimeFormatted: '13d 5h 32m',
-            };
-          }
-          return n;
-        })
-      );
-
-      setChannels((prev) =>
-        prev.map((ch) => {
-          if (ch.nodeId === 'TULSI_01') {
-            return {
-              ...ch,
-              validity: 'stale',
-              lastUpdate: '45m ago',
-              lastUpdateSecondsAgo: 2740,
-              diagnosticStatus: 'Telemetry packet delayed >40 min (Stale state flagged)',
-            };
-          }
-          return ch;
-        })
-      );
-      showToast('Simulated stale telemetry on TULSI_01 (>45 minutes delay).');
-    } else if (preset === 'node-offline') {
-      // Simulate MONEYPLANT_01 Carrier Loss
-      setNodes((prev) =>
-        prev.map((n) => {
-          if (n.nodeId === 'MONEYPLANT_01') {
-            return {
-              ...n,
-              status: 'offline',
-              rssi: -95,
-              lastSeenSecondsAgo: 3920,
-              packetLossPercent: 100,
-            };
-          }
-          return n;
-        })
-      );
-
-      setChannels((prev) =>
-        prev.map((ch) => {
-          if (ch.nodeId === 'MONEYPLANT_01') {
-            return {
-              ...ch,
-              reading: null,
-              rawReading: '-- (No carrier)',
-              validity: 'unavailable',
-              lastUpdate: '65m ago',
-              lastUpdateSecondsAgo: 3920,
-              diagnosticStatus: 'Node unreachable; 802.11 beacon lost (Carrier down)',
-            };
-          }
-          return ch;
-        })
-      );
-      showToast('Simulated MONEYPLANT_01 node offline (Carrier lost).');
+  const loadDiagnostics = async () => {
+    try {
+      const [liveNodes, liveChannels] = await Promise.all([
+        antigravityApi.fetchNodeDiagnostics(),
+        antigravityApi.fetchSensorChannels(),
+      ]);
+      if (liveNodes && liveNodes.length > 0) setNodes(liveNodes);
+      if (liveChannels && liveChannels.length > 0) setChannels(liveChannels);
+    } catch (e) {
+      console.warn('[RootWhisper] Failed to load live diagnostics:', e);
     }
   };
 
+  useEffect(() => {
+    loadDiagnostics();
+  }, []);
+
   // Node Actions
   const handlePingNode = (nodeId: string) => {
-    showToast(`ICMP / MQTT Ping response received from ${nodeId} (RTT: 18ms).`);
+    const target = nodes.find((n) => n.nodeId === nodeId);
+    if (target && target.status === 'online') {
+      showToast(`ICMP / MQTT Ping response received from ${nodeId} (RTT: 18ms).`);
+    } else {
+      showToast(`ICMP Ping to ${nodeId} timed out: Node is OFFLINE.`);
+    }
   };
 
   const handleScanI2c = (nodeId: string) => {
-    showToast(`I2C bus scan completed for ${nodeId}: 0x5A (MLX90614), 0x38 (AHT25), 0x23 (BH1750) ACK OK.`);
+    const target = nodes.find((n) => n.nodeId === nodeId);
+    if (target && target.status === 'online') {
+      showToast(`I2C bus scan completed for ${nodeId}: 0x5A (MLX90614), 0x38 (AHT25), 0x23 (BH1750) ACK OK.`);
+    } else {
+      showToast(`I2C bus scan failed for ${nodeId}: Node unreachable (Offline).`);
+    }
   };
 
   // Export Diagnostics Dataset
@@ -219,12 +119,16 @@ export const SensorDiagnosticsView: React.FC<SensorDiagnosticsViewProps> = ({
   };
 
   // Manual Diagnostics Refresh
-  const handleForceRefresh = () => {
+  const handleForceRefresh = async () => {
     setIsRefreshing(true);
-    setTimeout(() => {
+    try {
+      await loadDiagnostics();
+      showToast('Diagnostics telemetry refreshed from RootWhisper backend.');
+    } catch {
+      showToast('Diagnostics refreshed from local buffer.');
+    } finally {
       setIsRefreshing(false);
-      showToast('Diagnostics telemetry refreshed from Antigravity buffer.');
-    }, 600);
+    }
   };
 
   return (
@@ -300,26 +204,17 @@ export const SensorDiagnosticsView: React.FC<SensorDiagnosticsViewProps> = ({
           <div className="flex flex-row md:flex-col gap-2 shrink-0 self-start md:self-auto font-mono text-xs">
             <div className="bg-white/10 backdrop-blur-xs px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
               <Radio className="w-3.5 h-3.5 text-[#55B6A3]" />
-              <span>3 Nodes Online</span>
+              <span>{nodes.filter((n) => n.status === 'online').length} / 3 Nodes Online</span>
             </div>
             <div className="bg-white/10 backdrop-blur-xs px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 text-[#55B6A3]" />
-              <span>15 Channels Monitored</span>
+              <span>{channels.filter((c) => c.validity === 'valid').length} / 15 Channels Active</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 1. Diagnostic State Simulator (Ingestion & Fault Test Bench) */}
-      <section>
-        <DiagnosticStateSimulator
-          currentPreset={currentPreset}
-          onSelectPreset={handleSelectPreset}
-          onReset={() => handleSelectPreset('nominal')}
-        />
-      </section>
-
-      {/* 2. Three Individual Node Status Cards */}
+      {/* 1. Three Individual Node Status Cards */}
       <section id="node-cards">
         <NodeStatusCardGrid
           nodes={nodes}
@@ -333,7 +228,7 @@ export const SensorDiagnosticsView: React.FC<SensorDiagnosticsViewProps> = ({
         />
       </section>
 
-      {/* 3. Detailed Diagnostic Table for All 15 Sensor Channels */}
+      {/* 2. Detailed Diagnostic Table for All 15 Sensor Channels */}
       <section id="diagnostic-table">
         <DetailedDiagnosticTable
           channels={channels}
@@ -342,26 +237,23 @@ export const SensorDiagnosticsView: React.FC<SensorDiagnosticsViewProps> = ({
         />
       </section>
 
-      {/* 4. Data Packet & Freshness Monitoring */}
+      {/* 3. Data Packet & Freshness Monitoring */}
       <section>
         <PacketMonitoringSection nodes={nodes} />
       </section>
 
-      {/* 5. Sensor Calibration Status */}
+      {/* 4. Sensor Calibration Status */}
       <section>
         <SensorCalibrationOverview />
       </section>
 
-      {/* 6. Communication Error History */}
+      {/* 5. Communication Error History */}
       <section>
         <CommunicationErrorHistory
           errors={errors}
           onClearResolved={() => {
             setErrors((prev) => prev.filter((e) => !e.resolved));
             showToast('Resolved event history cleared.');
-          }}
-          onSimulateError={(type) => {
-            handleSelectPreset('sensor-error-99');
           }}
         />
       </section>

@@ -14,7 +14,6 @@ import { ReportsPage } from './pages/ReportsPage';
 import { SettingsPage } from './pages/SettingsPage';
 
 import { PlantDetailModal } from './components/dashboard/PlantDetailModal';
-import { SampleDataModal } from './components/dashboard/SampleDataModal';
 
 import {
   PlantTelemetry,
@@ -33,10 +32,16 @@ import {
   SAMPLE_TIME_SERIES,
 } from './data/sampleData';
 import { antigravityApi } from './services/antigravityApi';
+import { authApi, AuthUser } from './services/authApi';
+import { AuthPage } from './components/auth/AuthPage';
 import { useToast } from './hooks/useToast';
 import { useTelemetryStream } from './hooks/useTelemetryStream';
 
 export default function App() {
+  // Authentication & Session State
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
+  const [isAuthChecking, setIsAuthChecking] = useState<boolean>(true);
+
   // Navigation State
   const [currentTab, setCurrentTab] = useState<string>('dashboard');
   const [timeframe, setTimeframe] = useState<'6h' | '12h' | '24h' | '7d'>('24h');
@@ -54,7 +59,6 @@ export default function App() {
   // Modals & Navigation
   const [selectedMonitoringPlantId, setSelectedMonitoringPlantId] = useState<string>('tulsi-01');
   const [selectedPlant, setSelectedPlant] = useState<PlantTelemetry | null>(null);
-  const [isSampleDataModalOpen, setIsSampleDataModalOpen] = useState<boolean>(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
 
   // Toast Hook
@@ -64,22 +68,57 @@ export default function App() {
   const handleRefresh = async () => {
     setIsRefreshing(true);
     try {
-      const refreshedPlants = await antigravityApi.fetchPlants();
-      const refreshedEnv = await antigravityApi.fetchEnvironment();
-      const refreshedNodes = await antigravityApi.fetchNodes();
-      const refreshedLogs = await antigravityApi.fetchActivityLogs();
-      const refreshedSeries = await antigravityApi.fetchTimeSeries(timeframe);
+      const [refreshedPlants, refreshedEnv, refreshedKpis, refreshedNodes, refreshedLogs, refreshedSeries] = await Promise.all([
+        antigravityApi.fetchPlants(),
+        antigravityApi.fetchEnvironment(),
+        antigravityApi.fetchKpis(),
+        antigravityApi.fetchNodes(),
+        antigravityApi.fetchActivityLogs(),
+        antigravityApi.fetchTimeSeries(timeframe),
+      ]);
 
       setPlants(refreshedPlants);
       setEnvironment(refreshedEnv);
+      setKpis(refreshedKpis);
       setNodes(refreshedNodes);
       setActivityLogs(refreshedLogs);
       setTimeSeries(refreshedSeries);
-      showToast('Telemetry refreshed from Antigravity buffer.');
+      showToast('Telemetry refreshed from RootWhisper backend.');
+    } catch (err) {
+      console.warn('[RootWhisper App] Refresh error:', err);
     } finally {
       setTimeout(() => setIsRefreshing(false), 500);
     }
   };
+
+  // Check existing session on mount
+  React.useEffect(() => {
+    authApi
+      .getMe()
+      .then((user) => {
+        setCurrentUser(user);
+        setIsAuthChecking(false);
+        if (user) {
+          handleRefresh();
+        }
+      })
+      .catch(() => {
+        setIsAuthChecking(false);
+      });
+  }, []);
+
+  const handleLogout = async () => {
+    await authApi.logout();
+    setCurrentUser(null);
+    showToast('Signed out of RootWhisper station.');
+  };
+
+  // Sync KPIs whenever plant telemetry updates
+  React.useEffect(() => {
+    if (plants && plants.length > 0) {
+      antigravityApi.fetchKpis().then((k) => setKpis(k)).catch(() => {});
+    }
+  }, [plants]);
 
   // Timeframe change
   const handleTimeframeChange = async (t: '6h' | '12h' | '24h' | '7d') => {
@@ -133,6 +172,36 @@ export default function App() {
     showToast(res.message);
   };
 
+  if (isAuthChecking) {
+    return (
+      <div className="min-h-screen bg-[#F8F8F4] flex flex-col items-center justify-center p-4">
+        <div className="w-12 h-12 rounded-xl bg-[#245640] border border-[#55B6A3]/30 flex items-center justify-center animate-pulse mb-3">
+          <span className="text-[#A8C3A0] text-xl font-bold">🌿</span>
+        </div>
+        <p className="text-xs font-semibold text-[#173F32] tracking-wider uppercase">
+          Verifying RootWhisper Security Session...
+        </p>
+      </div>
+    );
+  }
+
+  const hasResetToken =
+    typeof window !== 'undefined' &&
+    (new URLSearchParams(window.location.search).has('token') ||
+      new URLSearchParams(window.location.search).has('reset_token'));
+
+  if (!currentUser || hasResetToken) {
+    return (
+      <AuthPage
+        onAuthSuccess={(user) => {
+          setCurrentUser(user);
+          showToast(`Welcome back, ${user.full_name}!`);
+          handleRefresh();
+        }}
+      />
+    );
+  }
+
   return (
     <>
       <AppLayout
@@ -150,8 +219,9 @@ export default function App() {
         onExportData={handleExportData}
         isMobileSidebarOpen={isMobileSidebarOpen}
         setIsMobileSidebarOpen={setIsMobileSidebarOpen}
-        onOpenSampleDataModal={() => setIsSampleDataModalOpen(true)}
         toastMessage={toastMessage}
+        currentUser={currentUser}
+        onLogout={handleLogout}
       >
         {/* Render Selected View */}
         {currentTab === 'settings' ? (
@@ -209,18 +279,6 @@ export default function App() {
         onOpenMonitoring={(plantId) => {
           setSelectedMonitoringPlantId(plantId);
           setCurrentTab('plant-monitoring');
-        }}
-      />
-
-      {/* Sample Data Architecture Inspector Modal */}
-      <SampleDataModal
-        isOpen={isSampleDataModalOpen}
-        onClose={() => setIsSampleDataModalOpen(false)}
-        rawSampleJson={{
-          metadata: antigravityApi.getMetadata(),
-          plants,
-          environment,
-          nodes,
         }}
       />
     </>

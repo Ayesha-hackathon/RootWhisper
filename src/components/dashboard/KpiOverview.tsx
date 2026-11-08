@@ -18,6 +18,8 @@ export const KpiOverview: React.FC<KpiOverviewProps> = ({
   onFilterNodes,
   onViewScreenings,
 }) => {
+  const isAllOffline = kpis.nodesOnline === 0;
+
   const cards = [
     {
       id: 'plants',
@@ -33,30 +35,30 @@ export const KpiOverview: React.FC<KpiOverviewProps> = ({
       id: 'nodes',
       title: 'Nodes Online',
       value: `${kpis.nodesOnline}/${kpis.totalNodes}`,
-      subtext: 'ESP32 Wi-Fi Mesh · 100% Signal Integrity',
+      subtext: isAllOffline ? 'Hardware disconnected · Connect ESP32 nodes' : 'ESP32 Wi-Fi Mesh Connected',
       icon: Radio,
-      badge: kpis.nodesOnline === kpis.totalNodes ? 'Mesh Stable' : 'Degraded',
-      badgeColor: 'text-[#087E75] bg-[#D9F0EA]',
+      badge: isAllOffline ? 'Offline' : (kpis.nodesOnline === kpis.totalNodes ? 'Mesh Stable' : 'Degraded'),
+      badgeColor: isAllOffline ? 'text-[#78847C] bg-[#FAF9F3]' : 'text-[#087E75] bg-[#D9F0EA]',
       action: onFilterNodes,
     },
     {
       id: 'screenings',
       title: 'Active Screenings',
       value: `0${kpis.activeScreenings}`,
-      subtext: 'Continuous CWSI & Leaf Thermal Profiling',
+      subtext: isAllOffline ? 'Awaiting telemetry to initiate screening' : 'Continuous CWSI & Leaf Thermal Profiling',
       icon: Activity,
-      badge: 'Real-Time AI',
-      badgeColor: 'text-[#123B36] bg-[#D9F0EA]',
+      badge: isAllOffline ? 'Standby' : 'Real-Time AI',
+      badgeColor: isAllOffline ? 'text-[#78847C] bg-[#FAF9F3]' : 'text-[#123B36] bg-[#D9F0EA]',
       action: onViewScreenings,
     },
     {
       id: 'collection',
       title: 'Data Collection Status',
       value: `${kpis.dataCollectionHealth}%`,
-      subtext: `${kpis.totalPacketsProcessedToday.toLocaleString()} telemetry packets today`,
+      subtext: isAllOffline ? '0 telemetry packets today (Awaiting node stream)' : `${kpis.totalPacketsProcessedToday.toLocaleString()} telemetry packets today`,
       icon: CheckCircle2,
-      badge: 'Nominal Cadence',
-      badgeColor: 'text-[#087E75] bg-[#D9F0EA]',
+      badge: isAllOffline ? 'Awaiting Stream' : 'Nominal Cadence',
+      badgeColor: isAllOffline ? 'text-[#78847C] bg-[#FAF9F3]' : 'text-[#087E75] bg-[#D9F0EA]',
       action: undefined,
     },
   ];

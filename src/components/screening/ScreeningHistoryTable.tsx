@@ -3,20 +3,35 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SAMPLE_SCREENING_HISTORY,
   ScreeningHistoryRecord,
   ScreeningOutcomeCategory,
 } from '../../data/sampleData';
+import { antigravityApi } from '../../services/antigravityApi';
 import { OUTCOME_DEFINITIONS } from './OutcomeCategoryBadges';
 import { Search, History, Filter } from 'lucide-react';
 
 export const ScreeningHistoryTable: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterOutcome, setFilterOutcome] = useState<ScreeningOutcomeCategory | 'ALL'>('ALL');
+  const [historyList, setHistoryList] = useState<ScreeningHistoryRecord[]>([]);
 
-  const filteredHistory = SAMPLE_SCREENING_HISTORY.filter((item) => {
+  useEffect(() => {
+    let mounted = true;
+    antigravityApi.fetchScreeningHistory().then((records) => {
+      if (mounted && records && records.length > 0) {
+        setHistoryList(records);
+      }
+    }).catch(() => {});
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const filteredHistory = historyList.filter((item) => {
     const matchesSearch =
       item.plantName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.plantCode.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -160,7 +175,7 @@ export const ScreeningHistoryTable: React.FC = () => {
 
       <div className="pt-2 border-t border-[#D9F0EA] flex items-center justify-between text-[11px] text-[#78847C]">
         <span>Showing {filteredHistory.length} verified screening evaluations.</span>
-        <span className="font-mono text-[#087E75]">SAMPLE DATA ARCHIVE</span>
+        <span className="font-mono text-[#087E75]">Live Telemetry Evaluation Archive</span>
       </div>
     </div>
   );

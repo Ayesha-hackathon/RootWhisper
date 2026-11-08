@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import { APP_CONFIG } from '../../config/appConfig';
 import {
   LayoutDashboard,
   Sprout,
@@ -16,22 +17,27 @@ import {
   CheckCircle2,
   FileText,
   X,
+  LogOut,
+  User,
 } from 'lucide-react';
+import { AuthUser } from '../../services/authApi';
 
 interface SidebarProps {
   currentTab: string;
   onSelectTab: (tab: string) => void;
-  onOpenSampleDataModal: () => void;
   isOpenMobile?: boolean;
   onCloseMobile?: () => void;
+  currentUser?: AuthUser | null;
+  onLogout?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
   currentTab,
   onSelectTab,
-  onOpenSampleDataModal,
   isOpenMobile = false,
   onCloseMobile,
+  currentUser,
+  onLogout,
 }) => {
   const navItems = [
     { id: 'dashboard', label: 'Screening Dashboard', icon: LayoutDashboard },
@@ -116,25 +122,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
             )}
           </div>
 
-          {/* Prototype Sample Data Notice Box */}
+          {/* Live Hardware Integration Badge */}
           <div className="px-4 py-3 bg-[#0A2622]/80 border-b border-[#1A4D45]">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#C58A35]" />
-                <span className="text-[11px] font-medium text-white tracking-wide">
-                  SAMPLE DATA ACTIVE
-                </span>
-              </div>
-              <button
-                onClick={onOpenSampleDataModal}
-                className="text-[11px] font-medium text-[#55B6A3] hover:text-white hover:underline flex items-center gap-0.5 cursor-pointer"
-              >
-                Info
-                <ExternalLink className="w-2.5 h-2.5 ml-0.5" />
-              </button>
+            <div className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#48D597] animate-pulse" />
+              <span className="text-[11px] font-semibold text-white tracking-wide">
+                HARDWARE INTEGRATION ACTIVE
+              </span>
             </div>
             <p className="text-[10px] text-[#55B6A3]/80 mt-1 leading-tight">
-              Frontend prototype decoupled from Antigravity engine.
+              FastAPI & SQLite Engine Active · ESP32 Fleet
             </p>
           </div>
 
@@ -190,22 +187,38 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
           </div>
 
-          {/* Researcher Profile */}
-          <div className="flex items-center gap-2.5 px-2 py-1">
-            <img
-              src="/src/assets/images/avatar_researcher_1794035218996.jpg"
-              alt="Dr. Aris Thorne"
-              referrerPolicy="no-referrer"
-              className="w-8 h-8 rounded-full object-cover border border-[#55B6A3]/60"
-            />
-            <div className="min-w-0 flex-1">
-              <p className="text-xs font-semibold text-white truncate">
-                Dr. Aris Thorne
-              </p>
-              <p className="text-[10px] text-[#55B6A3] truncate">
-                Lead Phytophysiologist
-              </p>
+          {/* Authenticated Human User Profile */}
+          <div className="flex items-center justify-between gap-2 px-2 py-1.5 rounded-lg bg-[#123B36]/60 border border-[#1A4D45]">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-8 h-8 rounded-full bg-[#245640] border border-[#55B6A3]/60 flex items-center justify-center text-xs font-bold text-white shrink-0">
+                {currentUser?.full_name
+                  ? currentUser.full_name
+                      .split(' ')
+                      .map((n) => n[0])
+                      .slice(0, 2)
+                      .join('')
+                      .toUpperCase()
+                  : 'RW'}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-semibold text-white truncate">
+                  {currentUser?.full_name || 'Station Operator'}
+                </p>
+                <p className="text-[10px] text-[#55B6A3] truncate">
+                  {currentUser?.email || 'Authenticated Session'}
+                </p>
+              </div>
             </div>
+
+            {onLogout && (
+              <button
+                onClick={onLogout}
+                title="Sign Out"
+                className="p-1.5 rounded-md text-[#55B6A3] hover:text-[#C95D58] hover:bg-[#1A4D45] transition-colors cursor-pointer shrink-0"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            )}
           </div>
         </div>
       </aside>

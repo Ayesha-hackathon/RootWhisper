@@ -7,6 +7,7 @@ import React from 'react';
 import { Sidebar } from '../components/layout/Sidebar';
 import { TopNav } from '../components/layout/TopNav';
 import { PlantTelemetry, EnvironmentalConditions, ESP32Node } from '../types';
+import { AuthUser } from '../services/authApi';
 
 interface AppLayoutProps {
   currentTab: string;
@@ -20,8 +21,9 @@ interface AppLayoutProps {
   onExportData: () => void;
   isMobileSidebarOpen: boolean;
   setIsMobileSidebarOpen: (open: boolean) => void;
-  onOpenSampleDataModal: () => void;
   toastMessage: string | null;
+  currentUser?: AuthUser | null;
+  onLogout?: () => void;
   children: React.ReactNode;
 }
 
@@ -37,8 +39,9 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   onExportData,
   isMobileSidebarOpen,
   setIsMobileSidebarOpen,
-  onOpenSampleDataModal,
   toastMessage,
+  currentUser,
+  onLogout,
   children,
 }) => {
   return (
@@ -48,6 +51,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         currentTab={currentTab}
         isOpenMobile={isMobileSidebarOpen}
         onCloseMobile={() => setIsMobileSidebarOpen(false)}
+        currentUser={currentUser}
+        onLogout={onLogout}
         onSelectTab={(tab) => {
           onSelectTab(tab);
           if (tab !== 'settings' && tab !== 'reports' && tab !== 'sensor-diagnostics' && tab !== 'esp32-nodes' && tab !== 'ai-screening' && tab !== 'analytics' && tab !== 'plant-monitoring' && tab !== 'dashboard') {
@@ -57,7 +62,6 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
             }, 60);
           }
         }}
-        onOpenSampleDataModal={onOpenSampleDataModal}
       />
 
       {/* Main Viewport Container */}

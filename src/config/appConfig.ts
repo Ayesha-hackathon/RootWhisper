@@ -5,30 +5,29 @@
  * RootWhisper Frontend Configuration
  * ----------------------------------------------------------------------------
  * Centralized application configuration driven by Vite environment variables.
- * Designed for deployment to static hosting or Google Cloud Run alongside the
- * Google Antigravity backend and ESP32 mesh ingest services.
+ * Directly routes to the local Python FastAPI backend at http://localhost:8000/api/v1.
  */
 
 export interface AppConfig {
   /**
-   * Base URL of the Google Antigravity backend REST & WebSocket API.
-   * Configured via VITE_ANTIGRAVITY_API_URL.
+   * Base URL of the FastAPI backend REST API.
+   * Defaults to http://localhost:8000/api/v1.
    */
   apiUrl: string;
 
   /**
-   * Toggle between live Antigravity backend and local sample telemetry data.
-   * Defaults to true in development or when backend is unreachable.
+   * Toggle between live backend and local sample telemetry fallback.
+   * Defaults to false so live backend is queried.
    */
   useSampleData: boolean;
 
   /**
-   * ESP32 Wi-Fi / MQTT Mesh Gateway Identifier.
+   * ESP32 Wi-Fi Node Cluster Identifier.
    */
   esp32MeshId: string;
 
   /**
-   * Model version tag corresponding to Antigravity foliar regression baseline.
+   * Model version tag corresponding to individual-plant Random Forest foliar baseline.
    */
   aiModelVersion: string;
 
@@ -38,28 +37,31 @@ export interface AppConfig {
   samplingIntervalMs: number;
 
   /**
-   * Live UI pulse refresh interval in milliseconds (default: 8,000ms).
+   * Live UI telemetry polling interval in milliseconds (default: 5,000ms).
    */
   uiRefreshIntervalMs: number;
 
   /**
-   * Default species-aware water-stress anomaly threshold delta (in °C).
+   * Default provisional canopy water-stress residual threshold delta (in °C).
    */
   defaultStressThresholdDelta: number;
 
   /**
-   * Target phytotron chamber identifier.
+   * Target node cluster identifier.
    */
   chamberId: string;
 }
 
 export const APP_CONFIG: AppConfig = {
-  apiUrl: (import.meta as any).env?.VITE_ANTIGRAVITY_API_URL || 'https://antigravity.rootwhisper.internal:8443/api/v1',
-  useSampleData: (import.meta as any).env?.VITE_USE_SAMPLE_DATA !== 'false',
-  esp32MeshId: (import.meta as any).env?.VITE_ESP32_MESH_ID || 'ESP32_MESH_CHAMBER_A4',
-  aiModelVersion: (import.meta as any).env?.VITE_AI_MODEL_VERSION || 'Antigravity-PhysioFingerprint-v2.4',
-  samplingIntervalMs: Number((import.meta as any).env?.VITE_SAMPLING_INTERVAL_MS) || 300000, // 5 min
-  uiRefreshIntervalMs: Number((import.meta as any).env?.VITE_UI_REFRESH_MS) || 8000, // 8 sec
-  defaultStressThresholdDelta: 1.8, // +1.8°C over expected hydrated baseline
-  chamberId: 'CHAMBER_ALPHA_04',
+  apiUrl: (import.meta as any).env?.VITE_ANTIGRAVITY_API_URL || 
+    (typeof window !== 'undefined' && window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
+      ? `${window.location.protocol}//${window.location.hostname}:8000/api/v1`
+      : 'http://localhost:8000/api/v1'),
+  useSampleData: false,
+  esp32MeshId: (import.meta as any).env?.VITE_ESP32_MESH_ID || 'ESP32_DEVKIT_V1_CLUSTER',
+  aiModelVersion: (import.meta as any).env?.VITE_AI_MODEL_VERSION || 'RootWhisper-RandomForest-v2.4',
+  samplingIntervalMs: Number((import.meta as any).env?.VITE_SAMPLING_INTERVAL_MS) || 300000,
+  uiRefreshIntervalMs: Number((import.meta as any).env?.VITE_UI_REFRESH_MS) || 5000,
+  defaultStressThresholdDelta: 1.5,
+  chamberId: 'ROOTWHISPER_DEVKIT_V1',
 };

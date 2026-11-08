@@ -147,8 +147,17 @@ export const EnvironmentalCorrelationSection: React.FC = () => {
       </div>
 
       {/* Chart Canvas */}
-      <div className="h-72 w-full pt-1">
-        <ResponsiveContainer width="100%" height="100%">
+      {data.length === 0 ? (
+        <div className="h-72 w-full flex flex-col items-center justify-center rounded-lg bg-[#FAF9F3] border border-dashed border-[#D4E7E1] p-6 text-center">
+          <Activity className="w-8 h-8 text-[#A8C3A0] mb-2" />
+          <p className="text-xs font-semibold text-[#123B36]">No historical sensor data available yet.</p>
+          <p className="text-[11px] text-[#78847C] mt-1 max-w-sm">
+            Waiting for sensor data. Connect your ESP32 node to start live monitoring.
+          </p>
+        </div>
+      ) : (
+        <div className="h-72 w-full pt-1">
+          <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={data} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#D9F0EA" vertical={false} />
             <XAxis
@@ -280,6 +289,7 @@ export const EnvironmentalCorrelationSection: React.FC = () => {
           </ComposedChart>
         </ResponsiveContainer>
       </div>
+      )}
 
       {/* Domain Scientific Footnote */}
       <div className="p-3 bg-[#F5FAF8] rounded-lg border border-[#D9F0EA] text-xs text-[#26342D] leading-relaxed">

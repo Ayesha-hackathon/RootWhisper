@@ -43,6 +43,8 @@ export const AiScreeningSummary: React.FC<AiScreeningSummaryProps> = ({
       <div className="space-y-4">
         {plants.map((plant) => {
           const isStress = plant.stressLevel === 'mild_stress' || plant.stressLevel === 'high_stress';
+          const hasData = plant.hasReceivedData !== false && plant.leafTemperature !== null;
+
           return (
             <div
               key={plant.id}
@@ -64,19 +66,29 @@ export const AiScreeningSummary: React.FC<AiScreeningSummaryProps> = ({
                   </span>
                   <span
                     className={`font-mono font-bold text-xs ${
-                      isStress ? 'text-[#C95D58]' : 'text-[#087E75]'
+                      !hasData
+                        ? 'text-[#78847C]'
+                        : isStress
+                        ? 'text-[#C95D58]'
+                        : 'text-[#087E75]'
                     }`}
                   >
-                    {plant.stressIndex.toFixed(2)}
+                    {hasData ? plant.stressIndex.toFixed(2) : '--'}
                   </span>
                   <span
                     className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-medium ${
-                      isStress
+                      !hasData
+                        ? 'bg-[#FAF9F3] text-[#78847C] border border-[#D4E7E1]'
+                        : isStress
                         ? 'bg-[#FFF2F0] text-[#C95D58]'
                         : 'bg-[#D9F0EA] text-[#087E75]'
                     }`}
                   >
-                    {isStress ? 'Water Stress Alert' : 'Hydration Optimal'}
+                    {!hasData
+                      ? 'Awaiting Telemetry'
+                      : isStress
+                      ? 'Water Stress Alert'
+                      : 'Hydration Optimal'}
                   </span>
                 </div>
               </div>
@@ -85,22 +97,34 @@ export const AiScreeningSummary: React.FC<AiScreeningSummaryProps> = ({
               <div className="w-full bg-[#D9F0EA] h-2 rounded-full overflow-hidden relative">
                 <div
                   className={`h-full rounded-full transition-all duration-500 ${
-                    isStress ? 'bg-[#C95D58]' : 'bg-[#087E75]'
+                    !hasData
+                      ? 'bg-[#A8C3A0]/30'
+                      : isStress
+                      ? 'bg-[#C95D58]'
+                      : 'bg-[#087E75]'
                   }`}
-                  style={{ width: `${Math.min(100, plant.stressIndex * 100)}%` }}
+                  style={{ width: `${hasData ? Math.min(100, plant.stressIndex * 100) : 0}%` }}
                 />
               </div>
 
               {/* Diagnosis & Stomatal Conductance row */}
               <div className="mt-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-[#78847C] pt-2 border-t border-[#D9F0EA]/70">
                 <p className="line-clamp-1 italic">
-                  &ldquo;{plant.physiologicalFingerprint.diagnosis}&rdquo;
+                  &ldquo;
+                  {hasData
+                    ? plant.physiologicalFingerprint.diagnosis
+                    : 'Awaiting hardware telemetry stream to initialize screening pipeline.'}
+                  &rdquo;
                 </p>
                 <div className="flex items-center gap-3 shrink-0 font-mono text-[10px]">
-                  <span>Stomatal Proxy: {plant.stomatalConductanceProxy} mmol</span>
+                  <span>
+                    Stomatal Proxy: {hasData ? `${plant.stomatalConductanceProxy} mmol` : 'N/A'}
+                  </span>
                   <span className="text-[#55B6A3]">·</span>
                   <span className="text-[#123B36] font-semibold">
-                    Early lead: +{plant.physiologicalFingerprint.hoursBeforeVisualWilting}h
+                    {hasData
+                      ? `Early lead: +${plant.physiologicalFingerprint.hoursBeforeVisualWilting}h`
+                      : 'Node offline'}
                   </span>
                 </div>
               </div>

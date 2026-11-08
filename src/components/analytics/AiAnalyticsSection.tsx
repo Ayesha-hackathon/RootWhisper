@@ -100,65 +100,75 @@ export const AiAnalyticsSection: React.FC = () => {
             </span>
           </div>
 
-          <div className="h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={residualChartData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#D9F0EA" vertical={false} />
-                <XAxis
-                  dataKey="timeLabel"
-                  tickLine={false}
-                  stroke="#55B6A3"
-                  tick={{ fill: '#78847C', fontSize: 10 }}
-                />
-                <YAxis
-                  tickLine={false}
-                  stroke="#55B6A3"
-                  tick={{ fill: '#78847C', fontSize: 11, fontFamily: 'monospace' }}
-                  domain={[-1, 30]}
-                />
-                <Tooltip content={<CustomLineTooltip />} />
-                <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '11px', color: '#78847C' }} />
+          {residualChartData.length === 0 ? (
+            <div className="h-64 w-full flex flex-col items-center justify-center rounded-lg bg-[#FAF9F3] border border-dashed border-[#D4E7E1] p-6 text-center">
+              <Clock className="w-8 h-8 text-[#A8C3A0] mb-2" />
+              <p className="text-xs font-semibold text-[#123B36]">No historical sensor data available yet.</p>
+              <p className="text-[11px] text-[#78847C] mt-1 max-w-sm">
+                Waiting for sensor data. Connect your ESP32 node to start logging high-resolution telemetry.
+              </p>
+            </div>
+          ) : (
+            <div className="h-64 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={residualChartData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#D9F0EA" vertical={false} />
+                  <XAxis
+                    dataKey="timeLabel"
+                    tickLine={false}
+                    stroke="#55B6A3"
+                    tick={{ fill: '#78847C', fontSize: 10 }}
+                  />
+                  <YAxis
+                    tickLine={false}
+                    stroke="#55B6A3"
+                    tick={{ fill: '#78847C', fontSize: 11, fontFamily: 'monospace' }}
+                    domain={[-1, 30]}
+                  />
+                  <Tooltip content={<CustomLineTooltip />} />
+                  <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '11px', color: '#78847C' }} />
 
-                <Line
-                  type="monotone"
-                  dataKey="observedTemp"
-                  name="Observed Leaf Temp (°C)"
-                  stroke="#C95D58"
-                  strokeWidth={2.4}
-                  dot={{ r: 3, fill: '#C95D58' }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="predictedTemp"
-                  name="AI Expected Hydrated Baseline (°C)"
-                  stroke="#087E75"
-                  strokeWidth={2}
-                  strokeDasharray="4 2"
-                  dot={false}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="residualDelta"
-                  name="Temperature Residual (Observed - Expected)"
-                  stroke="#C58A35"
-                  strokeWidth={2}
-                  dot={{ r: 2.5 }}
-                />
+                  <Line
+                    type="monotone"
+                    dataKey="observedTemp"
+                    name="Observed Leaf Temp (°C)"
+                    stroke="#C95D58"
+                    strokeWidth={2.4}
+                    dot={{ r: 3, fill: '#C95D58' }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="predictedTemp"
+                    name="AI Expected Hydrated Baseline (°C)"
+                    stroke="#087E75"
+                    strokeWidth={2}
+                    strokeDasharray="4 2"
+                    dot={false}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="residualDelta"
+                    name="Temperature Residual (Observed - Expected)"
+                    stroke="#C58A35"
+                    strokeWidth={2}
+                    dot={{ r: 2.5 }}
+                  />
 
-                <ReferenceLine
-                  y={1.8}
-                  stroke="#C95D58"
-                  strokeDasharray="4 4"
-                  label={{
-                    value: 'Adaptive Threshold (+1.8°C)',
-                    fill: '#C95D58',
-                    fontSize: 10,
-                    position: 'insideTopLeft',
-                  }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+                  <ReferenceLine
+                    y={1.8}
+                    stroke="#C95D58"
+                    strokeDasharray="4 4"
+                    label={{
+                      value: 'Adaptive Threshold (+1.8°C)',
+                      fill: '#C95D58',
+                      fontSize: 10,
+                      position: 'insideTopLeft',
+                    }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          )}
         </div>
 
         {/* Right: Screening Outcome Distribution (Donut Chart) */}
@@ -171,52 +181,64 @@ export const AiAnalyticsSection: React.FC = () => {
               </h3>
             </div>
             <p className="text-[11px] text-[#78847C] mb-2">
-              Historical sample proportion across 8,640 screening evaluations.
+              Historical sample proportion across screening evaluations.
             </p>
 
-            <div className="h-44 w-full flex items-center justify-center">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={SCREENING_OUTCOME_DISTRIBUTION}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={45}
-                    outerRadius={68}
-                    paddingAngle={3}
-                    dataKey="percentage"
-                  >
-                    {SCREENING_OUTCOME_DISTRIBUTION.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    formatter={(val: any, name: any) => [`${val}%`, name]}
-                    contentStyle={{
-                      backgroundColor: '#FFFFFF',
-                      borderColor: '#D4E7E1',
-                      borderRadius: '8px',
-                      fontSize: '11px',
-                    }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
+            {SCREENING_OUTCOME_DISTRIBUTION.length === 0 ? (
+              <div className="h-44 w-full flex flex-col items-center justify-center rounded-lg bg-[#FAF9F3] border border-dashed border-[#D4E7E1] p-4 text-center">
+                <PieIcon className="w-7 h-7 text-[#A8C3A0] mb-1.5" />
+                <p className="text-xs font-semibold text-[#123B36]">No screening data</p>
+                <p className="text-[10px] text-[#78847C] mt-0.5">Awaiting live telemetry packets</p>
+              </div>
+            ) : (
+              <div className="h-44 w-full flex items-center justify-center">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={SCREENING_OUTCOME_DISTRIBUTION}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={45}
+                      outerRadius={68}
+                      paddingAngle={3}
+                      dataKey="percentage"
+                    >
+                      {SCREENING_OUTCOME_DISTRIBUTION.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      formatter={(val: any, name: any) => [`${val}%`, name]}
+                      contentStyle={{
+                        backgroundColor: '#FFFFFF',
+                        borderColor: '#D4E7E1',
+                        borderRadius: '8px',
+                        fontSize: '11px',
+                      }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            )}
           </div>
 
           {/* Donut Legend */}
           <div className="space-y-1.5 pt-2 border-t border-[#D9F0EA] text-[10px]">
-            {SCREENING_OUTCOME_DISTRIBUTION.map((item, idx) => (
-              <div key={idx} className="flex items-center justify-between">
-                <span className="flex items-center gap-1.5 text-[#26342D]">
-                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }} />
-                  {item.name}
-                </span>
-                <span className="font-mono font-semibold text-[#123B36]">
-                  {item.percentage}%
-                </span>
-              </div>
-            ))}
+            {SCREENING_OUTCOME_DISTRIBUTION.length === 0 ? (
+              <span className="text-[11px] text-[#78847C] font-mono">0 evaluations recorded</span>
+            ) : (
+              SCREENING_OUTCOME_DISTRIBUTION.map((item, idx) => (
+                <div key={idx} className="flex items-center justify-between">
+                  <span className="flex items-center gap-1.5 text-[#26342D]">
+                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }} />
+                    {item.name}
+                  </span>
+                  <span className="font-mono font-semibold text-[#123B36]">
+                    {item.percentage}%
+                  </span>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -233,62 +255,68 @@ export const AiAnalyticsSection: React.FC = () => {
           </span>
         </div>
 
-        <div className="border border-[#D4E7E1] rounded-lg overflow-x-auto">
-          <table className="w-full text-left text-xs min-w-[700px]">
-            <thead className="bg-[#F5FAF8] border-b border-[#D4E7E1] text-[#78847C] font-mono text-[11px]">
-              <tr>
-                <th className="p-3">Period ID</th>
-                <th className="p-3">Target Plant</th>
-                <th className="p-3">Onset Timestamp</th>
-                <th className="p-3">Duration</th>
-                <th className="p-3">Peak Residual</th>
-                <th className="p-3">Status</th>
-                <th className="p-3">Physiological Interpretation</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[#D9F0EA] text-[#26342D]">
-              {SAMPLE_ANOMALY_PERIODS.map((anom) => {
-                const isActive = anom.status === 'active';
-                return (
-                  <tr key={anom.id} className="hover:bg-[#EEF7F4] transition-colors">
-                    <td className="p-3 font-mono font-semibold text-[#123B36]">
-                      {anom.id}
-                    </td>
-                    <td className="p-3 font-medium text-[#26342D]">
-                      {anom.plantName}
-                    </td>
-                    <td className="p-3 font-mono text-[11px] text-[#78847C]">
-                      {anom.startTime}
-                    </td>
-                    <td className="p-3 font-mono text-[11px]">
-                      {anom.duration}
-                    </td>
-                    <td className="p-3 font-mono font-bold text-[#C95D58]">
-                      +{anom.peakResidual.toFixed(1)}°C{' '}
-                      <span className="text-[10px] text-[#78847C] font-normal">
-                        (limit +{anom.adaptiveThreshold}°C)
-                      </span>
-                    </td>
-                    <td className="p-3">
-                      <span
-                        className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded ${
-                          isActive
-                            ? 'bg-[#FFF2F0] text-[#C95D58] border border-[#C95D58]/30'
-                            : 'bg-[#D9F0EA] text-[#087E75] border border-[#55B6A3]/40'
-                        }`}
-                      >
-                        {isActive ? 'ACTIVE' : 'RESOLVED'}
-                      </span>
-                    </td>
-                    <td className="p-3 text-[11px] text-[#78847C]">
-                      {anom.interpretation}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        {SAMPLE_ANOMALY_PERIODS.length === 0 ? (
+          <div className="p-8 text-center text-xs text-[#78847C] font-mono border border-[#D4E7E1] rounded-lg bg-[#FAF9F3]">
+            No persistent thermal anomaly episodes recorded yet. System waiting for live telemetry.
+          </div>
+        ) : (
+          <div className="border border-[#D4E7E1] rounded-lg overflow-x-auto">
+            <table className="w-full text-left text-xs min-w-[700px]">
+              <thead className="bg-[#F5FAF8] border-b border-[#D4E7E1] text-[#78847C] font-mono text-[11px]">
+                <tr>
+                  <th className="p-3">Period ID</th>
+                  <th className="p-3">Target Plant</th>
+                  <th className="p-3">Onset Timestamp</th>
+                  <th className="p-3">Duration</th>
+                  <th className="p-3">Peak Residual</th>
+                  <th className="p-3">Status</th>
+                  <th className="p-3">Physiological Interpretation</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#D9F0EA] text-[#26342D]">
+                {SAMPLE_ANOMALY_PERIODS.map((anom) => {
+                  const isActive = anom.status === 'active';
+                  return (
+                    <tr key={anom.id} className="hover:bg-[#EEF7F4] transition-colors">
+                      <td className="p-3 font-mono font-semibold text-[#123B36]">
+                        {anom.id}
+                      </td>
+                      <td className="p-3 font-medium text-[#26342D]">
+                        {anom.plantName}
+                      </td>
+                      <td className="p-3 font-mono text-[11px] text-[#78847C]">
+                        {anom.startTime}
+                      </td>
+                      <td className="p-3 font-mono text-[11px]">
+                        {anom.duration}
+                      </td>
+                      <td className="p-3 font-mono font-bold text-[#C95D58]">
+                        +{anom.peakResidual.toFixed(1)}°C{' '}
+                        <span className="text-[10px] text-[#78847C] font-normal">
+                          (limit +{anom.adaptiveThreshold}°C)
+                        </span>
+                      </td>
+                      <td className="p-3">
+                        <span
+                          className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded ${
+                            isActive
+                              ? 'bg-[#FFF2F0] text-[#C95D58] border border-[#C95D58]/30'
+                              : 'bg-[#D9F0EA] text-[#087E75] border border-[#55B6A3]/40'
+                          }`}
+                        >
+                          {isActive ? 'ACTIVE' : 'RESOLVED'}
+                        </span>
+                      </td>
+                      <td className="p-3 text-[11px] text-[#78847C]">
+                        {anom.interpretation}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

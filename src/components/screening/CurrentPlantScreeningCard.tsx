@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { PlantTelemetry } from '../../types';
 import { ScreeningOutcomeCategory } from '../../data/sampleData';
 import { OUTCOME_DEFINITIONS } from './OutcomeCategoryBadges';
@@ -30,34 +30,39 @@ export const CurrentPlantScreeningCard: React.FC<CurrentPlantScreeningCardProps>
   selectedPlantId,
   onSelectPlant,
 }) => {
-  const [simulatedOutcome, setSimulatedOutcome] = useState<ScreeningOutcomeCategory | 'auto'>('auto');
-  const [dataQualityState, setDataQualityState] = useState<'Valid' | 'Stale' | 'Unreliable' | 'Missing'>('Valid');
-
   const selectedPlant = plants.find((p) => p.id === selectedPlantId) || plants[0];
 
-  // Derive outcome: If simulatedOutcome is auto, use real plant state; if dataQuality is missing or unreliable, force INCONCLUSIVE
+  // Derive outcome strictly from genuine live hardware telemetry
+  const isDataInconclusive =
+    !selectedPlant.hasReceivedData ||
+    selectedPlant.leafTemperature === null ||
+    selectedPlant.ambientTemperature === null ||
+    selectedPlant.stressLevel === 'calibrating';
+
+  const dataQualityState = !selectedPlant.hasReceivedData
+    ? 'Awaiting Hardware'
+    : selectedPlant.stressLevel === 'calibrating'
+    ? 'Calibrating'
+    : 'Valid';
+
   let effectiveOutcome: ScreeningOutcomeCategory;
-  if (dataQualityState === 'Missing' || dataQualityState === 'Unreliable' || dataQualityState === 'Stale') {
+  if (isDataInconclusive) {
     effectiveOutcome = 'INCONCLUSIVE';
-  } else if (simulatedOutcome !== 'auto') {
-    effectiveOutcome = simulatedOutcome;
+  } else if (
+    selectedPlant.stressLevel === 'high_stress' ||
+    selectedPlant.stressLevel === 'mild_stress'
+  ) {
+    effectiveOutcome = 'POSSIBLE WATER STRESS';
   } else {
-    effectiveOutcome =
-      selectedPlant.id === 'tulsi-01'
-        ? 'POSSIBLE WATER STRESS'
-        : selectedPlant.stressLevel === 'mild_stress'
-        ? 'WATCH'
-        : 'NORMAL';
+    effectiveOutcome = 'NORMAL';
   }
 
   const outcomeDef = OUTCOME_DEFINITIONS[effectiveOutcome];
   const OutcomeIcon = outcomeDef.icon;
 
-  const isDataInconclusive = effectiveOutcome === 'INCONCLUSIVE';
-
   return (
     <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-5 shadow-xs space-y-4">
-      {/* Plant Selector Bar & Diagnostic Simulation Strip */}
+      {/* Plant Selector Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-[#D9F0EA]">
         {/* Plant Selector */}
         <div className="flex items-center gap-1.5 p-1 bg-[#EDF7F4] rounded-lg border border-[#D4E7E1]">
@@ -77,75 +82,18 @@ export const CurrentPlantScreeningCard: React.FC<CurrentPlantScreeningCardProps>
           ))}
         </div>
 
-        {/* Diagnostic Simulator for testing all 4 categories */}
-        <div className="flex items-center gap-1.5 text-xs">
-          <span className="text-[11px] text-[#78847C] font-mono">Test Outcome:</span>
-          <div className="flex items-center gap-1 p-0.5 bg-[#EDF7F4] rounded border border-[#D4E7E1]">
-            <button
-              onClick={() => {
-                setSimulatedOutcome('auto');
-                setDataQualityState('Valid');
-              }}
-              className={`px-2 py-0.5 text-[10px] font-mono rounded cursor-pointer ${
-                simulatedOutcome === 'auto' && dataQualityState === 'Valid'
-                  ? 'bg-[#123B36] text-white font-semibold'
-                  : 'text-[#78847C]'
-              }`}
-            >
-              Live State
-            </button>
-            <button
-              onClick={() => {
-                setSimulatedOutcome('NORMAL');
-                setDataQualityState('Valid');
-              }}
-              className={`px-2 py-0.5 text-[10px] font-mono rounded cursor-pointer ${
-                effectiveOutcome === 'NORMAL' && dataQualityState === 'Valid'
-                  ? 'bg-[#087E75] text-white font-semibold'
-                  : 'text-[#78847C]'
-              }`}
-            >
-              Normal
-            </button>
-            <button
-              onClick={() => {
-                setSimulatedOutcome('WATCH');
-                setDataQualityState('Valid');
-              }}
-              className={`px-2 py-0.5 text-[10px] font-mono rounded cursor-pointer ${
-                effectiveOutcome === 'WATCH' && dataQualityState === 'Valid'
-                  ? 'bg-[#C58A35] text-white font-semibold'
-                  : 'text-[#78847C]'
-              }`}
-            >
-              Watch
-            </button>
-            <button
-              onClick={() => {
-                setSimulatedOutcome('POSSIBLE WATER STRESS');
-                setDataQualityState('Valid');
-              }}
-              className={`px-2 py-0.5 text-[10px] font-mono rounded cursor-pointer ${
-                effectiveOutcome === 'POSSIBLE WATER STRESS' && dataQualityState === 'Valid'
-                  ? 'bg-[#C95D58] text-white font-semibold'
-                  : 'text-[#78847C]'
-              }`}
-            >
-              Stress
-            </button>
-            <button
-              onClick={() => {
-                setDataQualityState('Missing');
-              }}
-              className={`px-2 py-0.5 text-[10px] font-mono rounded cursor-pointer ${
-                effectiveOutcome === 'INCONCLUSIVE'
-                  ? 'bg-[#78847C] text-white font-semibold'
-                  : 'text-[#78847C]'
-              }`}
-            >
-              Inconclusive
-            </button>
-          </div>
+        {/* Live Hardware Telemetry Badge */}
+        <div className="flex items-center gap-2 text-xs font-mono">
+          <span className="text-[#78847C]">Hardware Channel:</span>
+          <span
+            className={`px-2 py-0.5 rounded text-[11px] font-semibold border ${
+              selectedPlant.hasReceivedData
+                ? 'bg-[#EDF7F4] text-[#087E75] border-[#55B6A3]/40'
+                : 'bg-[#FFF8EB] text-[#C58A35] border-[#C58A35]/40'
+            }`}
+          >
+            {selectedPlant.hardwareStatus || 'WAITING FOR FIRST DATA'}
+          </span>
         </div>
       </div>
 
@@ -170,11 +118,13 @@ export const CurrentPlantScreeningCard: React.FC<CurrentPlantScreeningCardProps>
               </span>
             </div>
             <h3 className="text-base font-bold text-[#123B36]">
-              {outcomeDef.description}
+              {isDataInconclusive
+                ? 'INCONCLUSIVE — Insufficient valid sensor data'
+                : outcomeDef.description}
             </h3>
             <p className="text-xs text-[#26342D] mt-0.5 max-w-2xl leading-relaxed">
               {isDataInconclusive
-                ? 'Telemetry packets are missing, stale (>40m), or sensor ADC values are out of physical bounds. Screening pipeline suspended.'
+                ? 'Telemetry packets are missing, stale (>40m), or physical ESP32 node is disconnected. RootWhisper requires genuine sensor telemetry to perform biophysical screening.'
                 : outcomeDef.criteria}
             </p>
           </div>
@@ -258,7 +208,7 @@ export const CurrentPlantScreeningCard: React.FC<CurrentPlantScreeningCardProps>
           </div>
           <div className="flex items-baseline gap-1">
             <span className="text-2xl font-bold font-mono text-[#123B36] tabular-nums">
-              {isDataInconclusive ? '--' : selectedPlant.soilMoisture.toFixed(1)}
+              {isDataInconclusive || selectedPlant.soilMoisture === null ? '--' : selectedPlant.soilMoisture.toFixed(1)}
             </span>
             <span className="text-xs font-mono text-[#78847C]">%</span>
           </div>

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ArrowLeft,
   Sliders,
@@ -25,6 +25,9 @@ import {
   Sun,
   AlertCircle,
 } from 'lucide-react';
+import { antigravityApi } from '../../services/antigravityApi';
+import { http } from '../../services/apiClient';
+import { APP_CONFIG } from '../../config/appConfig';
 
 interface SettingsViewProps {
   onBackToDashboard: () => void;
@@ -43,7 +46,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBackToDashboard })
       scientificName: 'Ocimum tenuiflorum',
       nodeId: 'NODE_ESP32_01',
       monitoringStatus: 'active',
-      soilThreshold: 30,
+      soilThreshold: 35,
     },
     {
       id: 'hibiscus-01',
@@ -52,16 +55,16 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBackToDashboard })
       scientificName: 'Hibiscus rosa-sinensis',
       nodeId: 'NODE_ESP32_02',
       monitoringStatus: 'active',
-      soilThreshold: 45,
+      soilThreshold: 40,
     },
     {
       id: 'moneyplant-01',
       code: 'MONEYPLANT_01',
-      commonName: 'Money Plant (Golden Pothos)',
+      commonName: 'Money Plant (Devil\'s Ivy)',
       scientificName: 'Epipremnum aureum',
       nodeId: 'NODE_ESP32_03',
       monitoringStatus: 'active',
-      soilThreshold: 35,
+      soilThreshold: 30,
     },
   ]);
 
@@ -69,27 +72,27 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBackToDashboard })
   const [tempUnit, setTempUnit] = useState<'celsius' | 'fahrenheit'>('celsius');
   const [lightUnit, setLightUnit] = useState<'lux' | 'par'>('lux');
   const [emissivityCoefficient, setEmissivityCoefficient] = useState<number>(0.98);
-  const [capacitiveCalibDry, setCapacitiveCalibDry] = useState<number>(3120);
-  const [capacitiveCalibWet, setCapacitiveCalibWet] = useState<number>(1450);
+  const [capacitiveCalibDry, setCapacitiveCalibDry] = useState<number>(3200);
+  const [capacitiveCalibWet, setCapacitiveCalibWet] = useState<number>(1400);
 
   // Area 3: Monitoring Configuration State
   const [samplingInterval, setSamplingInterval] = useState<string>('5 minutes');
-  const [dashboardRefreshRate, setDashboardRefreshRate] = useState<string>('8 seconds');
+  const [dashboardRefreshRate, setDashboardRefreshRate] = useState<string>('5 seconds');
   const [dataRetentionDays, setDataRetentionDays] = useState<string>('90 days');
   const [autoDliCalculation, setAutoDliCalculation] = useState<boolean>(true);
 
   // Area 4: AI Configuration State
   const [modelName, setModelName] = useState<string>('Random Forest Foliar Regression v2.4');
-  const [adaptiveThreshold, setAdaptiveThreshold] = useState<number>(1.8);
-  const [persistenceWindowMins, setPersistenceWindowMins] = useState<number>(60);
+  const [adaptiveThreshold, setAdaptiveThreshold] = useState<number>(1.5);
+  const [persistenceWindowMins, setPersistenceWindowMins] = useState<number>(25);
   const [screeningSensitivity, setScreeningSensitivity] = useState<'standard' | 'high' | 'conservative'>('standard');
   const [decoupleSoilFeature, setDecoupleSoilFeature] = useState<boolean>(true);
 
   // Area 5: System Configuration State
-  const [backendAddress, setBackendAddress] = useState<string>('https://antigravity.rootwhisper.internal:8443/api/v1');
-  const [mqttBrokerUrl, setMqttBrokerUrl] = useState<string>('mqtts://mesh-broker.phytotron.internal:8883');
-  const [apiConnectionStatus, setApiConnectionStatus] = useState<string>('Ready for Antigravity');
-  const [appVersion] = useState<string>('v2.4.1 (ESP32-S3 Mesh)');
+  const [backendAddress, setBackendAddress] = useState<string>(APP_CONFIG.apiUrl);
+  const [mqttBrokerUrl, setMqttBrokerUrl] = useState<string>('http://localhost:8000/api/v1/telemetry');
+  const [apiConnectionStatus, setApiConnectionStatus] = useState<string>('Checking backend...');
+  const [appVersion] = useState<string>('v2.4.1 (ESP32 DevKit V1 Cluster)');
 
   // Notification Toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -99,9 +102,76 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBackToDashboard })
     setTimeout(() => setToastMessage(null), 3800);
   };
 
-  // Honest Save Handler
-  const handleSave = (sectionName: string) => {
-    showToast(`Saved ${sectionName} to local prototype state. Ready for Google Antigravity backend synchronization.`);
+  // Load live settings from actual backend database on mount
+  useEffect(() => {
+    http.get<any[]>('/devices').then((devices) => {
+      if (devices && devices.length > 0) {
+        setPlantsConfig((prev) =>
+          prev.map((p) => {
+            const match = devices.find((d: any) => d.device_id === p.code);
+            if (match) {
+              return {
+                ...p,
+                soilThreshold: match.provisional_soil_dry_threshold_pct,
+                commonName: match.plant_name,
+                scientificName: match.species,
+              };
+            }
+            return p;
+          })
+        );
+
+        const first = devices[0];
+        if (first) {
+          setCapacitiveCalibDry(first.soil_dry_adc || 3200);
+          setCapacitiveCalibWet(first.soil_wet_adc || 1400);
+          setAdaptiveThreshold(first.provisional_temp_residual_threshold_c || 1.5);
+          setPersistenceWindowMins((first.persistence_window_size || 5) * 5);
+        }
+        setBackendAddress(APP_CONFIG.apiUrl);
+        setApiConnectionStatus('Online & Connected to FastAPI');
+      }
+    }).catch((err) => {
+      console.warn('[RootWhisper Settings] Could not load backend devices:', err);
+      setApiConnectionStatus('Backend offline (using local configuration)');
+    });
+  }, []);
+
+  // Save Handler with real backend database synchronization
+  const handleSave = async (sectionName: string) => {
+    try {
+      if (sectionName === 'Plant Configuration') {
+        for (const p of plantsConfig) {
+          await antigravityApi.updateDeviceConfig(p.code, {
+            provisional_soil_dry_threshold_pct: p.soilThreshold,
+          });
+        }
+        showToast('Plant soil-moisture thresholds saved to RootWhisper backend SQLite database!');
+      } else if (sectionName === 'Sensor Calibration') {
+        const devCodes = ['TULSI_01', 'HIBISCUS_01', 'MONEYPLANT_01'];
+        for (const code of devCodes) {
+          await antigravityApi.updateDeviceConfig(code, {
+            soil_dry_adc: capacitiveCalibDry,
+            soil_wet_adc: capacitiveCalibWet,
+          });
+        }
+        showToast('Probe Dry/Wet ADC calibrations saved to RootWhisper backend!');
+      } else if (sectionName === 'AI Screening Model') {
+        const devCodes = ['TULSI_01', 'HIBISCUS_01', 'MONEYPLANT_01'];
+        const windowSize = Math.max(1, Math.round(persistenceWindowMins / 5));
+        for (const code of devCodes) {
+          await antigravityApi.updateDeviceConfig(code, {
+            provisional_temp_residual_threshold_c: adaptiveThreshold,
+            persistence_window_size: windowSize,
+          });
+        }
+        showToast(`AI residual threshold (+${adaptiveThreshold}°C) & window (${windowSize} cycles) saved to backend!`);
+      } else {
+        showToast(`Saved ${sectionName} parameters successfully.`);
+      }
+    } catch (err: any) {
+      showToast(`Error saving settings: ${err.message || 'Network error'}`);
+    }
   };
 
   // Reset defaults handler

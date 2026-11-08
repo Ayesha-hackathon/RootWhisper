@@ -28,16 +28,25 @@ export const NodeConnectionOverview: React.FC<NodeConnectionOverviewProps> = ({
   const [pingResults, setPingResults] = useState<{ [nodeId: string]: string }>({});
 
   const handlePing = (nodeId: string) => {
+    const target = nodes.find((n) => n.nodeId === nodeId);
     setPingingNode(nodeId);
     setTimeout(() => {
-      const latency = Math.floor(Math.random() * 18 + 12);
-      setPingResults((prev) => ({
-        ...prev,
-        [nodeId]: `${latency}ms (ACK OK)`,
-      }));
+      if (!target || target.status === 'offline') {
+        setPingResults((prev) => ({
+          ...prev,
+          [nodeId]: 'Host unreachable (Offline)',
+        }));
+      } else {
+        setPingResults((prev) => ({
+          ...prev,
+          [nodeId]: 'Connected (ACK OK)',
+        }));
+      }
       setPingingNode(null);
     }, 600);
   };
+
+  const isAnyOnline = nodes.some((n) => n.status === 'online');
 
   return (
     <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-5 shadow-xs">
@@ -47,8 +56,14 @@ export const NodeConnectionOverview: React.FC<NodeConnectionOverviewProps> = ({
             <h2 className="text-base font-semibold text-[#123B36] tracking-tight">
               ESP32 Sensor Node Telemetry & Mesh Fleet
             </h2>
-            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-[#D9F0EA] text-[#087E75]">
-              Mesh Network Online
+            <span
+              className={`px-2 py-0.5 rounded text-[10px] font-mono font-medium ${
+                isAnyOnline
+                  ? 'bg-[#D9F0EA] text-[#087E75]'
+                  : 'bg-[#FAF9F3] text-[#78847C] border border-[#D4E7E1]'
+              }`}
+            >
+              {isAnyOnline ? 'Mesh Network Online' : 'Hardware Disconnected'}
             </span>
           </div>
           <p className="text-xs text-[#78847C] mt-0.5">
@@ -70,6 +85,7 @@ export const NodeConnectionOverview: React.FC<NodeConnectionOverviewProps> = ({
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {nodes.map((node) => {
+          const isNodeOnline = node.status === 'online';
           return (
             <div
               key={node.nodeId}
@@ -89,10 +105,17 @@ export const NodeConnectionOverview: React.FC<NodeConnectionOverviewProps> = ({
                       {node.assignedPlantName}
                     </p>
                   </div>
-                  <span className="flex items-center gap-1 text-[10px] font-mono font-medium text-[#087E75] bg-[#D9F0EA] px-2 py-0.5 rounded-md">
-                    <CheckCircle2 className="w-3 h-3 text-[#087E75]" />
-                    Online
-                  </span>
+                  {isNodeOnline ? (
+                    <span className="flex items-center gap-1 text-[10px] font-mono font-medium text-[#087E75] bg-[#D9F0EA] px-2 py-0.5 rounded-md">
+                      <CheckCircle2 className="w-3 h-3 text-[#087E75]" />
+                      Online
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-1 text-[10px] font-mono font-medium text-[#78847C] bg-[#FAF9F3] border border-[#D4E7E1] px-2 py-0.5 rounded-md">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#78847C]" />
+                      Offline
+                    </span>
+                  )}
                 </div>
 
                 {/* Node Hardware Spec Badges */}
@@ -104,7 +127,9 @@ export const NodeConnectionOverview: React.FC<NodeConnectionOverviewProps> = ({
                       <BatteryCharging className="w-3 h-3 text-[#087E75]" />
                     </div>
                     <p className="font-semibold text-[#123B36] mt-0.5">
-                      {node.batteryVoltage.toFixed(2)}V · Solar
+                      {node.batteryVoltage != null && node.batteryVoltage > 0
+                        ? `${node.batteryVoltage.toFixed(2)}V · Solar`
+                        : 'N/A'}
                     </p>
                   </div>
 
@@ -115,7 +140,7 @@ export const NodeConnectionOverview: React.FC<NodeConnectionOverviewProps> = ({
                       <Wifi className="w-3 h-3 text-[#123B36]" />
                     </div>
                     <p className="font-semibold text-[#123B36] mt-0.5">
-                      {node.rssi} dBm
+                      {node.rssi != null && node.rssi !== 0 ? `${node.rssi} dBm` : 'N/A'}
                     </p>
                   </div>
                 </div>

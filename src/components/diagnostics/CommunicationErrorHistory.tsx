@@ -19,13 +19,11 @@ import { CommunicationErrorRecord } from '../../types';
 interface CommunicationErrorHistoryProps {
   errors: CommunicationErrorRecord[];
   onClearResolved?: () => void;
-  onSimulateError?: (type: string) => void;
 }
 
 export const CommunicationErrorHistory: React.FC<CommunicationErrorHistoryProps> = ({
   errors,
   onClearResolved,
-  onSimulateError,
 }) => {
   const [severityFilter, setSeverityFilter] = useState<string>('all');
   const [nodeFilter, setNodeFilter] = useState<string>('all');
@@ -68,19 +66,6 @@ export const CommunicationErrorHistory: React.FC<CommunicationErrorHistoryProps>
               Audit log of CRC32 checksum errors, frame sequence gaps, Wi-Fi reconnects, and out-of-bounds telemetry intercepts.
             </p>
           </div>
-
-          {/* Quick Simulation Trigger */}
-          {onSimulateError && (
-            <div className="flex items-center gap-2 self-start sm:self-auto">
-              <button
-                onClick={() => onSimulateError('sentinel')}
-                className="py-1 px-2.5 rounded text-xs font-medium border border-[#D4E7E1] hover:border-[#C95D58] bg-white text-[#C95D58] hover:bg-[#FDF2F2] transition-colors cursor-pointer"
-                title="Simulate MLX90614 -99.0°C fault intercept"
-              >
-                + Inject -99.0°C Fault
-              </button>
-            </div>
-          )}
         </div>
 
         {/* Filter Controls */}

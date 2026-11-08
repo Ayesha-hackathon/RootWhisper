@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useRef } from 'react';
+import { authApi } from '../../services/authApi';
 import {
   FileText,
   Printer,
@@ -592,9 +593,9 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
 
             <div className="flex items-center gap-4">
               <div className="text-right">
-                <div className="font-semibold text-xs text-[#123B36]">Dr. Aris Thorne, Ph.D.</div>
-                <div className="text-[11px] text-[#78847C]">Lead Phytophysiologist & Framework Architect</div>
-                <div className="text-[10px] font-mono text-[#087E75] mt-0.5">Verified Digital Timestamp · Antigravity Ready</div>
+                <div className="font-semibold text-xs text-[#123B36]">{authApi.getStoredUser()?.full_name || 'Station Principal Investigator'}</div>
+                <div className="text-[11px] text-[#78847C]">{authApi.getStoredUser()?.email || 'Authorized Station Research Operator'}</div>
+                <div className="text-[10px] font-mono text-[#087E75] mt-0.5">Verified Digital Timestamp · Live Backend Engine</div>
               </div>
               <div className="w-12 h-12 rounded-full border-2 border-[#123B36] flex items-center justify-center p-1 bg-[#D9F0EA] text-[#123B36]">
                 <ShieldCheck className="w-6 h-6" />

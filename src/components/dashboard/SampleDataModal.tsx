@@ -61,17 +61,16 @@ export const SampleDataModal: React.FC<SampleDataModalProps> = ({
           <div className="p-4 rounded-xl bg-[#D9F0EA]/70 border border-[#55B6A3]/30 space-y-2">
             <div className="flex items-center justify-between">
               <span className="font-semibold text-[#123B36]">
-                Decoupled Architecture Notice
+                Backend Data Architecture
               </span>
-              <span className="font-mono text-[10px] bg-[#123B36] text-white px-2 py-0.5 rounded">
-                SAMPLE DATA ACTIVE
+              <span className={`font-mono text-[10px] px-2 py-0.5 rounded text-white ${ANTIGRAVITY_CONFIG.useSampleData ? 'bg-[#C58A35]' : 'bg-[#087E75]'}`}>
+                {ANTIGRAVITY_CONFIG.useSampleData ? 'SAMPLE DATA ACTIVE' : 'LIVE FASTAPI BACKEND ACTIVE'}
               </span>
             </div>
             <p className="text-[#78847C] leading-relaxed text-[11px]">
-              This frontend prototype strictly isolates all sample mock records inside{' '}
-              <code className="text-[#123B36] font-mono font-semibold">/src/data/sampleData.ts</code>.
-              Your existing Antigravity backend, AI engine, and ESP32 broker are connected via the service contract in{' '}
-              <code className="text-[#123B36] font-mono font-semibold">/src/services/antigravityApi.ts</code>.
+              {ANTIGRAVITY_CONFIG.useSampleData
+                ? 'This frontend prototype is running in standalone sample mode.'
+                : 'Directly communicating with the live Python FastAPI backend at ' + ANTIGRAVITY_CONFIG.apiUrl + ' and SQLite database data/rootwhisper.db. Telemetry is queried from the 3 ESP32 nodes.'}
             </p>
           </div>
 

@@ -34,6 +34,8 @@ export interface AiBaselineStats {
   summaryInsight: string;
 }
 
+export type HardwareNodeState = 'ONLINE' | 'OFFLINE' | 'WAITING FOR FIRST DATA' | 'STALE' | 'CONNECTION ERROR';
+
 export interface PlantTelemetry {
   id: string;
   code: string;
@@ -42,18 +44,20 @@ export interface PlantTelemetry {
   family: string;
   nodeId: string;
   nodeStatus: 'online' | 'offline' | 'degraded';
+  hardwareStatus?: HardwareNodeState;
+  hasReceivedData?: boolean;
   illustrationUrl: string;
   stressLevel: StressLevel;
   stressIndex: number; // 0.00 to 1.00 (Crop Water Stress Index - CWSI)
-  soilMoisture: number; // percentage %
+  soilMoisture: number | null; // percentage % (null when awaiting data)
   soilMoistureThreshold: number; // %
-  leafTemperature: number; // °C (radiometric IR)
-  ambientTemperature: number; // °C
-  temperatureDelta: number; // T_leaf - T_ambient (°C)
-  relativeHumidity: number; // %
-  lightIntensity: number; // lux (BH1750)
+  leafTemperature: number | null; // °C (radiometric IR, null when awaiting data)
+  ambientTemperature: number | null; // °C (null when awaiting data)
+  temperatureDelta: number | null; // T_leaf - T_ambient (°C)
+  relativeHumidity: number | null; // % (null when awaiting data)
+  lightIntensity: number | null; // lux (BH1750, null when awaiting data)
   parIntensity?: number; // µmol/m²/s
-  vpd: number; // Vapor Pressure Deficit (kPa)
+  vpd: number | null; // Vapor Pressure Deficit (kPa)
   transpirationRate: 'nominal' | 'restricted' | 'depressed';
   stomatalConductanceProxy: number; // mmol/m²s
   lastUpdated: string;
@@ -81,14 +85,14 @@ export interface PlantTelemetry {
 export interface EnvironmentalConditions {
   facilityName: string;
   location: string;
-  ambientTemp: number; // °C
-  ambientRh: number; // %
-  vpd: number; // kPa
-  parLightAvg: number; // µmol/m²/s
-  dli: number; // Daily Light Integral (mol/m²/day)
-  co2Level: number; // ppm
-  airflowSpeed: number; // m/s
-  photoperiodHours: number;
+  ambientTemp: number | null; // °C
+  ambientRh: number | null; // %
+  vpd: number | null; // kPa
+  parLightAvg: number | null; // µmol/m²/s
+  dli: number | null; // Daily Light Integral (mol/m²/day)
+  co2Level: number | null; // ppm
+  airflowSpeed: number | null; // m/s
+  photoperiodHours: number | null;
 }
 
 export interface TimeSeriesReading {
@@ -124,15 +128,15 @@ export interface ESP32Node {
   macAddress: string;
   firmwareVersion: string;
   uptimeHours: number;
-  rssi: number; // dBm
-  batteryVoltage: number; // V
+  rssi: number | null; // dBm
+  batteryVoltage: number | null; // V
   solarCharging: boolean;
   packetRate: string; // e.g. "1 pkt / 10s"
   packetLoss: number; // %
   sensors: {
     name: string;
     model: string;
-    status: 'healthy' | 'warning' | 'error';
+    status: 'healthy' | 'warning' | 'error' | 'offline';
   }[];
 }
 

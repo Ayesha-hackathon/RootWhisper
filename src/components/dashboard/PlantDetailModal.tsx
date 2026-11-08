@@ -180,13 +180,15 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
                   </p>
                   <p
                     className={`text-base font-bold font-mono mt-0.5 ${
-                      plant.temperatureDelta > 1.5 ? 'text-[#C95D58]' : 'text-[#087E75]'
+                      plant.temperatureDelta !== null && plant.temperatureDelta > 1.5 ? 'text-[#C95D58]' : 'text-[#087E75]'
                     }`}
                   >
-                    {plant.temperatureDelta > 0 ? `+${plant.temperatureDelta.toFixed(1)}` : plant.temperatureDelta.toFixed(1)}°C
+                    {plant.temperatureDelta !== null
+                      ? (plant.temperatureDelta > 0 ? `+${plant.temperatureDelta.toFixed(1)}°C` : `${plant.temperatureDelta.toFixed(1)}°C`)
+                      : 'N/A'}
                   </p>
                   <p className="text-[10px] text-[#78847C] mt-1">
-                    T_leaf ({plant.leafTemperature}°C) - T_air ({plant.ambientTemperature}°C)
+                    T_leaf ({plant.leafTemperature !== null ? `${plant.leafTemperature}°C` : 'N/A'}) - T_air ({plant.ambientTemperature !== null ? `${plant.ambientTemperature}°C` : 'N/A'})
                   </p>
                 </div>
               </div>
@@ -205,7 +207,7 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
                   Soil Moisture
                 </span>
                 <p className="text-lg font-bold font-mono text-[#123B36] mt-1">
-                  {plant.soilMoisture.toFixed(1)}%
+                  {plant.soilMoisture !== null ? `${plant.soilMoisture.toFixed(1)}%` : 'N/A'}
                 </p>
                 <p className="text-[10px] text-[#78847C] mt-0.5">
                   Threshold: {plant.soilMoistureThreshold}%
@@ -218,7 +220,7 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
                   IR Leaf Temp
                 </span>
                 <p className="text-lg font-bold font-mono text-[#123B36] mt-1">
-                  {plant.leafTemperature.toFixed(1)}°C
+                  {plant.leafTemperature !== null ? `${plant.leafTemperature.toFixed(1)}°C` : 'N/A'}
                 </p>
                 <p className="text-[10px] text-[#78847C] mt-0.5">
                   Contactless MLX90614
@@ -231,7 +233,7 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
                   Ambient Light
                 </span>
                 <p className="text-lg font-bold font-mono text-[#123B36] mt-1 tabular-nums">
-                  {plant.lightIntensity.toLocaleString()}{' '}
+                  {plant.lightIntensity !== null ? `${plant.lightIntensity.toLocaleString()} ` : 'N/A '}
                   <span className="text-[10px] font-normal font-sans text-[#78847C]">lux</span>
                 </p>
                 <p className="text-[10px] text-[#78847C] mt-0.5">
@@ -258,7 +260,7 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
         {/* Footer Actions */}
         <div className="px-6 py-4 border-t border-[#D9F0EA] bg-[#F5FAF8] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="text-[11px] font-mono text-[#78847C]">
-            RSSI: {plant.wifiRssi} dBm · Battery: {plant.batteryVoltage.toFixed(2)}V
+            RSSI: {plant.wifiRssi !== null ? `${plant.wifiRssi} dBm` : 'N/A'} · Battery: {plant.batteryVoltage ? `${plant.batteryVoltage.toFixed(2)}V` : 'N/A'}
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
@@ -289,7 +291,7 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
               className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold text-[#FFFFFF] bg-[#123B36] hover:bg-[#087E75] transition-colors cursor-pointer disabled:opacity-50 shadow-xs"
             >
               <Droplets className="w-3.5 h-3.5" />
-              <span>{isIrrigating ? 'Pulsing...' : 'Simulate Irrigation Pulse'}</span>
+              <span>{isIrrigating ? 'Pulsing...' : 'Pulse Micro-Irrigation'}</span>
             </button>
           </div>
         </div>

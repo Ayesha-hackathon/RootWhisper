@@ -19,8 +19,8 @@ interface AiBaselinePanelProps {
 }
 
 export const AiBaselinePanel: React.FC<AiBaselinePanelProps> = ({ plant }) => {
-  const { aiBaseline } = plant;
-  const isStressResidual = aiBaseline.temperatureResidual > aiBaseline.adaptiveThreshold;
+  const { aiBaseline, hasReceivedData } = plant;
+  const isStressResidual = hasReceivedData && aiBaseline.temperatureResidual > aiBaseline.adaptiveThreshold;
 
   return (
     <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-5 shadow-xs">
@@ -53,9 +53,9 @@ export const AiBaselinePanel: React.FC<AiBaselinePanelProps> = ({ plant }) => {
           </span>
           <div className="flex items-baseline gap-1 mt-1">
             <span className="text-2xl font-bold font-mono text-[#123B36] tabular-nums">
-              {aiBaseline.expectedLeafTemp.toFixed(1)}
+              {hasReceivedData ? `${aiBaseline.expectedLeafTemp.toFixed(1)}` : 'N/A'}
             </span>
-            <span className="text-xs font-mono text-[#78847C]">°C</span>
+            {hasReceivedData && <span className="text-xs font-mono text-[#78847C]">°C</span>}
           </div>
           <p className="text-[10px] text-[#78847C] mt-1">
             Simulated under full hydration
@@ -69,9 +69,9 @@ export const AiBaselinePanel: React.FC<AiBaselinePanelProps> = ({ plant }) => {
           </span>
           <div className="flex items-baseline gap-1 mt-1">
             <span className="text-2xl font-bold font-mono text-[#26342D] tabular-nums">
-              {aiBaseline.observedLeafTemp.toFixed(1)}
+              {hasReceivedData ? `${aiBaseline.observedLeafTemp.toFixed(1)}` : 'N/A'}
             </span>
-            <span className="text-xs font-mono text-[#78847C]">°C</span>
+            {hasReceivedData && <span className="text-xs font-mono text-[#78847C]">°C</span>}
           </div>
           <p className="text-[10px] text-[#78847C] mt-1 font-mono">
             MLX90614 Contactless IR
@@ -80,11 +80,10 @@ export const AiBaselinePanel: React.FC<AiBaselinePanelProps> = ({ plant }) => {
 
         {/* 3. Temperature Residual (T_observed - T_expected) */}
         <div
-          className={`p-3.5 rounded-lg border ${
-            isStressResidual
+          className={`p-3.5 rounded-lg border ${isStressResidual
               ? 'bg-[#FFF8F7] border-[#C95D58]/40'
               : 'bg-[#EDF7F4] border-[#55B6A3]/50'
-          }`}
+            }`}
         >
           <div className="flex items-center justify-between">
             <span className="text-[11px] text-[#78847C] font-medium">
@@ -98,13 +97,14 @@ export const AiBaselinePanel: React.FC<AiBaselinePanelProps> = ({ plant }) => {
           </div>
           <div className="flex items-baseline gap-1 mt-1">
             <span
-              className={`text-2xl font-bold font-mono tabular-nums ${
-                isStressResidual ? 'text-[#C95D58]' : 'text-[#087E75]'
-              }`}
+              className={`text-2xl font-bold font-mono tabular-nums ${isStressResidual ? 'text-[#C95D58]' : 'text-[#087E75]'
+                }`}
             >
-              {aiBaseline.temperatureResidual > 0 ? `+${aiBaseline.temperatureResidual.toFixed(1)}` : aiBaseline.temperatureResidual.toFixed(1)}
+              {hasReceivedData
+                ? (aiBaseline.temperatureResidual > 0 ? `+${aiBaseline.temperatureResidual.toFixed(1)}` : aiBaseline.temperatureResidual.toFixed(1))
+                : 'N/A'}
             </span>
-            <span className="text-xs font-mono text-[#78847C]">°C</span>
+            {hasReceivedData && <span className="text-xs font-mono text-[#78847C]">°C</span>}
           </div>
           <p className="text-[10px] text-[#78847C] mt-1">
             T_observed − T_expected
@@ -135,9 +135,8 @@ export const AiBaselinePanel: React.FC<AiBaselinePanelProps> = ({ plant }) => {
             Residual vs Stress Threshold Scale
           </span>
           <span
-            className={`font-mono text-[11px] font-semibold ${
-              isStressResidual ? 'text-[#C95D58]' : 'text-[#087E75]'
-            }`}
+            className={`font-mono text-[11px] font-semibold ${isStressResidual ? 'text-[#C95D58]' : 'text-[#087E75]'
+              }`}
           >
             {isStressResidual
               ? `Stress Detected (+${(aiBaseline.temperatureResidual - aiBaseline.adaptiveThreshold).toFixed(1)}°C over threshold)`
@@ -154,9 +153,8 @@ export const AiBaselinePanel: React.FC<AiBaselinePanelProps> = ({ plant }) => {
 
           {/* Current Needle Position */}
           <div
-            className={`absolute top-0 bottom-0 w-2.5 rounded-full shadow-sm transition-all duration-500 ${
-              isStressResidual ? 'bg-[#C95D58]' : 'bg-[#087E75]'
-            }`}
+            className={`absolute top-0 bottom-0 w-2.5 rounded-full shadow-sm transition-all duration-500 ${isStressResidual ? 'bg-[#C95D58]' : 'bg-[#087E75]'
+              }`}
             style={{
               left: `${Math.min(
                 95,

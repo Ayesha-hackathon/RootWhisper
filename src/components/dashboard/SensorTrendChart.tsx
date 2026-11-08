@@ -62,6 +62,40 @@ export const SensorTrendChart: React.FC<SensorTrendChartProps> = ({ data }) => {
     return null;
   };
 
+  if (!data || data.length === 0) {
+    return (
+      <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-6 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-3 border-b border-[#D9F0EA]">
+          <div>
+            <div className="flex items-center gap-2">
+              <h2 className="text-base font-semibold text-[#123B36] tracking-tight">
+                Physiological & Environmental Dynamics
+              </h2>
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-[#FFF8EB] text-[#C58A35] border border-[#C58A35]/30">
+                Awaiting Hardware Telemetry
+              </span>
+            </div>
+            <p className="text-xs text-[#78847C] mt-0.5">
+              Continuous canopy microclimate, capacitive substrate moisture, and physiological leaf-air differentials.
+            </p>
+          </div>
+        </div>
+
+        <div className="py-14 text-center">
+          <div className="w-12 h-12 rounded-full bg-[#EDF7F4] border border-[#D4E7E1] flex items-center justify-center mx-auto mb-3">
+            <TrendingUp className="w-6 h-6 text-[#78847C]" />
+          </div>
+          <h3 className="text-sm font-semibold text-[#123B36] mb-1">
+            No historical sensor data available yet
+          </h3>
+          <p className="text-xs text-[#78847C] max-w-md mx-auto">
+            Waiting for sensor data. Connect your ESP32 node to start live monitoring.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-5 shadow-xs">
       {/* Chart Header & Controls */}
