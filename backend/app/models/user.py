@@ -42,11 +42,17 @@ class PasswordResetToken(Base):
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
 
     def to_dict(self):
+        exp = self.expires_at
+        if exp and exp.tzinfo is None:
+            exp = exp.replace(tzinfo=timezone.utc)
+        created = self.created_at
+        if created and created.tzinfo is None:
+            created = created.replace(tzinfo=timezone.utc)
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "expires_at": self.expires_at.isoformat() if self.expires_at else None,
+            "expires_at": exp.isoformat() if exp else None,
             "used": self.used,
-            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "created_at": created.isoformat() if created else None,
         }
 

@@ -162,56 +162,78 @@ export const authApi = {
    * Submits a password reset request. Dispatches link via Gmail SMTP.
    */
   async forgotPassword(email: string): Promise<{ status: string; message: string }> {
-    const res = await fetch(`${APP_CONFIG.apiUrl}/auth/forgot-password`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    });
+    try {
+      const res = await fetch(`${APP_CONFIG.apiUrl}/auth/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
 
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({ detail: 'Password recovery request failed.' }));
-      throw new Error(err.detail || `Error (${res.status})`);
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ detail: 'Password recovery request failed.' }));
+        throw new Error(err.detail || `Error (${res.status})`);
+      }
+
+      return await res.json();
+    } catch (err: any) {
+      if (err.name === 'TypeError' && err.message === 'Failed to fetch') {
+        throw new Error('Unable to connect to the RootWhisper security server. Please verify your connection or try again shortly.');
+      }
+      throw err;
     }
-
-    return await res.json();
   },
 
   /**
    * Verifies that a password recovery token from email URL is valid, active, and unexpired.
    */
   async verifyResetToken(token: string): Promise<{ status: string; message: string; user_email_masked?: string }> {
-    const res = await fetch(`${APP_CONFIG.apiUrl}/auth/verify-reset-token?token=${encodeURIComponent(token)}`, {
-      method: 'GET',
-    });
+    try {
+      const res = await fetch(`${APP_CONFIG.apiUrl}/auth/verify-reset-token?token=${encodeURIComponent(token)}`, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' },
+      });
 
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({ detail: 'The recovery token is invalid, expired, or has already been used.' }));
-      throw new Error(err.detail || `Error (${res.status})`);
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ detail: 'The recovery token is invalid, expired, or has already been used.' }));
+        throw new Error(err.detail || `Error (${res.status})`);
+      }
+
+      return await res.json();
+    } catch (err: any) {
+      if (err.name === 'TypeError' && err.message === 'Failed to fetch') {
+        throw new Error('Unable to connect to the RootWhisper security server. Please verify your connection or try again shortly.');
+      }
+      throw err;
     }
-
-    return await res.json();
   },
 
   /**
    * Resets password using single-use token.
    */
   async resetPassword(token: string, newPassword: string, confirmPassword: string): Promise<{ status: string; message: string }> {
-    const res = await fetch(`${APP_CONFIG.apiUrl}/auth/reset-password`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        token,
-        new_password: newPassword,
-        confirm_password: confirmPassword,
-      }),
-    });
+    try {
+      const res = await fetch(`${APP_CONFIG.apiUrl}/auth/reset-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          token,
+          new_password: newPassword,
+          confirm_password: confirmPassword,
+        }),
+      });
 
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({ detail: 'Failed to reset password.' }));
-      throw new Error(err.detail || `Error (${res.status})`);
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ detail: 'Failed to reset password.' }));
+        throw new Error(err.detail || `Error (${res.status})`);
+      }
+
+      return await res.json();
+    } catch (err: any) {
+      if (err.name === 'TypeError' && err.message === 'Failed to fetch') {
+        throw new Error('Unable to connect to the RootWhisper security server. Please verify your connection or try again shortly.');
+      }
+      throw err;
     }
-
-    return await res.json();
   },
 };
 

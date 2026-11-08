@@ -299,7 +299,11 @@ def verify_reset_token_endpoint(token: str, db: Session = Depends(get_db)):
             detail="This password recovery token has already been used. Please request a new link."
         )
 
-    if reset_record.expires_at <= now:
+    rec_exp = reset_record.expires_at
+    if rec_exp.tzinfo is None:
+        rec_exp = rec_exp.replace(tzinfo=timezone.utc)
+
+    if rec_exp <= now:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="This password recovery token has expired. Password reset links are valid for 30 minutes."
@@ -323,7 +327,7 @@ def verify_reset_token_endpoint(token: str, db: Session = Depends(get_db)):
         "status": "VALID",
         "message": "Recovery token is valid and unexpired.",
         "user_email_masked": masked_user,
-        "expires_at": reset_record.expires_at.isoformat()
+        "expires_at": rec_exp.isoformat()
     }
 
 
@@ -337,26 +341,29 @@ def reset_password_endpoint(payload: ResetPasswordRequest, db: Session = Depends
     now = datetime.now(timezone.utc)
 
     reset_record = db.query(PasswordResetToken).filter(
-        PasswordResetToken.token_hash == t_hash,
-        PasswordResetToken.used == False,
-        PasswordResetToken.expires_at > now
+        PasswordResetToken.token_hash == t_hash
     ).first()
 
     if not reset_record:
-        # Check if it was already used
-        used_record = db.query(PasswordResetToken).filter(
-            PasswordResetToken.token_hash == t_hash,
-            PasswordResetToken.used == True
-        ).first()
-        if used_record:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="This recovery token has already been used. Tokens are strictly single-use."
-            )
-
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="The password reset link is invalid or has expired."
+        )
+
+    if reset_record.used:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="This recovery token has already been used. Tokens are strictly single-use."
+        )
+
+    rec_exp = reset_record.expires_at
+    if rec_exp.tzinfo is None:
+        rec_exp = rec_exp.replace(tzinfo=timezone.utc)
+
+    if rec_exp <= now:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="This password recovery token has expired. Password reset links are valid for 30 minutes."
         )
 
     user = db.query(User).filter(User.id == reset_record.user_id).first()

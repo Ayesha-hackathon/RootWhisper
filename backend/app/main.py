@@ -1,8 +1,10 @@
 """RootWhisper FastAPI Backend Application."""
 
 import os
+import logging
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.app.database import engine, Base, SessionLocal
@@ -68,6 +70,8 @@ default_origins = [
 
 all_origins = [o for o in set(default_origins + custom_origins) if o and o != "*"]
 
+logger = logging.getLogger("rootwhisper")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=all_origins,
@@ -76,6 +80,24 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logger.exception("Unhandled server exception processing %s %s: %s", request.method, request.url, exc)
+    origin = request.headers.get("origin")
+    headers = {
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "*",
+    }
+    if origin:
+        headers["Access-Control-Allow-Origin"] = origin
+    return JSONResponse(
+        status_code=500,
+        content={"detail": f"An unexpected server error occurred: {str(exc)}"},
+        headers=headers,
+    )
 
 # Register API Routers
 app.include_router(auth_router)

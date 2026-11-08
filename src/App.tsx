@@ -188,7 +188,10 @@ export default function App() {
   const hasResetToken =
     typeof window !== 'undefined' &&
     (new URLSearchParams(window.location.search).has('token') ||
-      new URLSearchParams(window.location.search).has('reset_token'));
+      new URLSearchParams(window.location.search).has('reset_token') ||
+      (window.location.hash.includes('?') &&
+        (new URLSearchParams(window.location.hash.split('?')[1]).has('token') ||
+          new URLSearchParams(window.location.hash.split('?')[1]).has('reset_token'))));
 
   if (!currentUser || hasResetToken) {
     return (

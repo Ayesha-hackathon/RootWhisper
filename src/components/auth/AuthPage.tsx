@@ -35,8 +35,18 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess }) => {
 
   // Automatically detect and validate recovery token from URL parameters
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const tokenFromUrl = params.get('token') || params.get('reset_token');
+    const getParam = (name: string): string | null => {
+      const search = new URLSearchParams(window.location.search);
+      const val = search.get(name);
+      if (val) return val;
+      if (window.location.hash.includes('?')) {
+        const hashSearch = new URLSearchParams(window.location.hash.split('?')[1]);
+        return hashSearch.get(name);
+      }
+      return null;
+    };
+
+    const tokenFromUrl = getParam('token') || getParam('reset_token');
 
     if (tokenFromUrl) {
       setResetToken(tokenFromUrl);

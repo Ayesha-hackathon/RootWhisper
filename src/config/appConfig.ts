@@ -52,13 +52,15 @@ export interface AppConfig {
   chamberId: string;
 }
 
+const resolvedApiUrl = (import.meta as any).env?.VITE_ANTIGRAVITY_API_URL || 
+  (typeof window !== 'undefined' && window.location.hostname && window.location.hostname.endsWith('github.io')
+    ? 'https://rootwhisper-api.onrender.com/api/v1'
+    : (typeof window !== 'undefined' && window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
+        ? `${window.location.protocol}//${window.location.hostname}:8000/api/v1`
+        : 'http://localhost:8000/api/v1'));
+
 export const APP_CONFIG: AppConfig = {
-  apiUrl: (import.meta as any).env?.VITE_ANTIGRAVITY_API_URL || 
-    (typeof window !== 'undefined' && window.location.hostname && window.location.hostname.endsWith('github.io')
-      ? 'https://rootwhisper-api.onrender.com/api/v1'
-      : (typeof window !== 'undefined' && window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
-          ? `${window.location.protocol}//${window.location.hostname}:8000/api/v1`
-          : 'http://localhost:8000/api/v1')),
+  apiUrl: resolvedApiUrl.replace(/\/+$/, ''),
   useSampleData: false,
   esp32MeshId: (import.meta as any).env?.VITE_ESP32_MESH_ID || 'ESP32_DEVKIT_V1_CLUSTER',
   aiModelVersion: (import.meta as any).env?.VITE_AI_MODEL_VERSION || 'RootWhisper-RandomForest-v2.4',
