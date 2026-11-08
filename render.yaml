@@ -1,57 +1,38 @@
 # RootWhisper Render Infrastructure-as-Code Blueprint
-# Automatically provisions:
-# 1. FastAPI Python Backend Web Service with persistent SSD SQLite storage
-# 2. React Vite Static Site Frontend (Global Edge CDN)
+# Configured for Render Free Web Service + Neon PostgreSQL Database
+# Frontend is hosted on GitHub Pages: https://ayesha-hackathon.github.io/RootWhisper
 services:
   # --------------------------------------------------------------------------
-  # 1. FastAPI Backend Service (Requires Starter plan for Persistent SSD Disk)
+  # FastAPI Python Backend Web Service (Render Free Tier)
   # --------------------------------------------------------------------------
   - type: web
     name: rootwhisper-api
     runtime: python
-    plan: starter
+    plan: free
     region: oregon
     buildCommand: "pip install -r requirements.txt"
     startCommand: "python -m uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT"
     healthCheckPath: /health
-    disk:
-      name: rootwhisper-sqlite-data
-      mountPath: /opt/render/project/src/data
-      sizeGB: 1
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.2
       - key: ENVIRONMENT
         value: production
+      - key: DATABASE_URL
+        sync: false
       - key: ROOTWHISPER_JWT_SECRET
         generateValue: true
-      - key: SMTP_HOST
-        value: smtp.gmail.com
-      - key: SMTP_PORT
-        value: "587"
-      - key: SMTP_USER
-        sync: false
-      - key: SMTP_PASSWORD
-        sync: false
-      - key: SMTP_FROM_EMAIL
-        sync: false
       - key: FRONTEND_BASE_URL
+        value: "https://ayesha-hackathon.github.io/RootWhisper"
+      - key: EMAIL_PROVIDER
+        value: GMAIL_API
+      - key: GMAIL_CLIENT_ID
         sync: false
-
-  # --------------------------------------------------------------------------
-  # 2. React Vite Static Frontend (Global Edge CDN - Free Tier)
-  # --------------------------------------------------------------------------
-  - type: web
-    name: rootwhisper-web
-    runtime: static
-    plan: free
-    rootDir: frontend
-    buildCommand: "npm install && npm run build"
-    staticPublishPath: dist
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
-    envVars:
-      - key: VITE_ANTIGRAVITY_API_URL
-        value: "https://rootwhisper-api.onrender.com/api/v1"
+      - key: GMAIL_CLIENT_SECRET
+        sync: false
+      - key: GMAIL_REFRESH_TOKEN
+        sync: false
+      - key: GMAIL_SENDER_EMAIL
+        value: rootwhisper184@gmail.com
+      - key: CORS_ORIGINS
+        value: "https://ayesha-hackathon.github.io,http://localhost:3000"
