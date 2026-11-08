@@ -44,11 +44,11 @@ export const AiScreeningView: React.FC<AiScreeningViewProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Breadcrumb & Action Toolbar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[#EEF3ED]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[#D9F0EA]">
         <div className="flex items-center gap-3">
           <button
             onClick={onBackToDashboard}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#E5EBE3] bg-white text-xs font-medium text-[#26342D] hover:text-[#173F32] hover:bg-[#F8F8F4] transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D4E7E1] bg-white text-xs font-medium text-[#26342D] hover:text-[#123B36] hover:bg-[#F5FAF8] transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Dashboard Overview</span>
@@ -62,9 +62,9 @@ export const AiScreeningView: React.FC<AiScreeningViewProps> = ({
           <button
             onClick={handleScreeningClick}
             disabled={isScreening}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#173F32] hover:bg-[#245640] text-[#FFFFFF] rounded-md text-xs font-semibold shadow-xs transition-colors cursor-pointer disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#123B36] hover:bg-[#087E75] text-[#FFFFFF] rounded-md text-xs font-semibold shadow-xs transition-colors cursor-pointer disabled:opacity-50"
           >
-            <Activity className="w-3.5 h-3.5 text-[#A8BDA8]" />
+            <Activity className="w-3.5 h-3.5 text-[#55B6A3]" />
             <span>{isScreening ? 'Screening Pipeline Running...' : 'Execute Immediate Screening Scan'}</span>
           </button>
         </div>

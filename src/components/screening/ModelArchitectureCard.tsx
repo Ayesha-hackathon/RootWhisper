@@ -51,15 +51,15 @@ export const ModelArchitectureCard: React.FC = () => {
   ];
 
   return (
-    <div className="bg-[#FFFFFF] rounded-xl border border-[#E5EBE3] p-5 shadow-xs space-y-4">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-5 shadow-xs space-y-4">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#EEF3ED]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#D9F0EA]">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-base font-semibold text-[#173F32] tracking-tight">
+            <h2 className="text-base font-semibold text-[#123B36] tracking-tight">
               Screening Model Architecture & Principles
             </h2>
-            <span className="font-mono text-[10px] text-[#245640] bg-[#EEF3ED] px-2 py-0.5 rounded font-semibold">
+            <span className="font-mono text-[10px] text-[#087E75] bg-[#D9F0EA] px-2 py-0.5 rounded font-semibold">
               Biophysical Framework
             </span>
           </div>
@@ -80,14 +80,14 @@ export const ModelArchitectureCard: React.FC = () => {
           return (
             <div
               key={idx}
-              className="p-3.5 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3] flex flex-col justify-between"
+              className="p-3.5 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1] flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-7 h-7 rounded-md bg-white border border-[#E5EBE3] flex items-center justify-center text-[#173F32]">
+                  <div className="w-7 h-7 rounded-md bg-white border border-[#D4E7E1] flex items-center justify-center text-[#123B36]">
                     <Icon className="w-3.5 h-3.5" />
                   </div>
-                  <h3 className="text-xs font-semibold text-[#173F32] leading-tight">
+                  <h3 className="text-xs font-semibold text-[#123B36] leading-tight">
                     {pillar.title}
                   </h3>
                 </div>

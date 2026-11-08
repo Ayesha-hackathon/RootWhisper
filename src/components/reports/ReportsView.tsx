@@ -98,8 +98,8 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
     <div className="space-y-6 animate-fade-in pb-12 print:p-0 print:m-0 print:space-y-4">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-lg bg-[#173F32] text-[#F8F8F4] text-xs font-medium shadow-lg border border-[#A8BDA8]/30 flex items-center gap-2 print:hidden">
-          <span className="w-2 h-2 rounded-full bg-[#A8BDA8]" />
+        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-lg bg-[#123B36] text-[#F5FAF8] text-xs font-medium shadow-lg border border-[#55B6A3]/30 flex items-center gap-2 print:hidden">
+          <span className="w-2 h-2 rounded-full bg-[#55B6A3]" />
           <span>{toastMessage}</span>
         </div>
       )}
@@ -109,7 +109,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
         <div className="flex items-center gap-3">
           <button
             onClick={onBackToDashboard}
-            className="flex items-center gap-1.5 py-1.5 px-3 rounded-lg border border-[#E5EBE3] hover:border-[#173F32] bg-white text-xs font-medium text-[#173F32] transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 py-1.5 px-3 rounded-lg border border-[#D4E7E1] hover:border-[#123B36] bg-white text-xs font-medium text-[#123B36] transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Dashboard</span>
@@ -117,7 +117,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
           <div className="flex items-center gap-2 text-xs text-[#78847C]">
             <span>Documentation</span>
             <span aria-hidden="true">/</span>
-            <span className="text-[#173F32] font-semibold">Research Reports</span>
+            <span className="text-[#123B36] font-semibold">Research Reports</span>
           </div>
         </div>
 
@@ -126,16 +126,16 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
           <button
             onClick={handleExportCsv}
             disabled={isExporting}
-            className="flex items-center gap-1.5 py-1.5 px-3 rounded-lg border border-[#E5EBE3] hover:border-[#173F32] bg-white text-xs font-medium text-[#26342D] transition-colors cursor-pointer disabled:opacity-50"
+            className="flex items-center gap-1.5 py-1.5 px-3 rounded-lg border border-[#D4E7E1] hover:border-[#123B36] bg-white text-xs font-medium text-[#26342D] transition-colors cursor-pointer disabled:opacity-50"
             title="Download formatted CSV dataset"
           >
-            <Download className="w-3.5 h-3.5 text-[#173F32]" />
+            <Download className="w-3.5 h-3.5 text-[#123B36]" />
             <span>Export CSV</span>
           </button>
 
           <button
             onClick={handlePrint}
-            className="flex items-center gap-1.5 py-1.5 px-3.5 rounded-lg bg-[#173F32] hover:bg-[#245640] text-white text-xs font-medium shadow-xs transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 py-1.5 px-3.5 rounded-lg bg-[#123B36] hover:bg-[#087E75] text-white text-xs font-medium shadow-xs transition-colors cursor-pointer"
             title="Open browser print dialog for high-res PDF export"
           >
             <Printer className="w-3.5 h-3.5" />
@@ -145,7 +145,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
       </div>
 
       {/* Report Category Switcher & Filter Ribbon (Hidden during print) */}
-      <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#E5EBE3] shadow-xs space-y-4 print:hidden">
+      <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#D4E7E1] shadow-xs space-y-4 print:hidden">
         <div>
           <span className="text-[10px] font-semibold text-[#78847C] uppercase tracking-wider block mb-2">
             Select Report Category
@@ -160,13 +160,13 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
                   onClick={() => setSelectedCategory(cat.id)}
                   className={`p-3 rounded-lg border text-left transition-all cursor-pointer flex flex-col justify-between ${
                     isSelected
-                      ? 'bg-[#EEF3ED] border-[#245640] text-[#173F32] shadow-xs'
-                      : 'bg-[#F8F8F4] border-[#E5EBE3] text-[#26342D] hover:bg-[#EEF3ED]/40'
+                      ? 'bg-[#D9F0EA] border-[#087E75] text-[#123B36] shadow-xs'
+                      : 'bg-[#F5FAF8] border-[#D4E7E1] text-[#26342D] hover:bg-[#D9F0EA]/40'
                   }`}
                 >
                   <div className="flex items-center justify-between text-xs font-semibold">
                     <span>{idx + 1}. {cat.title.split('&')[0]}</span>
-                    {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-[#245640]" />}
+                    {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-[#087E75]" />}
                   </div>
                   <p className="text-[10px] text-[#78847C] mt-1 leading-snug line-clamp-2">
                     {cat.subtitle}
@@ -178,16 +178,16 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
         </div>
 
         {/* Filter Bar: Plant Selector & Date Range Selector */}
-        <div className="pt-3 border-t border-[#F0F4EF] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 text-xs">
+        <div className="pt-3 border-t border-[#E1EFEA] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 text-xs">
           <div className="flex flex-wrap items-center gap-3">
             {/* Plant Selector */}
             <div className="flex items-center gap-1.5">
-              <Sprout className="w-3.5 h-3.5 text-[#173F32]" />
+              <Sprout className="w-3.5 h-3.5 text-[#123B36]" />
               <span className="text-[#78847C] font-medium">Plant Scope:</span>
               <select
                 value={selectedPlant}
                 onChange={(e) => setSelectedPlant(e.target.value)}
-                className="py-1 px-2.5 text-xs bg-[#F8F8F4] border border-[#E5EBE3] rounded-lg text-[#26342D] focus:outline-none focus:border-[#173F32] cursor-pointer"
+                className="py-1 px-2.5 text-xs bg-[#F5FAF8] border border-[#D4E7E1] rounded-lg text-[#26342D] focus:outline-none focus:border-[#123B36] cursor-pointer"
               >
                 <option value="all">All Species (Tulsi, Hibiscus, Money Plant)</option>
                 <option value="tulsi-01">Tulsi (TULSI_01)</option>
@@ -198,12 +198,12 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
 
             {/* Date Range Selector */}
             <div className="flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-[#173F32]" />
+              <Calendar className="w-3.5 h-3.5 text-[#123B36]" />
               <span className="text-[#78847C] font-medium">Date Range:</span>
               <select
                 value={dateRange}
                 onChange={(e) => setDateRange(e.target.value)}
-                className="py-1 px-2.5 text-xs bg-[#F8F8F4] border border-[#E5EBE3] rounded-lg text-[#26342D] focus:outline-none focus:border-[#173F32] cursor-pointer"
+                className="py-1 px-2.5 text-xs bg-[#F5FAF8] border border-[#D4E7E1] rounded-lg text-[#26342D] focus:outline-none focus:border-[#123B36] cursor-pointer"
               >
                 <option value="Last 24 Hours">Last 24 Hours (Diurnal cycle)</option>
                 <option value="Last 7 Days">Last 7 Days (Hydraulic trend)</option>
@@ -225,17 +225,17 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
         {activeSummary.map((item, idx) => (
           <div
             key={idx}
-            className="bg-white p-4 rounded-xl border border-[#E5EBE3] shadow-xs flex flex-col justify-between"
+            className="bg-white p-4 rounded-xl border border-[#D4E7E1] shadow-xs flex flex-col justify-between"
           >
             <div className="text-[11px] text-[#78847C] font-medium mb-1 truncate">
               {item.label}
             </div>
-            <div className="font-mono text-2xl font-bold text-[#173F32] tabular-nums">
+            <div className="font-mono text-2xl font-bold text-[#123B36] tabular-nums">
               {item.value}
             </div>
-            <div className="mt-2 pt-2 border-t border-[#F0F4EF] flex items-center justify-between text-[10px] text-[#78847C]">
+            <div className="mt-2 pt-2 border-t border-[#E1EFEA] flex items-center justify-between text-[10px] text-[#78847C]">
               <span className="truncate">{item.subtext}</span>
-              <span className="text-[#245640] font-semibold shrink-0 ml-1">{item.change}</span>
+              <span className="text-[#087E75] font-semibold shrink-0 ml-1">{item.change}</span>
             </div>
           </div>
         ))}
@@ -246,18 +246,18 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
       {/* ==================================================================== */}
       <div
         ref={reportRef}
-        className="bg-white rounded-2xl border border-[#E5EBE3] shadow-sm p-6 sm:p-10 space-y-8 print:border-none print:shadow-none print:p-0 print:space-y-6"
+        className="bg-white rounded-2xl border border-[#D4E7E1] shadow-sm p-6 sm:p-10 space-y-8 print:border-none print:shadow-none print:p-0 print:space-y-6"
       >
         {/* Formal Institutional Header */}
-        <div className="border-b-2 border-[#173F32] pb-6 space-y-4">
+        <div className="border-b-2 border-[#123B36] pb-6 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 text-xs font-mono text-[#245640] tracking-wider uppercase font-semibold">
+              <div className="flex items-center gap-2 text-xs font-mono text-[#087E75] tracking-wider uppercase font-semibold">
                 <span>RootWhisper Botanical Phytotron Lab</span>
                 <span aria-hidden="true">·</span>
                 <span>Chamber A-4</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#173F32] mt-1">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#123B36] mt-1">
                 {activeCategoryConfig.title}
               </h2>
               <p className="text-xs sm:text-sm text-[#78847C] mt-1 max-w-2xl">
@@ -266,18 +266,18 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
             </div>
 
             {/* Document Reference Stamp */}
-            <div className="p-3 bg-[#F8F8F4] border border-[#E5EBE3] rounded-lg text-right font-mono text-[11px] shrink-0 space-y-0.5">
-              <div><strong className="text-[#173F32]">DOC REF:</strong> RW-REP-2026-11</div>
-              <div><strong className="text-[#173F32]">SCOPE:</strong> {selectedPlant.toUpperCase()}</div>
-              <div><strong className="text-[#173F32]">RANGE:</strong> {dateRange}</div>
-              <div className="text-[10px] text-[#245640] font-semibold">SECURITY: UNRESTRICTED RESEARCH</div>
+            <div className="p-3 bg-[#F5FAF8] border border-[#D4E7E1] rounded-lg text-right font-mono text-[11px] shrink-0 space-y-0.5">
+              <div><strong className="text-[#123B36]">DOC REF:</strong> RW-REP-2026-11</div>
+              <div><strong className="text-[#123B36]">SCOPE:</strong> {selectedPlant.toUpperCase()}</div>
+              <div><strong className="text-[#123B36]">RANGE:</strong> {dateRange}</div>
+              <div className="text-[10px] text-[#087E75] font-semibold">SECURITY: UNRESTRICTED RESEARCH</div>
             </div>
           </div>
 
           {/* Explicit Sample Data Notice Banner */}
-          <div className="px-4 py-2.5 rounded-lg bg-[#EEF3ED] border border-[#A8BDA8]/50 flex items-center justify-between text-xs">
-            <div className="flex items-center gap-2 text-[#173F32] font-semibold">
-              <Info className="w-4 h-4 text-[#245640]" />
+          <div className="px-4 py-2.5 rounded-lg bg-[#D9F0EA] border border-[#55B6A3]/50 flex items-center justify-between text-xs">
+            <div className="flex items-center gap-2 text-[#123B36] font-semibold">
+              <Info className="w-4 h-4 text-[#087E75]" />
               <span>{activeCategoryConfig.sampleNotice}</span>
             </div>
             <span className="text-[11px] font-mono text-[#78847C] hidden sm:inline">
@@ -288,7 +288,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
 
         {/* Report Section 1: Executive Findings Prose */}
         <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-[#173F32] uppercase tracking-wider">
+          <h3 className="text-sm font-semibold text-[#123B36] uppercase tracking-wider">
             1. Executive Overview & Methodology
           </h3>
           <p className="text-xs sm:text-sm text-[#26342D] leading-relaxed">
@@ -305,20 +305,20 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
         {/* Report Section 2: Recharts Trend Analysis Visual */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-[#173F32] uppercase tracking-wider">
+            <h3 className="text-sm font-semibold text-[#123B36] uppercase tracking-wider">
               2. Temporal Trend Visualizations & Microclimate Response
             </h3>
             <span className="text-xs font-mono text-[#78847C]">24-Hour Diurnal Sample</span>
           </div>
 
-          <div className="bg-[#FAFAF8] p-4 sm:p-5 rounded-xl border border-[#E5EBE3]">
+          <div className="bg-[#F0F7F4] p-4 sm:p-5 rounded-xl border border-[#D4E7E1]">
             <div className="h-64 sm:h-72 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <ComposedChart
                   data={REPORT_CHART_SERIES}
                   margin={{ top: 10, right: 20, left: 0, bottom: 5 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" stroke="#E5EBE3" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#D4E7E1" />
                   <XAxis
                     dataKey="time"
                     stroke="#78847C"
@@ -345,7 +345,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
                   <Tooltip
                     contentStyle={{
                       backgroundColor: '#FFFFFF',
-                      borderColor: '#E5EBE3',
+                      borderColor: '#D4E7E1',
                       borderRadius: '8px',
                       fontSize: '11px',
                     }}
@@ -367,7 +367,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
                     type="monotone"
                     dataKey="hibiscusDelta"
                     name="Hibiscus ΔT (T_leaf - T_air)"
-                    stroke="#245640"
+                    stroke="#087E75"
                     strokeWidth={2}
                     dot={{ r: 2 }}
                   />
@@ -376,7 +376,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
                     type="monotone"
                     dataKey="moneyDelta"
                     name="Money Plant ΔT"
-                    stroke="#173F32"
+                    stroke="#123B36"
                     strokeWidth={1.8}
                     dot={{ r: 2 }}
                   />
@@ -384,7 +384,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
                     yAxisId="right"
                     dataKey="vpd"
                     name="Chamber VPD (kPa)"
-                    fill="#A8BDA8"
+                    fill="#55B6A3"
                     opacity={0.35}
                     barSize={16}
                   />
@@ -399,15 +399,15 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
 
         {/* Report Section 3: Comprehensive Findings Data Table */}
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-[#173F32] uppercase tracking-wider">
+          <h3 className="text-sm font-semibold text-[#123B36] uppercase tracking-wider">
             3. Quantitative Findings & Telemetry Ledger
           </h3>
 
-          <div className="overflow-x-auto border border-[#E5EBE3] rounded-xl">
+          <div className="overflow-x-auto border border-[#D4E7E1] rounded-xl">
             {selectedCategory === 'plant-monitoring' && (
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-[#FAFAF8] border-b border-[#E5EBE3] text-[11px] font-semibold text-[#78847C] uppercase">
+                  <tr className="bg-[#F0F7F4] border-b border-[#D4E7E1] text-[11px] font-semibold text-[#78847C] uppercase">
                     <th className="py-2.5 px-3">Species</th>
                     <th className="py-2.5 px-3">Node ID</th>
                     <th className="py-2.5 px-3">Soil Moisture</th>
@@ -418,10 +418,10 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
                     <th className="py-2.5 px-3">Protocol Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#F0F4EF]">
+                <tbody className="divide-y divide-[#E1EFEA]">
                   {REPORT_TABLE_ROWS['plant-monitoring'].map((row, rIdx) => (
-                    <tr key={rIdx} className="hover:bg-[#F8F8F4]">
-                      <td className="py-2.5 px-3 font-semibold text-[#173F32]">{row.plant}</td>
+                    <tr key={rIdx} className="hover:bg-[#F5FAF8]">
+                      <td className="py-2.5 px-3 font-semibold text-[#123B36]">{row.plant}</td>
                       <td className="py-2.5 px-3 font-mono">{row.nodeId}</td>
                       <td className="py-2.5 px-3 font-mono">{row.moisture}</td>
                       <td className="py-2.5 px-3 font-mono">{row.leafTemp}</td>
@@ -430,8 +430,8 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
                       <td className="py-2.5 px-3">
                         <span className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
                           row.status.includes('Mild')
-                            ? 'bg-[#FBF4E8] text-[#C58A35]'
-                            : 'bg-[#EEF3ED] text-[#245640]'
+                            ? 'bg-[#FFF8EB] text-[#C58A35]'
+                            : 'bg-[#D9F0EA] text-[#087E75]'
                         }`}>
                           {row.status}
                         </span>
@@ -446,7 +446,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
             {selectedCategory === 'sensor-history' && (
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-[#FAFAF8] border-b border-[#E5EBE3] text-[11px] font-semibold text-[#78847C] uppercase">
+                  <tr className="bg-[#F0F7F4] border-b border-[#D4E7E1] text-[11px] font-semibold text-[#78847C] uppercase">
                     <th className="py-2.5 px-3">Measurement Channel</th>
                     <th className="py-2.5 px-3">Sensor Model</th>
                     <th className="py-2.5 px-3">Mean Value</th>
@@ -456,16 +456,16 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
                     <th className="py-2.5 px-3">Calibration Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#F0F4EF]">
+                <tbody className="divide-y divide-[#E1EFEA]">
                   {REPORT_TABLE_ROWS['sensor-history'].map((row, rIdx) => (
-                    <tr key={rIdx} className="hover:bg-[#F8F8F4]">
-                      <td className="py-2.5 px-3 font-semibold text-[#173F32]">{row.channel}</td>
+                    <tr key={rIdx} className="hover:bg-[#F5FAF8]">
+                      <td className="py-2.5 px-3 font-semibold text-[#123B36]">{row.channel}</td>
                       <td className="py-2.5 px-3 text-[#78847C]">{row.model}</td>
                       <td className="py-2.5 px-3 font-mono font-bold text-[#26342D]">{row.mean}</td>
                       <td className="py-2.5 px-3 font-mono text-[11px]">{row.min} – {row.max}</td>
                       <td className="py-2.5 px-3 font-mono text-[11px]">{row.stdDev}</td>
-                      <td className="py-2.5 px-3 text-[#245640] font-mono font-semibold">{row.dataValidity}</td>
-                      <td className="py-2.5 px-3 text-[#245640]">{row.status}</td>
+                      <td className="py-2.5 px-3 text-[#087E75] font-mono font-semibold">{row.dataValidity}</td>
+                      <td className="py-2.5 px-3 text-[#087E75]">{row.status}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -475,7 +475,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
             {selectedCategory === 'ai-screening' && (
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-[#FAFAF8] border-b border-[#E5EBE3] text-[11px] font-semibold text-[#78847C] uppercase">
+                  <tr className="bg-[#F0F7F4] border-b border-[#D4E7E1] text-[11px] font-semibold text-[#78847C] uppercase">
                     <th className="py-2.5 px-3">Timestamp</th>
                     <th className="py-2.5 px-3">Specimen</th>
                     <th className="py-2.5 px-3">T_Expected</th>
@@ -486,11 +486,11 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
                     <th className="py-2.5 px-3">Outcome</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#F0F4EF]">
+                <tbody className="divide-y divide-[#E1EFEA]">
                   {REPORT_TABLE_ROWS['ai-screening'].map((row, rIdx) => (
-                    <tr key={rIdx} className="hover:bg-[#F8F8F4]">
+                    <tr key={rIdx} className="hover:bg-[#F5FAF8]">
                       <td className="py-2.5 px-3 font-mono text-[11px] text-[#78847C]">{row.timestamp}</td>
-                      <td className="py-2.5 px-3 font-semibold text-[#173F32]">{row.plant}</td>
+                      <td className="py-2.5 px-3 font-semibold text-[#123B36]">{row.plant}</td>
                       <td className="py-2.5 px-3 font-mono">{row.tExpected}</td>
                       <td className="py-2.5 px-3 font-mono">{row.tObserved}</td>
                       <td className="py-2.5 px-3 font-mono font-bold text-[#C95D58]">{row.residual}</td>
@@ -501,8 +501,8 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
                           row.outcome.includes('STRESS')
                             ? 'bg-[#FDF2F2] text-[#C95D58]'
                             : row.outcome.includes('WATCH')
-                            ? 'bg-[#FBF4E8] text-[#C58A35]'
-                            : 'bg-[#EEF3ED] text-[#245640]'
+                            ? 'bg-[#FFF8EB] text-[#C58A35]'
+                            : 'bg-[#D9F0EA] text-[#087E75]'
                         }`}>
                           {row.outcome}
                         </span>
@@ -516,7 +516,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
             {selectedCategory === 'environmental-trend' && (
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-[#FAFAF8] border-b border-[#E5EBE3] text-[11px] font-semibold text-[#78847C] uppercase">
+                  <tr className="bg-[#F0F7F4] border-b border-[#D4E7E1] text-[11px] font-semibold text-[#78847C] uppercase">
                     <th className="py-2.5 px-3">Period</th>
                     <th className="py-2.5 px-3">Ambient Temp</th>
                     <th className="py-2.5 px-3">RH %</th>
@@ -526,13 +526,13 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
                     <th className="py-2.5 px-3">Evaluation</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#F0F4EF]">
+                <tbody className="divide-y divide-[#E1EFEA]">
                   {REPORT_TABLE_ROWS['environmental-trend'].map((row, rIdx) => (
-                    <tr key={rIdx} className="hover:bg-[#F8F8F4]">
-                      <td className="py-2.5 px-3 font-semibold text-[#173F32]">{row.period}</td>
+                    <tr key={rIdx} className="hover:bg-[#F5FAF8]">
+                      <td className="py-2.5 px-3 font-semibold text-[#123B36]">{row.period}</td>
                       <td className="py-2.5 px-3 font-mono">{row.ambientTemp}</td>
                       <td className="py-2.5 px-3 font-mono">{row.humidity}</td>
-                      <td className="py-2.5 px-3 font-mono font-bold text-[#245640]">{row.vpd}</td>
+                      <td className="py-2.5 px-3 font-mono font-bold text-[#087E75]">{row.vpd}</td>
                       <td className="py-2.5 px-3 font-mono">{row.parLight}</td>
                       <td className="py-2.5 px-3 font-mono">{row.co2}</td>
                       <td className="py-2.5 px-3 text-[#78847C]">{row.evaluation}</td>
@@ -545,7 +545,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
             {selectedCategory === 'node-diagnostics' && (
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-[#FAFAF8] border-b border-[#E5EBE3] text-[11px] font-semibold text-[#78847C] uppercase">
+                  <tr className="bg-[#F0F7F4] border-b border-[#D4E7E1] text-[11px] font-semibold text-[#78847C] uppercase">
                     <th className="py-2.5 px-3">Node ID</th>
                     <th className="py-2.5 px-3">MAC Address</th>
                     <th className="py-2.5 px-3">Board Spec</th>
@@ -557,10 +557,10 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
                     <th className="py-2.5 px-3">I2C Health</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#F0F4EF]">
+                <tbody className="divide-y divide-[#E1EFEA]">
                   {REPORT_TABLE_ROWS['node-diagnostics'].map((row, rIdx) => (
-                    <tr key={rIdx} className="hover:bg-[#F8F8F4]">
-                      <td className="py-2.5 px-3 font-mono font-bold text-[#173F32]">{row.nodeId}</td>
+                    <tr key={rIdx} className="hover:bg-[#F5FAF8]">
+                      <td className="py-2.5 px-3 font-mono font-bold text-[#123B36]">{row.nodeId}</td>
                       <td className="py-2.5 px-3 font-mono text-[11px] text-[#78847C]">{row.mac}</td>
                       <td className="py-2.5 px-3 text-[#78847C]">{row.board}</td>
                       <td className="py-2.5 px-3 font-mono">{row.uptime}</td>
@@ -568,7 +568,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
                       <td className="py-2.5 px-3 font-mono text-[#C58A35]">{row.dropped}</td>
                       <td className="py-2.5 px-3 font-mono">{row.rssi}</td>
                       <td className="py-2.5 px-3 font-mono">{row.voltage}</td>
-                      <td className="py-2.5 px-3 text-[#245640] text-[11px]">{row.busHealth}</td>
+                      <td className="py-2.5 px-3 text-[#087E75] text-[11px]">{row.busHealth}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -578,7 +578,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
         </div>
 
         {/* Report Section 4: Formal Attestation & Investigator Signature Block */}
-        <div className="pt-6 border-t-2 border-[#E5EBE3] space-y-4 break-inside-avoid">
+        <div className="pt-6 border-t-2 border-[#D4E7E1] space-y-4 break-inside-avoid">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
             <div className="space-y-1">
               <span className="text-[10px] font-semibold text-[#78847C] uppercase tracking-wider block">
@@ -592,17 +592,17 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ onBackToDashboard }) =
 
             <div className="flex items-center gap-4">
               <div className="text-right">
-                <div className="font-semibold text-xs text-[#173F32]">Dr. Aris Thorne, Ph.D.</div>
+                <div className="font-semibold text-xs text-[#123B36]">Dr. Aris Thorne, Ph.D.</div>
                 <div className="text-[11px] text-[#78847C]">Lead Phytophysiologist & Framework Architect</div>
-                <div className="text-[10px] font-mono text-[#245640] mt-0.5">Verified Digital Timestamp · Antigravity Ready</div>
+                <div className="text-[10px] font-mono text-[#087E75] mt-0.5">Verified Digital Timestamp · Antigravity Ready</div>
               </div>
-              <div className="w-12 h-12 rounded-full border-2 border-[#173F32] flex items-center justify-center p-1 bg-[#EEF3ED] text-[#173F32]">
+              <div className="w-12 h-12 rounded-full border-2 border-[#123B36] flex items-center justify-center p-1 bg-[#D9F0EA] text-[#123B36]">
                 <ShieldCheck className="w-6 h-6" />
               </div>
             </div>
           </div>
 
-          <div className="pt-3 border-t border-[#F0F4EF] flex flex-col sm:flex-row items-center justify-between text-[10px] text-[#78847C] font-mono">
+          <div className="pt-3 border-t border-[#E1EFEA] flex flex-col sm:flex-row items-center justify-between text-[10px] text-[#78847C] font-mono">
             <span>RootWhisper Framework · Species-Aware AI Botanical Intelligence</span>
             <span>Document Checksum: 0x8FA42DE1 · Confidentiality: Research Standard</span>
           </div>

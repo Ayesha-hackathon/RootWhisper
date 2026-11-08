@@ -29,7 +29,7 @@ export const EnvironmentalOverview: React.FC<EnvironmentalOverviewProps> = ({
       description: 'Optimal transpiration range (0.8–1.4 kPa)',
       icon: Gauge,
       badge: 'Balanced',
-      badgeColor: 'text-[#245640] bg-[#EEF3ED]',
+      badgeColor: 'text-[#087E75] bg-[#D9F0EA]',
     },
     {
       label: 'Ambient Temperature',
@@ -37,7 +37,7 @@ export const EnvironmentalOverview: React.FC<EnvironmentalOverviewProps> = ({
       description: 'Chamber diurnal setpoint: 24.0°C',
       icon: Flame,
       badge: 'Stable',
-      badgeColor: 'text-[#245640] bg-[#EEF3ED]',
+      badgeColor: 'text-[#087E75] bg-[#D9F0EA]',
     },
     {
       label: 'Chamber Humidity',
@@ -45,7 +45,7 @@ export const EnvironmentalOverview: React.FC<EnvironmentalOverviewProps> = ({
       description: 'RH hygrometer sensor baseline',
       icon: Droplets,
       badge: 'Optimal',
-      badgeColor: 'text-[#245640] bg-[#EEF3ED]',
+      badgeColor: 'text-[#087E75] bg-[#D9F0EA]',
     },
     {
       label: 'Average PAR Irradiance',
@@ -61,7 +61,7 @@ export const EnvironmentalOverview: React.FC<EnvironmentalOverviewProps> = ({
       description: 'Atmospheric equilibrium maintained',
       icon: CloudSun,
       badge: 'Normal',
-      badgeColor: 'text-[#78847C] bg-[#F4F7F3]',
+      badgeColor: 'text-[#78847C] bg-[#EDF7F4]',
     },
     {
       label: 'Laminar Airflow Speed',
@@ -69,22 +69,22 @@ export const EnvironmentalOverview: React.FC<EnvironmentalOverviewProps> = ({
       description: `Photoperiod: ${environment.photoperiodHours}h Light Cycle`,
       icon: Wind,
       badge: 'Gentle',
-      badgeColor: 'text-[#78847C] bg-[#F4F7F3]',
+      badgeColor: 'text-[#78847C] bg-[#EDF7F4]',
     },
   ];
 
   return (
-    <div className="bg-[#FFFFFF] rounded-xl border border-[#E5EBE3] p-5 shadow-xs">
-      <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#EEF3ED]">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#CCE2DB] p-5 shadow-xs">
+      <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#D9F0EA]">
         <div>
-          <h2 className="text-base font-semibold text-[#173F32] tracking-tight">
+          <h2 className="text-base font-semibold text-[#123B36] tracking-tight">
             Chamber Microclimate Environment
           </h2>
           <p className="text-xs text-[#78847C] mt-0.5">
             {environment.facilityName} · {environment.location}
           </p>
         </div>
-        <div className="flex items-center gap-1.5 text-xs font-mono text-[#245640] bg-[#EEF3ED] px-2.5 py-1 rounded-md">
+        <div className="flex items-center gap-1.5 text-xs font-mono text-[#087E75] bg-[#D9F0EA] px-2.5 py-1 rounded-md border border-[#55B6A3]/30 font-medium">
           <Timer className="w-3.5 h-3.5" />
           <span>Photoperiod: 14h / 10h</span>
         </div>
@@ -96,25 +96,27 @@ export const EnvironmentalOverview: React.FC<EnvironmentalOverviewProps> = ({
           return (
             <div
               key={idx}
-              className="p-3 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3]/80 flex flex-col justify-between"
+              className="p-3.5 rounded-lg bg-[#EAF4F0] border border-[#CCE2DB] flex flex-col justify-between transition-all hover:border-[#087E75]"
             >
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <Icon className="w-4 h-4 text-[#173F32]" />
+                  <div className="w-7 h-7 rounded-md bg-[#D9F0EA] flex items-center justify-center text-[#087E75]">
+                    <Icon className="w-3.5 h-3.5" />
+                  </div>
                   <span
-                    className={`text-[9px] font-semibold px-1.5 py-0.5 rounded ${item.badgeColor}`}
+                    className={`text-[9px] font-semibold px-1.5 py-0.5 rounded border border-[#55B6A3]/20 ${item.badgeColor}`}
                   >
                     {item.badge}
                   </span>
                 </div>
-                <p className="text-[11px] text-[#78847C] line-clamp-1">
+                <p className="text-[11px] text-[#78847C] line-clamp-1 font-medium">
                   {item.label}
                 </p>
-                <p className="text-base font-bold font-mono text-[#173F32] mt-0.5 tabular-nums">
+                <p className="text-base font-bold font-mono text-[#123B36] mt-0.5 tabular-nums">
                   {item.value}
                 </p>
               </div>
-              <p className="text-[10px] text-[#78847C] mt-2 pt-1 border-t border-[#EEF3ED] line-clamp-1">
+              <p className="text-[10px] text-[#78847C] mt-2 pt-1 border-t border-[#D9F0EA] line-clamp-1">
                 {item.description}
               </p>
             </div>

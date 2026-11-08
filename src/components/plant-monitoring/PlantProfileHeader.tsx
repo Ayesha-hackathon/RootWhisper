@@ -52,12 +52,12 @@ export const PlantProfileHeader: React.FC<PlantProfileHeaderProps> = ({
     : plant.lastUpdated;
 
   return (
-    <div className="bg-[#FFFFFF] rounded-xl border border-[#E5EBE3] p-6 shadow-xs">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-6 shadow-xs">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         {/* Left: Botanical Plate & Plant Taxonomic Details */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
           {/* Botanical Plate Image Frame */}
-          <div className="w-24 h-28 sm:w-28 sm:h-32 rounded-xl bg-[#F8F8F4] border border-[#E5EBE3] p-2 flex items-center justify-center shrink-0 overflow-hidden shadow-xs relative">
+          <div className="w-24 h-28 sm:w-28 sm:h-32 rounded-xl bg-[#F5FAF8] border border-[#D4E7E1] p-2 flex items-center justify-center shrink-0 overflow-hidden shadow-xs relative">
             <img
               src={plant.illustrationUrl}
               alt={plant.commonName}
@@ -72,7 +72,7 @@ export const PlantProfileHeader: React.FC<PlantProfileHeaderProps> = ({
           {/* Plant Identity and Metadata */}
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-1">
-              <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-[#EEF3ED] text-[#173F32]">
+              <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-[#D9F0EA] text-[#123B36]">
                 {plant.code}
               </span>
               <span className="text-xs text-[#78847C]">·</span>
@@ -85,7 +85,7 @@ export const PlantProfileHeader: React.FC<PlantProfileHeaderProps> = ({
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-semibold text-[#173F32] tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-semibold text-[#123B36] tracking-tight">
               {plant.commonName}
             </h1>
 
@@ -104,7 +104,7 @@ export const PlantProfileHeader: React.FC<PlantProfileHeaderProps> = ({
                     ? 'bg-[#FFF8EB] border-[#C58A35]/30 text-[#C58A35]'
                     : isInvalid
                     ? 'bg-[#FFF2F0] border-[#C95D58]/30 text-[#C95D58]'
-                    : 'bg-[#EEF3ED] border-[#A8BDA8]/40 text-[#245640]'
+                    : 'bg-[#D9F0EA] border-[#55B6A3]/40 text-[#087E75]'
                 }`}
               >
                 {isOffline ? (
@@ -114,14 +114,14 @@ export const PlantProfileHeader: React.FC<PlantProfileHeaderProps> = ({
                 ) : isInvalid ? (
                   <AlertTriangle className="w-3.5 h-3.5 text-[#C95D58]" />
                 ) : (
-                  <Wifi className="w-3.5 h-3.5 text-[#245640]" />
+                  <Wifi className="w-3.5 h-3.5 text-[#087E75]" />
                 )}
                 <span>Node: {connectionStatus}</span>
               </div>
 
               {/* Last Received Timestamp */}
               <div className="flex items-center gap-1 text-[#78847C] font-mono text-[11px]">
-                <Clock className="w-3 h-3 text-[#A8BDA8]" />
+                <Clock className="w-3 h-3 text-[#55B6A3]" />
                 <span>Last payload: {lastReceived}</span>
               </div>
             </div>
@@ -129,15 +129,15 @@ export const PlantProfileHeader: React.FC<PlantProfileHeaderProps> = ({
         </div>
 
         {/* Right: Baseline Learning Status & Data State Simulator */}
-        <div className="lg:max-w-md w-full flex flex-col justify-between space-y-3 pt-3 lg:pt-0 lg:border-l lg:border-[#EEF3ED] lg:pl-6">
+        <div className="lg:max-w-md w-full flex flex-col justify-between space-y-3 pt-3 lg:pt-0 lg:border-l lg:border-[#D9F0EA] lg:pl-6">
           {/* Baseline Learning Status Pill & Metric */}
-          <div className="p-3.5 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3]">
+          <div className="p-3.5 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1]">
             <div className="flex items-center justify-between text-xs mb-1">
-              <span className="font-semibold text-[#173F32] flex items-center gap-1.5">
-                <Activity className="w-3.5 h-3.5 text-[#245640]" />
+              <span className="font-semibold text-[#123B36] flex items-center gap-1.5">
+                <Activity className="w-3.5 h-3.5 text-[#087E75]" />
                 Baseline Learning Status
               </span>
-              <span className="font-mono font-semibold text-[11px] text-[#245640] bg-[#EEF3ED] px-2 py-0.5 rounded">
+              <span className="font-mono font-semibold text-[11px] text-[#087E75] bg-[#D9F0EA] px-2 py-0.5 rounded">
                 {plant.aiBaseline.learningProgressPercent}% Converged
               </span>
             </div>
@@ -147,19 +147,19 @@ export const PlantProfileHeader: React.FC<PlantProfileHeaderProps> = ({
             </p>
 
             {/* Micro progress bar */}
-            <div className="w-full bg-[#E5EBE3] h-1.5 rounded-full overflow-hidden mt-2">
+            <div className="w-full bg-[#D4E7E1] h-1.5 rounded-full overflow-hidden mt-2">
               <div
-                className="bg-[#245640] h-full rounded-full"
+                className="bg-[#087E75] h-full rounded-full"
                 style={{ width: `${plant.aiBaseline.learningProgressPercent}%` }}
               />
             </div>
           </div>
 
           {/* Interactive State Simulator (Testing Unavailable, Stale, Invalid, Offline) */}
-          <div className="p-2.5 rounded-lg bg-white border border-[#E5EBE3]">
+          <div className="p-2.5 rounded-lg bg-white border border-[#D4E7E1]">
             <div className="flex items-center justify-between text-[11px] font-medium text-[#78847C] mb-1.5">
               <span>Telemetry Diagnostic State:</span>
-              <span className="font-mono text-[10px] text-[#173F32] font-semibold">
+              <span className="font-mono text-[10px] text-[#123B36] font-semibold">
                 Simulated Test Harness
               </span>
             </div>
@@ -177,8 +177,8 @@ export const PlantProfileHeader: React.FC<PlantProfileHeaderProps> = ({
                   onClick={() => onDataStateChange(state.id)}
                   className={`py-1 text-[10px] font-medium rounded transition-colors text-center cursor-pointer ${
                     dataState === state.id
-                      ? 'bg-[#173F32] text-white font-semibold'
-                      : 'bg-[#F4F7F3] text-[#78847C] hover:text-[#26342D]'
+                      ? 'bg-[#123B36] text-white font-semibold'
+                      : 'bg-[#EDF7F4] text-[#78847C] hover:text-[#26342D]'
                   }`}
                 >
                   {state.label}

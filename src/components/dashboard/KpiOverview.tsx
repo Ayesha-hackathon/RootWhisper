@@ -26,7 +26,7 @@ export const KpiOverview: React.FC<KpiOverviewProps> = ({
       subtext: 'Species calibrated: Tulsi, Hibiscus, Pothos',
       icon: Sprout,
       badge: 'Active Fleet',
-      badgeColor: 'text-[#245640] bg-[#EEF3ED]',
+      badgeColor: 'text-[#087E75] bg-[#D9F0EA]',
       action: undefined,
     },
     {
@@ -36,7 +36,7 @@ export const KpiOverview: React.FC<KpiOverviewProps> = ({
       subtext: 'ESP32 Wi-Fi Mesh · 100% Signal Integrity',
       icon: Radio,
       badge: kpis.nodesOnline === kpis.totalNodes ? 'Mesh Stable' : 'Degraded',
-      badgeColor: 'text-[#245640] bg-[#EEF3ED]',
+      badgeColor: 'text-[#087E75] bg-[#D9F0EA]',
       action: onFilterNodes,
     },
     {
@@ -46,7 +46,7 @@ export const KpiOverview: React.FC<KpiOverviewProps> = ({
       subtext: 'Continuous CWSI & Leaf Thermal Profiling',
       icon: Activity,
       badge: 'Real-Time AI',
-      badgeColor: 'text-[#173F32] bg-[#EEF3ED]',
+      badgeColor: 'text-[#123B36] bg-[#D9F0EA]',
       action: onViewScreenings,
     },
     {
@@ -56,7 +56,7 @@ export const KpiOverview: React.FC<KpiOverviewProps> = ({
       subtext: `${kpis.totalPacketsProcessedToday.toLocaleString()} telemetry packets today`,
       icon: CheckCircle2,
       badge: 'Nominal Cadence',
-      badgeColor: 'text-[#245640] bg-[#EEF3ED]',
+      badgeColor: 'text-[#087E75] bg-[#D9F0EA]',
       action: undefined,
     },
   ];
@@ -69,7 +69,7 @@ export const KpiOverview: React.FC<KpiOverviewProps> = ({
           <div
             key={card.id}
             onClick={card.action}
-            className={`bg-[#FFFFFF] rounded-xl border border-[#E5EBE3] p-4 shadow-xs flex flex-col justify-between transition-all hover:border-[#A8BDA8] ${
+            className={`bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-4 shadow-xs flex flex-col justify-between transition-all hover:border-[#55B6A3] ${
               card.action ? 'cursor-pointer hover:shadow-sm' : ''
             }`}
           >
@@ -78,7 +78,7 @@ export const KpiOverview: React.FC<KpiOverviewProps> = ({
               <span className="text-xs font-medium text-[#78847C] tracking-tight">
                 {card.title}
               </span>
-              <div className="w-8 h-8 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3] flex items-center justify-center text-[#173F32] shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1] flex items-center justify-center text-[#123B36] shrink-0">
                 <Icon className="w-4 h-4" />
               </div>
             </div>
@@ -86,11 +86,11 @@ export const KpiOverview: React.FC<KpiOverviewProps> = ({
             {/* Metric Value */}
             <div className="my-2.5">
               <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold font-mono text-[#173F32] tracking-tight tabular-nums">
+                <span className="text-2xl font-bold font-mono text-[#123B36] tracking-tight tabular-nums">
                   {card.value}
                 </span>
                 <span
-                  className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${card.badgeColor}`}
+                  className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md ${card.badgeColor}`}
                 >
                   {card.badge}
                 </span>
@@ -98,7 +98,7 @@ export const KpiOverview: React.FC<KpiOverviewProps> = ({
             </div>
 
             {/* Subtext */}
-            <div className="pt-2 border-t border-[#F4F7F3] flex items-center justify-between text-[11px] text-[#78847C]">
+            <div className="pt-2 border-t border-[#EDF7F4] flex items-center justify-between text-[11px] text-[#78847C]">
               <span className="truncate">{card.subtext}</span>
             </div>
           </div>

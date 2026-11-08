@@ -50,7 +50,7 @@ export const NodeStatusCardGrid: React.FC<NodeStatusCardGridProps> = ({
     <div className="space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
-          <h2 className="text-base font-semibold text-[#173F32]">
+          <h2 className="text-base font-semibold text-[#123B36]">
             ESP32 Sensor Nodes Fleet
           </h2>
           <p className="text-xs text-[#78847C] mt-0.5">
@@ -95,15 +95,15 @@ export const NodeStatusCardGrid: React.FC<NodeStatusCardGridProps> = ({
                   ? 'border-[#C58A35]/40 bg-white'
                   : isDegraded
                   ? 'border-[#C58A35]/50 bg-white'
-                  : 'border-[#E5EBE3] hover:border-[#A8BDA8]'
+                  : 'border-[#D4E7E1] hover:border-[#55B6A3]'
               }`}
             >
               {/* Card Header */}
-              <div className="p-4 border-b border-[#F0F4EF]">
+              <div className="p-4 border-b border-[#E1EFEA]">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-sm font-bold text-[#173F32] tracking-tight">
+                      <span className="font-mono text-sm font-bold text-[#123B36] tracking-tight">
                         {node.nodeId}
                       </span>
                       <span className="text-[10px] text-[#78847C] font-mono">
@@ -121,19 +121,19 @@ export const NodeStatusCardGrid: React.FC<NodeStatusCardGridProps> = ({
                   {/* Status Indicator */}
                   <div className="flex items-center gap-1.5 shrink-0">
                     {isOnline && (
-                      <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#EEF3ED] text-[#245640] text-[11px] font-semibold">
-                        <span className="w-2 h-2 rounded-full bg-[#245640]" />
+                      <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#D9F0EA] text-[#087E75] text-[11px] font-semibold">
+                        <span className="w-2 h-2 rounded-full bg-[#087E75]" />
                         <span>ONLINE</span>
                       </div>
                     )}
                     {isStale && (
-                      <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#FBF4E8] text-[#C58A35] text-[11px] font-semibold">
+                      <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#FFF8EB] text-[#C58A35] text-[11px] font-semibold">
                         <AlertTriangle className="w-3 h-3 text-[#C58A35]" />
                         <span>STALE</span>
                       </div>
                     )}
                     {isDegraded && (
-                      <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#FBF4E8] text-[#C58A35] text-[11px] font-semibold">
+                      <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#FFF8EB] text-[#C58A35] text-[11px] font-semibold">
                         <AlertTriangle className="w-3 h-3 text-[#C58A35]" />
                         <span>DEGRADED</span>
                       </div>
@@ -148,7 +148,7 @@ export const NodeStatusCardGrid: React.FC<NodeStatusCardGridProps> = ({
                 </div>
 
                 {/* Freshness & Last Update */}
-                <div className="mt-3 pt-2.5 border-t border-[#F0F4EF] flex items-center justify-between text-xs text-[#78847C]">
+                <div className="mt-3 pt-2.5 border-t border-[#E1EFEA] flex items-center justify-between text-xs text-[#78847C]">
                   <div className="flex items-center gap-1.5">
                     <Clock className="w-3.5 h-3.5 text-[#78847C]" />
                     <span>Last packet:</span>
@@ -173,13 +173,13 @@ export const NodeStatusCardGrid: React.FC<NodeStatusCardGridProps> = ({
               {/* Card Body: Network, Telemetry & Sensor Health */}
               <div className="p-4 space-y-3.5 text-xs">
                 {/* Network & Power Metrics */}
-                <div className="grid grid-cols-2 gap-2 p-2.5 bg-[#F8F8F4] rounded-lg border border-[#E5EBE3]/70">
+                <div className="grid grid-cols-2 gap-2 p-2.5 bg-[#F5FAF8] rounded-lg border border-[#D4E7E1]/70">
                   <div>
                     <span className="text-[10px] text-[#78847C] uppercase tracking-wider block">
                       Wi-Fi RSSI
                     </span>
                     <div className="flex items-center gap-1.5 mt-0.5">
-                      <Wifi className="w-3.5 h-3.5 text-[#173F32]" />
+                      <Wifi className="w-3.5 h-3.5 text-[#123B36]" />
                       <span className="font-mono font-semibold text-[#26342D] tabular-nums">
                         {isOffline ? '--' : `${node.rssi} dBm`}
                       </span>
@@ -194,19 +194,19 @@ export const NodeStatusCardGrid: React.FC<NodeStatusCardGridProps> = ({
                       Power Rail / LiPo
                     </span>
                     <div className="flex items-center gap-1.5 mt-0.5">
-                      <Battery className="w-3.5 h-3.5 text-[#245640]" />
+                      <Battery className="w-3.5 h-3.5 text-[#087E75]" />
                       <span className="font-mono font-semibold text-[#26342D] tabular-nums">
                         {isOffline ? '--' : `${node.batteryVoltage.toFixed(2)}V`}
                       </span>
                       {!isOffline && (
-                        <span className="text-[10px] text-[#245640] font-mono">
+                        <span className="text-[10px] text-[#087E75] font-mono">
                           ({node.busSupplyVoltage.toFixed(2)}V LDO)
                         </span>
                       )}
                     </div>
                   </div>
 
-                  <div className="col-span-2 pt-1 border-t border-[#E5EBE3]/60 flex items-center justify-between text-[11px] font-mono text-[#78847C]">
+                  <div className="col-span-2 pt-1 border-t border-[#D4E7E1]/60 flex items-center justify-between text-[11px] font-mono text-[#78847C]">
                     <span>IP: {isOffline ? 'Disconnected' : node.ipAddress}</span>
                     <span>MAC: {node.macAddress}</span>
                   </div>
@@ -222,14 +222,14 @@ export const NodeStatusCardGrid: React.FC<NodeStatusCardGridProps> = ({
                         : `${(100 - node.packetLossPercent).toFixed(2)}% OK · ${node.packetsDropped} dropped`}
                     </span>
                   </div>
-                  <div className="h-1.5 w-full bg-[#E5EBE3] rounded-full overflow-hidden">
+                  <div className="h-1.5 w-full bg-[#D4E7E1] rounded-full overflow-hidden">
                     <div
                       className={`h-full transition-all duration-500 rounded-full ${
                         isOffline
                           ? 'w-0 bg-[#C95D58]'
                           : node.packetLossPercent > 0.5
                           ? 'bg-[#C58A35]'
-                          : 'bg-[#245640]'
+                          : 'bg-[#087E75]'
                       }`}
                       style={{
                         width: isOffline ? '0%' : `${Math.max(5, 100 - node.packetLossPercent)}%`,
@@ -259,8 +259,8 @@ export const NodeStatusCardGrid: React.FC<NodeStatusCardGridProps> = ({
                             isFaulty
                               ? 'bg-[#FDF2F2] border-[#C95D58]/30 text-[#C95D58]'
                               : isWarn
-                              ? 'bg-[#FBF4E8] border-[#C58A35]/30 text-[#C58A35]'
-                              : 'bg-[#F4F7F3] border-[#E5EBE3] text-[#26342D]'
+                              ? 'bg-[#FFF8EB] border-[#C58A35]/30 text-[#C58A35]'
+                              : 'bg-[#EDF7F4] border-[#D4E7E1] text-[#26342D]'
                           }`}
                         >
                           <span className="truncate pr-1 font-medium">{sm.name}</span>
@@ -275,16 +275,16 @@ export const NodeStatusCardGrid: React.FC<NodeStatusCardGridProps> = ({
               </div>
 
               {/* Card Footer: Interactive Actions */}
-              <div className="p-3 bg-[#FAFAF8] border-t border-[#F0F4EF] flex items-center justify-between gap-2">
+              <div className="p-3 bg-[#F0F7F4] border-t border-[#E1EFEA] flex items-center justify-between gap-2">
                 <button
                   onClick={() => handlePing(node.nodeId)}
                   disabled={pingingNodeId === node.nodeId || isOffline}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded text-xs font-medium border border-[#E5EBE3] hover:border-[#A8BDA8] bg-white text-[#173F32] hover:bg-[#EEF3ED] transition-colors disabled:opacity-50 cursor-pointer"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded text-xs font-medium border border-[#D4E7E1] hover:border-[#55B6A3] bg-white text-[#123B36] hover:bg-[#D9F0EA] transition-colors disabled:opacity-50 cursor-pointer"
                   title="Simulate ICMP / MQTT Ping response"
                 >
                   <Radio
                     className={`w-3.5 h-3.5 ${
-                      pingingNodeId === node.nodeId ? 'animate-pulse text-[#245640]' : ''
+                      pingingNodeId === node.nodeId ? 'animate-pulse text-[#087E75]' : ''
                     }`}
                   />
                   <span>{pingingNodeId === node.nodeId ? 'Ping (18ms)...' : 'Ping Node'}</span>
@@ -293,12 +293,12 @@ export const NodeStatusCardGrid: React.FC<NodeStatusCardGridProps> = ({
                 <button
                   onClick={() => handleScan(node.nodeId)}
                   disabled={scanningNodeId === node.nodeId || isOffline}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded text-xs font-medium border border-[#E5EBE3] hover:border-[#A8BDA8] bg-white text-[#173F32] hover:bg-[#EEF3ED] transition-colors disabled:opacity-50 cursor-pointer"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded text-xs font-medium border border-[#D4E7E1] hover:border-[#55B6A3] bg-white text-[#123B36] hover:bg-[#D9F0EA] transition-colors disabled:opacity-50 cursor-pointer"
                   title="Scan I2C bus (0x5A, 0x38, 0x23)"
                 >
                   <Search
                     className={`w-3.5 h-3.5 ${
-                      scanningNodeId === node.nodeId ? 'animate-spin text-[#245640]' : ''
+                      scanningNodeId === node.nodeId ? 'animate-spin text-[#087E75]' : ''
                     }`}
                   />
                   <span>{scanningNodeId === node.nodeId ? 'Scanning...' : 'I2C Scan'}</span>
@@ -307,7 +307,7 @@ export const NodeStatusCardGrid: React.FC<NodeStatusCardGridProps> = ({
                 {onSelectNodeFilter && (
                   <button
                     onClick={() => onSelectNodeFilter(node.nodeId)}
-                    className="p-1.5 rounded text-xs font-medium border border-[#E5EBE3] hover:border-[#A8BDA8] bg-white text-[#78847C] hover:text-[#173F32] transition-colors cursor-pointer"
+                    className="p-1.5 rounded text-xs font-medium border border-[#D4E7E1] hover:border-[#55B6A3] bg-white text-[#78847C] hover:text-[#123B36] transition-colors cursor-pointer"
                     title="Filter table by this node"
                   >
                     <Cpu className="w-3.5 h-3.5" />

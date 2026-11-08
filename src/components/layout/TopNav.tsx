@@ -32,13 +32,13 @@ export const TopNav: React.FC<TopNavProps> = ({
   onOpenMobileMenu,
 }) => {
   return (
-    <header className="sticky top-0 z-20 h-16 bg-[#FFFFFF]/95 backdrop-blur-md border-b border-[#E5EBE3] px-4 sm:px-6 flex items-center justify-between gap-3 sm:gap-6 select-none">
+    <header className="sticky top-0 z-20 h-16 bg-[#123B36] border-b border-[#0C2925] px-4 sm:px-6 flex items-center justify-between gap-3 sm:gap-6 select-none shadow-xs text-white">
       {/* Zone 1: Mobile Hamburger, Context Breadcrumb & View Mode Switcher */}
       <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
         {onOpenMobileMenu && (
           <button
             onClick={onOpenMobileMenu}
-            className="p-1.5 rounded-lg text-[#173F32] hover:bg-[#EEF3ED] lg:hidden cursor-pointer shrink-0"
+            className="p-1.5 rounded-lg text-[#D9F0EA] hover:bg-[#1A4D45] lg:hidden cursor-pointer shrink-0"
             title="Open workspace navigation"
             aria-label="Open workspace navigation"
           >
@@ -46,19 +46,19 @@ export const TopNav: React.FC<TopNavProps> = ({
           </button>
         )}
 
-        <span className="text-sm font-semibold text-[#173F32] tracking-tight shrink-0 hidden sm:inline">
+        <span className="text-sm font-semibold text-white tracking-tight shrink-0 hidden sm:inline">
           RootWhisper
         </span>
-        <span className="text-[#A8BDA8] text-sm shrink-0 hidden sm:inline">/</span>
+        <span className="text-[#55B6A3] text-sm shrink-0 hidden sm:inline">/</span>
         
         {/* View Switcher: Horizontally scrollable on narrower viewports */}
-        <div className="flex items-center gap-1 p-0.5 bg-[#F4F7F3] rounded-lg border border-[#E5EBE3] overflow-x-auto max-w-[calc(100vw-180px)] sm:max-w-md md:max-w-xl lg:max-w-none scrollbar-none">
+        <div className="flex items-center gap-1 p-0.5 bg-[#0C2925] rounded-lg border border-[#1A4D45] overflow-x-auto max-w-[calc(100vw-180px)] sm:max-w-md md:max-w-xl lg:max-w-none scrollbar-none">
           <button
             onClick={() => onSelectTab('dashboard')}
             className={`px-2.5 py-1 text-xs font-medium rounded transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
               currentTab === 'dashboard'
-                ? 'bg-white text-[#173F32] shadow-xs font-semibold'
-                : 'text-[#78847C] hover:text-[#26342D]'
+                ? 'bg-[#087E75] text-white shadow-xs font-semibold'
+                : 'text-[#D9F0EA]/85 hover:text-white hover:bg-[#1A4D45]/60'
             }`}
           >
             Dashboard
@@ -67,8 +67,8 @@ export const TopNav: React.FC<TopNavProps> = ({
             onClick={() => onSelectTab('plant-monitoring')}
             className={`px-2.5 py-1 text-xs font-medium rounded transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
               currentTab === 'plant-monitoring'
-                ? 'bg-white text-[#173F32] shadow-xs font-semibold'
-                : 'text-[#78847C] hover:text-[#26342D]'
+                ? 'bg-[#087E75] text-white shadow-xs font-semibold'
+                : 'text-[#D9F0EA]/85 hover:text-white hover:bg-[#1A4D45]/60'
             }`}
           >
             Plant Monitoring
@@ -77,8 +77,8 @@ export const TopNav: React.FC<TopNavProps> = ({
             onClick={() => onSelectTab('analytics')}
             className={`px-2.5 py-1 text-xs font-medium rounded transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
               currentTab === 'analytics'
-                ? 'bg-white text-[#173F32] shadow-xs font-semibold'
-                : 'text-[#78847C] hover:text-[#26342D]'
+                ? 'bg-[#087E75] text-white shadow-xs font-semibold'
+                : 'text-[#D9F0EA]/85 hover:text-white hover:bg-[#1A4D45]/60'
             }`}
           >
             Analytics
@@ -87,8 +87,8 @@ export const TopNav: React.FC<TopNavProps> = ({
             onClick={() => onSelectTab('ai-screening')}
             className={`px-2.5 py-1 text-xs font-medium rounded transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
               currentTab === 'ai-screening'
-                ? 'bg-white text-[#173F32] shadow-xs font-semibold'
-                : 'text-[#78847C] hover:text-[#26342D]'
+                ? 'bg-[#087E75] text-white shadow-xs font-semibold'
+                : 'text-[#D9F0EA]/85 hover:text-white hover:bg-[#1A4D45]/60'
             }`}
           >
             AI Screening
@@ -97,8 +97,8 @@ export const TopNav: React.FC<TopNavProps> = ({
             onClick={() => onSelectTab('sensor-diagnostics')}
             className={`px-2.5 py-1 text-xs font-medium rounded transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
               currentTab === 'sensor-diagnostics' || currentTab === 'esp32-nodes'
-                ? 'bg-white text-[#173F32] shadow-xs font-semibold'
-                : 'text-[#78847C] hover:text-[#26342D]'
+                ? 'bg-[#087E75] text-white shadow-xs font-semibold'
+                : 'text-[#D9F0EA]/85 hover:text-white hover:bg-[#1A4D45]/60'
             }`}
           >
             Sensor Diagnostics
@@ -107,8 +107,8 @@ export const TopNav: React.FC<TopNavProps> = ({
             onClick={() => onSelectTab('reports')}
             className={`px-2.5 py-1 text-xs font-medium rounded transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
               currentTab === 'reports'
-                ? 'bg-white text-[#173F32] shadow-xs font-semibold'
-                : 'text-[#78847C] hover:text-[#26342D]'
+                ? 'bg-[#087E75] text-white shadow-xs font-semibold'
+                : 'text-[#D9F0EA]/85 hover:text-white hover:bg-[#1A4D45]/60'
             }`}
           >
             Reports
@@ -117,8 +117,8 @@ export const TopNav: React.FC<TopNavProps> = ({
             onClick={() => onSelectTab('settings')}
             className={`px-2.5 py-1 text-xs font-medium rounded transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
               currentTab === 'settings'
-                ? 'bg-white text-[#173F32] shadow-xs font-semibold'
-                : 'text-[#78847C] hover:text-[#26342D]'
+                ? 'bg-[#087E75] text-white shadow-xs font-semibold'
+                : 'text-[#D9F0EA]/85 hover:text-white hover:bg-[#1A4D45]/60'
             }`}
           >
             Settings
@@ -127,15 +127,15 @@ export const TopNav: React.FC<TopNavProps> = ({
       </div>
 
       {/* Zone 2: Timeframe Filter Tabs */}
-      <div className="hidden md:flex items-center gap-1 p-1 bg-[#F4F7F3] rounded-lg border border-[#E5EBE3] shrink-0">
+      <div className="hidden md:flex items-center gap-1 p-1 bg-[#0C2925] rounded-lg border border-[#1A4D45] shrink-0">
         {(['6h', '12h', '24h', '7d'] as const).map((t) => (
           <button
             key={t}
             onClick={() => onTimeframeChange(t)}
             className={`px-3 py-1 text-xs font-medium rounded transition-colors whitespace-nowrap cursor-pointer ${
               timeframe === t
-                ? 'bg-white text-[#173F32] shadow-xs font-semibold'
-                : 'text-[#78847C] hover:text-[#26342D]'
+                ? 'bg-[#087E75] text-white shadow-xs font-semibold'
+                : 'text-[#D9F0EA]/85 hover:text-white'
             }`}
           >
             {t.toUpperCase()}
@@ -151,18 +151,18 @@ export const TopNav: React.FC<TopNavProps> = ({
           title={isStreaming ? 'Pause live 5s telemetry pulse' : 'Resume live 5s telemetry pulse'}
           className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium border transition-colors cursor-pointer ${
             isStreaming
-              ? 'bg-[#EEF3ED] border-[#A8BDA8] text-[#173F32]'
-              : 'bg-white border-[#E5EBE3] text-[#78847C] hover:text-[#26342D]'
+              ? 'bg-[#087E75]/30 border-[#55B6A3] text-white'
+              : 'bg-[#0C2925] border-[#1A4D45] text-[#D9F0EA]/85 hover:text-white'
           }`}
         >
           {isStreaming ? (
             <>
-              <Pause className="w-3.5 h-3.5 text-[#245640]" />
+              <Pause className="w-3.5 h-3.5 text-[#55B6A3]" />
               <span className="hidden sm:inline">Telemetry Live</span>
             </>
           ) : (
             <>
-              <Play className="w-3.5 h-3.5 text-[#78847C]" />
+              <Play className="w-3.5 h-3.5 text-[#D9F0EA]" />
               <span className="hidden sm:inline">Stream Paused</span>
             </>
           )}
@@ -172,18 +172,18 @@ export const TopNav: React.FC<TopNavProps> = ({
         <button
           onClick={onRefresh}
           disabled={isRefreshing}
-          className="p-1.5 rounded-md border border-[#E5EBE3] text-[#26342D] hover:bg-[#F8F8F4] hover:text-[#173F32] transition-colors cursor-pointer disabled:opacity-50"
+          className="p-1.5 rounded-md border border-[#1A4D45] bg-[#0C2925] text-[#D9F0EA] hover:bg-[#1A4D45] hover:text-white transition-colors cursor-pointer disabled:opacity-50"
           title="Force telemetry refresh"
         >
           <RefreshCw
-            className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-[#173F32]' : ''}`}
+            className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-[#55B6A3]' : ''}`}
           />
         </button>
 
         {/* Primary Action Button */}
         <button
           onClick={onExportData}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#173F32] hover:bg-[#245640] text-[#FFFFFF] rounded-md text-xs font-medium shadow-xs transition-colors whitespace-nowrap cursor-pointer"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#087E75] hover:bg-[#55B6A3] text-white rounded-md text-xs font-medium shadow-xs transition-colors whitespace-nowrap cursor-pointer"
         >
           <Download className="w-3.5 h-3.5" />
           <span>Export Dataset</span>

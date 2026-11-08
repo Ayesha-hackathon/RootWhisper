@@ -42,7 +42,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   children,
 }) => {
   return (
-    <div className="min-h-screen bg-[#F8F8F4] flex flex-row">
+    <div className="min-h-screen bg-[#EAF2ED] flex flex-row">
       {/* Fixed Left Sidebar & Mobile Drawer */}
       <Sidebar
         currentTab={currentTab}
@@ -77,8 +77,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
 
         {/* Global Floating Toast */}
         {toastMessage && (
-          <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-lg bg-[#173F32] text-[#F8F8F4] text-xs font-medium shadow-lg border border-[#A8BDA8]/30 flex items-center gap-2 animate-fade-in">
-            <span className="w-2 h-2 rounded-full bg-[#A8BDA8]" />
+          <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-lg bg-[#123B36] text-[#F5FAF8] text-xs font-medium shadow-lg border border-[#55B6A3]/30 flex items-center gap-2 animate-fade-in">
+            <span className="w-2 h-2 rounded-full bg-[#55B6A3]" />
             <span>{toastMessage}</span>
           </div>
         )}
@@ -89,12 +89,12 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         </main>
 
         {/* Institutional Footer */}
-        <footer className="border-t border-[#E5EBE3] py-5 px-8 text-center text-xs text-[#78847C] bg-white print:hidden">
+        <footer className="border-t border-[#0C2925] py-5 px-8 text-center text-xs text-[#D9F0EA]/80 bg-[#123B36] print:hidden">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2 max-w-7xl mx-auto">
             <span>
               RootWhisper · Species-Aware AI Framework for Early Plant Water-Stress Screening
             </span>
-            <span className="font-mono text-[11px] text-[#245640]">
+            <span className="font-mono text-[11px] text-[#55B6A3]">
               Google Antigravity & ESP32-S3 Mesh Ready
             </span>
           </div>

@@ -65,20 +65,20 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#173F32]/40 backdrop-blur-xs select-none">
-      <div className="bg-[#FFFFFF] w-full max-w-3xl rounded-2xl border border-[#E5EBE3] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#123B36]/40 backdrop-blur-xs select-none">
+      <div className="bg-[#FFFFFF] w-full max-w-3xl rounded-2xl border border-[#D4E7E1] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#EEF3ED] flex items-center justify-between bg-[#F8F8F4]">
+        <div className="px-6 py-4 border-b border-[#D9F0EA] flex items-center justify-between bg-[#F5FAF8]">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-[#173F32] flex items-center justify-center text-[#F8F8F4]">
-              <Activity className="w-4 h-4 text-[#A8BDA8]" />
+            <div className="w-8 h-8 rounded-lg bg-[#123B36] flex items-center justify-center text-[#F5FAF8]">
+              <Activity className="w-4 h-4 text-[#55B6A3]" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-base font-semibold text-[#173F32]">
+                <h2 className="text-base font-semibold text-[#123B36]">
                   {plant.commonName}
                 </h2>
-                <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#EEF3ED] text-[#245640] font-semibold">
+                <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#D9F0EA] text-[#087E75] font-semibold">
                   {plant.code}
                 </span>
               </div>
@@ -90,7 +90,7 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#78847C] hover:text-[#26342D] hover:bg-[#EEF3ED] transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-[#78847C] hover:text-[#26342D] hover:bg-[#D9F0EA] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -100,8 +100,8 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
         <div className="p-6 overflow-y-auto space-y-6">
           {/* Action Feedback Banner */}
           {actionFeedback && (
-            <div className="p-3 bg-[#EEF3ED] border border-[#A8BDA8]/50 rounded-lg text-xs font-medium text-[#173F32] flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#245640]" />
+            <div className="p-3 bg-[#D9F0EA] border border-[#55B6A3]/50 rounded-lg text-xs font-medium text-[#123B36] flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[#087E75]" />
               <span>{actionFeedback}</span>
             </div>
           )}
@@ -109,7 +109,7 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
           {/* Top Split: Botanical Plate + Physiological Diagnosis */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
             {/* High-res Botanical Plate Image */}
-            <div className="md:col-span-5 bg-[#F8F8F4] rounded-xl border border-[#E5EBE3] p-4 flex flex-col items-center justify-center relative">
+            <div className="md:col-span-5 bg-[#F5FAF8] rounded-xl border border-[#D4E7E1] p-4 flex flex-col items-center justify-center relative">
               <img
                 src={plant.illustrationUrl}
                 alt={plant.commonName}
@@ -129,7 +129,7 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
                 className={`p-4 rounded-xl border ${
                   isStress
                     ? 'bg-[#FFF8F7] border-[#C95D58]/30'
-                    : 'bg-[#F4F7F3] border-[#A8BDA8]/40'
+                    : 'bg-[#EDF7F4] border-[#55B6A3]/40'
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
@@ -137,24 +137,24 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
                     {isStress ? (
                       <AlertCircle className="w-4 h-4 text-[#C95D58]" />
                     ) : (
-                      <CheckCircle2 className="w-4 h-4 text-[#245640]" />
+                      <CheckCircle2 className="w-4 h-4 text-[#087E75]" />
                     )}
                     <span
                       className={`text-xs font-semibold ${
-                        isStress ? 'text-[#C95D58]' : 'text-[#245640]'
+                        isStress ? 'text-[#C95D58]' : 'text-[#087E75]'
                       }`}
                     >
                       {isStress ? 'Early Water-Stress Detected' : 'Physiological Homeostasis'}
                     </span>
                   </div>
-                  <span className="font-mono text-xs font-bold text-[#173F32]">
+                  <span className="font-mono text-xs font-bold text-[#123B36]">
                     CWSI: {plant.stressIndex.toFixed(2)}
                   </span>
                 </div>
                 <p className="text-xs text-[#26342D] leading-relaxed">
                   {plant.physiologicalFingerprint.diagnosis}
                 </p>
-                <div className="mt-3 pt-2 border-t border-[#EEF3ED] flex items-center justify-between text-[11px] font-mono text-[#78847C]">
+                <div className="mt-3 pt-2 border-t border-[#D9F0EA] flex items-center justify-between text-[11px] font-mono text-[#78847C]">
                   <span>Lead Time: +{plant.physiologicalFingerprint.hoursBeforeVisualWilting}h before wilting</span>
                   <span>Transpiration: {plant.physiologicalFingerprint.transpirationEfficiency}%</span>
                 </div>
@@ -162,11 +162,11 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
 
               {/* Fingerprint Benchmarks */}
               <div className="grid grid-cols-2 gap-3 text-xs">
-                <div className="p-3 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3]">
+                <div className="p-3 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1]">
                   <p className="text-[10px] text-[#78847C] uppercase font-semibold">
                     Hydrated Baseline ΔT
                   </p>
-                  <p className="text-base font-bold font-mono text-[#173F32] mt-0.5">
+                  <p className="text-base font-bold font-mono text-[#123B36] mt-0.5">
                     {plant.physiologicalFingerprint.baselineLeafDelta}°C
                   </p>
                   <p className="text-[10px] text-[#78847C] mt-1">
@@ -174,13 +174,13 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
                   </p>
                 </div>
 
-                <div className="p-3 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3]">
+                <div className="p-3 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1]">
                   <p className="text-[10px] text-[#78847C] uppercase font-semibold">
                     Current Measured ΔT
                   </p>
                   <p
                     className={`text-base font-bold font-mono mt-0.5 ${
-                      plant.temperatureDelta > 1.5 ? 'text-[#C95D58]' : 'text-[#245640]'
+                      plant.temperatureDelta > 1.5 ? 'text-[#C95D58]' : 'text-[#087E75]'
                     }`}
                   >
                     {plant.temperatureDelta > 0 ? `+${plant.temperatureDelta.toFixed(1)}` : plant.temperatureDelta.toFixed(1)}°C
@@ -195,16 +195,16 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
 
           {/* Real-time Telemetry Metrics Table */}
           <div>
-            <h3 className="text-xs font-semibold text-[#173F32] uppercase tracking-wider mb-2.5">
+            <h3 className="text-xs font-semibold text-[#123B36] uppercase tracking-wider mb-2.5">
               Live Edge Sensor Telemetry ({plant.nodeId})
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-              <div className="p-3 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3]">
+              <div className="p-3 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1]">
                 <span className="text-[#78847C] text-[11px] flex items-center gap-1">
-                  <Droplet className="w-3.5 h-3.5 text-[#173F32]" />
+                  <Droplet className="w-3.5 h-3.5 text-[#123B36]" />
                   Soil Moisture
                 </span>
-                <p className="text-lg font-bold font-mono text-[#173F32] mt-1">
+                <p className="text-lg font-bold font-mono text-[#123B36] mt-1">
                   {plant.soilMoisture.toFixed(1)}%
                 </p>
                 <p className="text-[10px] text-[#78847C] mt-0.5">
@@ -212,12 +212,12 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
                 </p>
               </div>
 
-              <div className="p-3 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3]">
+              <div className="p-3 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1]">
                 <span className="text-[#78847C] text-[11px] flex items-center gap-1">
-                  <Thermometer className="w-3.5 h-3.5 text-[#173F32]" />
+                  <Thermometer className="w-3.5 h-3.5 text-[#123B36]" />
                   IR Leaf Temp
                 </span>
-                <p className="text-lg font-bold font-mono text-[#173F32] mt-1">
+                <p className="text-lg font-bold font-mono text-[#123B36] mt-1">
                   {plant.leafTemperature.toFixed(1)}°C
                 </p>
                 <p className="text-[10px] text-[#78847C] mt-0.5">
@@ -225,12 +225,12 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
                 </p>
               </div>
 
-              <div className="p-3 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3]">
+              <div className="p-3 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1]">
                 <span className="text-[#78847C] text-[11px] flex items-center gap-1">
                   <Sun className="w-3.5 h-3.5 text-[#C58A35]" />
                   Ambient Light
                 </span>
-                <p className="text-lg font-bold font-mono text-[#173F32] mt-1 tabular-nums">
+                <p className="text-lg font-bold font-mono text-[#123B36] mt-1 tabular-nums">
                   {plant.lightIntensity.toLocaleString()}{' '}
                   <span className="text-[10px] font-normal font-sans text-[#78847C]">lux</span>
                 </p>
@@ -239,12 +239,12 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
                 </p>
               </div>
 
-              <div className="p-3 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3]">
+              <div className="p-3 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1]">
                 <span className="text-[#78847C] text-[11px] flex items-center gap-1">
-                  <Activity className="w-3.5 h-3.5 text-[#245640]" />
+                  <Activity className="w-3.5 h-3.5 text-[#087E75]" />
                   Stomatal Proxy
                 </span>
-                <p className="text-lg font-bold font-mono text-[#173F32] mt-1 tabular-nums">
+                <p className="text-lg font-bold font-mono text-[#123B36] mt-1 tabular-nums">
                   {plant.stomatalConductanceProxy}
                 </p>
                 <p className="text-[10px] text-[#78847C] mt-0.5">
@@ -256,7 +256,7 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
         </div>
 
         {/* Footer Actions */}
-        <div className="px-6 py-4 border-t border-[#EEF3ED] bg-[#F8F8F4] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="px-6 py-4 border-t border-[#D9F0EA] bg-[#F5FAF8] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="text-[11px] font-mono text-[#78847C]">
             RSSI: {plant.wifiRssi} dBm · Battery: {plant.batteryVoltage.toFixed(2)}V
           </div>
@@ -268,7 +268,7 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
                   onClose();
                   onOpenMonitoring(plant.id);
                 }}
-                className="px-3 py-1.5 rounded-md text-xs font-semibold text-[#173F32] bg-[#EEF3ED] hover:bg-[#A8BDA8]/40 transition-colors cursor-pointer"
+                className="px-3 py-1.5 rounded-md text-xs font-semibold text-[#123B36] bg-[#D9F0EA] hover:bg-[#55B6A3]/40 transition-colors cursor-pointer"
               >
                 Open Full Monitoring Page
               </button>
@@ -277,16 +277,16 @@ export const PlantDetailModal: React.FC<PlantDetailModalProps> = ({
             <button
               onClick={handleScreeningClick}
               disabled={isScreening}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold text-[#173F32] bg-white border border-[#E5EBE3] hover:border-[#A8BDA8] transition-colors cursor-pointer disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold text-[#123B36] bg-white border border-[#D4E7E1] hover:border-[#55B6A3] transition-colors cursor-pointer disabled:opacity-50"
             >
-              <Cpu className="w-3.5 h-3.5 text-[#245640]" />
+              <Cpu className="w-3.5 h-3.5 text-[#087E75]" />
               <span>{isScreening ? 'Screening...' : 'Trigger AI Screen'}</span>
             </button>
 
             <button
               onClick={handleIrrigationClick}
               disabled={isIrrigating}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold text-[#FFFFFF] bg-[#173F32] hover:bg-[#245640] transition-colors cursor-pointer disabled:opacity-50 shadow-xs"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold text-[#FFFFFF] bg-[#123B36] hover:bg-[#087E75] transition-colors cursor-pointer disabled:opacity-50 shadow-xs"
             >
               <Droplets className="w-3.5 h-3.5" />
               <span>{isIrrigating ? 'Pulsing...' : 'Simulate Irrigation Pulse'}</span>

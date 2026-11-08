@@ -116,15 +116,15 @@ export const ProcessingPipeline: React.FC = () => {
   const [selectedStage, setSelectedStage] = useState<PipelineStage>(PIPELINE_STAGES[4]); // default to Expected Leaf Temp Prediction
 
   return (
-    <div className="bg-[#FFFFFF] rounded-xl border border-[#E5EBE3] p-5 shadow-xs space-y-4">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-5 shadow-xs space-y-4">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#EEF3ED]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#D9F0EA]">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-base font-semibold text-[#173F32] tracking-tight">
+            <h2 className="text-base font-semibold text-[#123B36] tracking-tight">
               Biophysical Processing Pipeline
             </h2>
-            <span className="font-mono text-[10px] text-[#245640] bg-[#EEF3ED] px-2 py-0.5 rounded font-semibold">
+            <span className="font-mono text-[10px] text-[#087E75] bg-[#D9F0EA] px-2 py-0.5 rounded font-semibold">
               9-Stage Screening Architecture
             </span>
           </div>
@@ -149,22 +149,22 @@ export const ProcessingPipeline: React.FC = () => {
               onClick={() => setSelectedStage(stage)}
               className={`p-2.5 rounded-lg border text-left transition-all flex flex-col justify-between h-full min-h-[96px] sm:min-h-[105px] cursor-pointer ${
                 isSelected
-                  ? 'bg-[#173F32] text-white border-[#173F32] shadow-sm'
-                  : 'bg-[#F8F8F4] border-[#E5EBE3] hover:border-[#A8BDA8] text-[#26342D]'
+                  ? 'bg-[#123B36] text-white border-[#123B36] shadow-sm'
+                  : 'bg-[#F5FAF8] border-[#D4E7E1] hover:border-[#55B6A3] text-[#26342D]'
               }`}
             >
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <span
                     className={`font-mono text-[10px] font-bold px-1.5 py-0.2 rounded ${
-                      isSelected ? 'bg-white/20 text-white' : 'bg-white text-[#78847C] border border-[#E5EBE3]'
+                      isSelected ? 'bg-white/20 text-white' : 'bg-white text-[#78847C] border border-[#D4E7E1]'
                     }`}
                   >
                     0{stage.step}
                   </span>
-                  <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-[#A8BDA8]' : 'text-[#173F32]'}`} />
+                  <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-[#55B6A3]' : 'text-[#123B36]'}`} />
                 </div>
-                <p className={`text-[11px] font-semibold line-clamp-2 leading-tight ${isSelected ? 'text-white' : 'text-[#173F32]'}`}>
+                <p className={`text-[11px] font-semibold line-clamp-2 leading-tight ${isSelected ? 'text-white' : 'text-[#123B36]'}`}>
                   {stage.title}
                 </p>
               </div>
@@ -177,20 +177,20 @@ export const ProcessingPipeline: React.FC = () => {
       </div>
 
       {/* Selected Stage Detail Drawer / Callout */}
-      <div className="p-4 rounded-xl bg-[#F8F8F4] border border-[#E5EBE3] flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="p-4 rounded-xl bg-[#F5FAF8] border border-[#D4E7E1] flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-xs font-bold text-[#173F32] bg-[#EEF3ED] px-2 py-0.5 rounded">
+            <span className="font-mono text-xs font-bold text-[#123B36] bg-[#D9F0EA] px-2 py-0.5 rounded">
               Stage 0{selectedStage.step}: {selectedStage.title}
             </span>
             <span className="text-xs text-[#78847C]">·</span>
-            <span className="text-xs font-semibold text-[#245640]">{selectedStage.subtitle}</span>
+            <span className="text-xs font-semibold text-[#087E75]">{selectedStage.subtitle}</span>
           </div>
           <p className="text-xs text-[#26342D] leading-relaxed">
             {selectedStage.description}
           </p>
           <p className="text-[11px] text-[#78847C] pt-1">
-            <strong className="text-[#173F32]">Biophysical Protocol:</strong> {selectedStage.scientificDetail}
+            <strong className="text-[#123B36]">Biophysical Protocol:</strong> {selectedStage.scientificDetail}
           </p>
         </div>
       </div>

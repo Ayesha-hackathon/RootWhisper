@@ -893,10 +893,10 @@ export interface ScreeningDistributionItem {
 }
 
 export const SCREENING_OUTCOME_DISTRIBUTION: ScreeningDistributionItem[] = [
-  { name: 'Optimal Turgor (CWSI < 0.3)', percentage: 68.4, sampleCount: 5912, color: '#245640' },
+  { name: 'Optimal Turgor (CWSI < 0.3)', percentage: 68.4, sampleCount: 5912, color: '#087E75' },
   { name: 'Mild Water-Stress (0.3 - 0.7)', percentage: 22.8, sampleCount: 1970, color: '#C58A35' },
   { name: 'Critical Water Deficit (> 0.7)', percentage: 4.8, sampleCount: 414, color: '#C95D58' },
-  { name: 'Calibration / Diurnal Rest', percentage: 4.0, sampleCount: 344, color: '#A8BDA8' },
+  { name: 'Calibration / Diurnal Rest', percentage: 4.0, sampleCount: 344, color: '#55B6A3' },
 ];
 
 export type ScreeningOutcomeCategory = 'NORMAL' | 'WATCH' | 'POSSIBLE WATER STRESS' | 'INCONCLUSIVE';

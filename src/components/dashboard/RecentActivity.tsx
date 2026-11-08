@@ -30,11 +30,11 @@ export const RecentActivity: React.FC<RecentActivityProps> = ({ events }) => {
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case 'screening':
-        return <Activity className="w-3.5 h-3.5 text-[#173F32]" />;
+        return <Activity className="w-3.5 h-3.5 text-[#123B36]" />;
       case 'node':
-        return <Cpu className="w-3.5 h-3.5 text-[#245640]" />;
+        return <Cpu className="w-3.5 h-3.5 text-[#087E75]" />;
       case 'irrigation':
-        return <Droplets className="w-3.5 h-3.5 text-[#173F32]" />;
+        return <Droplets className="w-3.5 h-3.5 text-[#123B36]" />;
       case 'calibration':
       default:
         return <Sliders className="w-3.5 h-3.5 text-[#78847C]" />;
@@ -42,10 +42,10 @@ export const RecentActivity: React.FC<RecentActivityProps> = ({ events }) => {
   };
 
   return (
-    <div className="bg-[#FFFFFF] rounded-xl border border-[#E5EBE3] p-5 shadow-xs">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-[#EEF3ED]">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-5 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-[#D9F0EA]">
         <div>
-          <h2 className="text-base font-semibold text-[#173F32] tracking-tight">
+          <h2 className="text-base font-semibold text-[#123B36] tracking-tight">
             Recent System Activity & AI Screenings
           </h2>
           <p className="text-xs text-[#78847C] mt-0.5">
@@ -54,14 +54,14 @@ export const RecentActivity: React.FC<RecentActivityProps> = ({ events }) => {
         </div>
 
         {/* Filter buttons */}
-        <div className="flex items-center gap-1 p-1 bg-[#F4F7F3] rounded-lg border border-[#E5EBE3] shrink-0">
+        <div className="flex items-center gap-1 p-1 bg-[#EDF7F4] rounded-lg border border-[#D4E7E1] shrink-0">
           {(['all', 'screening', 'node', 'irrigation'] as const).map((cat) => (
             <button
               key={cat}
               onClick={() => setFilter(cat)}
               className={`px-2.5 py-1 text-xs font-medium rounded capitalize transition-colors cursor-pointer ${
                 filter === cat
-                  ? 'bg-white text-[#173F32] shadow-xs font-semibold'
+                  ? 'bg-white text-[#123B36] shadow-xs font-semibold'
                   : 'text-[#78847C] hover:text-[#26342D]'
               }`}
             >
@@ -83,10 +83,10 @@ export const RecentActivity: React.FC<RecentActivityProps> = ({ events }) => {
             return (
               <div
                 key={evt.id}
-                className="p-3 rounded-lg bg-[#F8F8F4] border border-[#EEF3ED] flex items-start justify-between gap-3 text-xs"
+                className="p-3 rounded-lg bg-[#F5FAF8] border border-[#D9F0EA] flex items-start justify-between gap-3 text-xs"
               >
                 <div className="flex items-start gap-2.5">
-                  <div className="mt-0.5 w-6 h-6 rounded-md bg-white border border-[#E5EBE3] flex items-center justify-center shrink-0">
+                  <div className="mt-0.5 w-6 h-6 rounded-md bg-white border border-[#D4E7E1] flex items-center justify-center shrink-0">
                     {getCategoryIcon(evt.category)}
                   </div>
                   <div>
@@ -95,7 +95,7 @@ export const RecentActivity: React.FC<RecentActivityProps> = ({ events }) => {
                         {evt.timestamp}
                       </span>
                       {evt.plantName && (
-                        <span className="font-mono text-[10px] px-1.5 py-0.2 rounded bg-[#EEF3ED] text-[#173F32] font-semibold">
+                        <span className="font-mono text-[10px] px-1.5 py-0.2 rounded bg-[#D9F0EA] text-[#123B36] font-semibold">
                           {evt.plantName}
                         </span>
                       )}
@@ -116,7 +116,7 @@ export const RecentActivity: React.FC<RecentActivityProps> = ({ events }) => {
                         ? 'bg-[#FFF2F0] text-[#C95D58]'
                         : isWarning
                         ? 'bg-[#FFF8EB] text-[#C58A35]'
-                        : 'bg-[#EEF3ED] text-[#245640]'
+                        : 'bg-[#D9F0EA] text-[#087E75]'
                     }`}
                   >
                     {evt.metric}

@@ -65,8 +65,8 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5EBE3] shadow-md text-xs">
-          <p className="font-semibold text-[#173F32] mb-1.5 border-b border-[#EEF3ED] pb-1 font-mono">
+        <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#D4E7E1] shadow-md text-xs">
+          <p className="font-semibold text-[#123B36] mb-1.5 border-b border-[#D9F0EA] pb-1 font-mono">
             {label}
           </p>
           <div className="space-y-1">
@@ -94,15 +94,15 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
   };
 
   return (
-    <div className="bg-[#FFFFFF] rounded-xl border border-[#E5EBE3] p-5 shadow-xs space-y-4">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-5 shadow-xs space-y-4">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#EEF3ED]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D9F0EA]">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-base font-semibold text-[#173F32] tracking-tight">
+            <h2 className="text-base font-semibold text-[#123B36] tracking-tight">
               Temporal Multi-Sensor Dynamics
             </h2>
-            <span className="font-mono text-[10px] text-[#245640] bg-[#EEF3ED] px-2 py-0.5 rounded font-semibold">
+            <span className="font-mono text-[10px] text-[#087E75] bg-[#D9F0EA] px-2 py-0.5 rounded font-semibold">
               {dateRange.toUpperCase()} Window
             </span>
           </div>
@@ -122,8 +122,8 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
           onClick={() => setActiveSensor('leaf_temp')}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
             activeSensor === 'leaf_temp'
-              ? 'bg-[#173F32] text-white'
-              : 'bg-[#F8F8F4] text-[#78847C] hover:text-[#26342D] border border-[#E5EBE3]'
+              ? 'bg-[#123B36] text-white'
+              : 'bg-[#F5FAF8] text-[#78847C] hover:text-[#26342D] border border-[#D4E7E1]'
           }`}
         >
           <Thermometer className="w-3.5 h-3.5" />
@@ -134,8 +134,8 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
           onClick={() => setActiveSensor('moisture')}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
             activeSensor === 'moisture'
-              ? 'bg-[#173F32] text-white'
-              : 'bg-[#F8F8F4] text-[#78847C] hover:text-[#26342D] border border-[#E5EBE3]'
+              ? 'bg-[#123B36] text-white'
+              : 'bg-[#F5FAF8] text-[#78847C] hover:text-[#26342D] border border-[#D4E7E1]'
           }`}
         >
           <Droplet className="w-3.5 h-3.5" />
@@ -146,8 +146,8 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
           onClick={() => setActiveSensor('ambient_temp')}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
             activeSensor === 'ambient_temp'
-              ? 'bg-[#173F32] text-white'
-              : 'bg-[#F8F8F4] text-[#78847C] hover:text-[#26342D] border border-[#E5EBE3]'
+              ? 'bg-[#123B36] text-white'
+              : 'bg-[#F5FAF8] text-[#78847C] hover:text-[#26342D] border border-[#D4E7E1]'
           }`}
         >
           <Flame className="w-3.5 h-3.5" />
@@ -158,8 +158,8 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
           onClick={() => setActiveSensor('humidity')}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
             activeSensor === 'humidity'
-              ? 'bg-[#173F32] text-white'
-              : 'bg-[#F8F8F4] text-[#78847C] hover:text-[#26342D] border border-[#E5EBE3]'
+              ? 'bg-[#123B36] text-white'
+              : 'bg-[#F5FAF8] text-[#78847C] hover:text-[#26342D] border border-[#D4E7E1]'
           }`}
         >
           <CloudRain className="w-3.5 h-3.5" />
@@ -170,8 +170,8 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
           onClick={() => setActiveSensor('light')}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
             activeSensor === 'light'
-              ? 'bg-[#173F32] text-white'
-              : 'bg-[#F8F8F4] text-[#78847C] hover:text-[#26342D] border border-[#E5EBE3]'
+              ? 'bg-[#123B36] text-white'
+              : 'bg-[#F5FAF8] text-[#78847C] hover:text-[#26342D] border border-[#D4E7E1]'
           }`}
         >
           <Sun className="w-3.5 h-3.5" />
@@ -183,16 +183,16 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
       <div className="h-72 w-full pt-2">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={mergedSeries} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#EEF3ED" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#D9F0EA" vertical={false} />
             <XAxis
               dataKey="timeLabel"
               tickLine={false}
-              stroke="#A8BDA8"
+              stroke="#55B6A3"
               tick={{ fill: '#78847C', fontSize: 11 }}
             />
             <YAxis
               tickLine={false}
-              stroke="#A8BDA8"
+              stroke="#55B6A3"
               tick={{ fill: '#78847C', fontSize: 11, fontFamily: 'monospace' }}
               domain={
                 activeSensor === 'leaf_temp' || activeSensor === 'ambient_temp'
@@ -225,9 +225,9 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
                     type="monotone"
                     dataKey="hibiscusLeafTemp"
                     name="Hibiscus Leaf Temp (°C)"
-                    stroke="#245640"
+                    stroke="#087E75"
                     strokeWidth={2}
-                    dot={{ r: 3, fill: '#245640' }}
+                    dot={{ r: 3, fill: '#087E75' }}
                   />
                 )}
                 {(plantFilter === 'all' || plantFilter === 'moneyplant-01') && (
@@ -235,9 +235,9 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
                     type="monotone"
                     dataKey="moneyPlantLeafTemp"
                     name="Money Plant Leaf Temp (°C)"
-                    stroke="#A8BDA8"
+                    stroke="#55B6A3"
                     strokeWidth={2}
-                    dot={{ r: 3, fill: '#A8BDA8' }}
+                    dot={{ r: 3, fill: '#55B6A3' }}
                   />
                 )}
                 <ReferenceLine
@@ -272,7 +272,7 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
                     type="monotone"
                     dataKey="hibiscusMoisture"
                     name="Hibiscus Moisture (%)"
-                    stroke="#245640"
+                    stroke="#087E75"
                     strokeWidth={2.2}
                     dot={{ r: 3 }}
                   />
@@ -282,7 +282,7 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
                     type="monotone"
                     dataKey="moneyPlantMoisture"
                     name="Money Plant Moisture (%)"
-                    stroke="#173F32"
+                    stroke="#123B36"
                     strokeWidth={2.2}
                     dot={{ r: 3 }}
                   />
@@ -307,9 +307,9 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
                 type="monotone"
                 dataKey="ambientTemp"
                 name="Chamber Ambient Temperature (°C)"
-                stroke="#173F32"
+                stroke="#123B36"
                 strokeWidth={2.4}
-                dot={{ r: 3, fill: '#173F32' }}
+                dot={{ r: 3, fill: '#123B36' }}
               />
             )}
 
@@ -343,7 +343,7 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
                     type="monotone"
                     dataKey="hibiscusLight"
                     name="Hibiscus Canopy Light (lux)"
-                    stroke="#245640"
+                    stroke="#087E75"
                     strokeWidth={2.2}
                     dot={{ r: 3 }}
                   />
@@ -353,7 +353,7 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
                     type="monotone"
                     dataKey="moneyPlantLight"
                     name="Money Plant Light (lux)"
-                    stroke="#A8BDA8"
+                    stroke="#55B6A3"
                     strokeWidth={2.2}
                     dot={{ r: 3 }}
                   />
@@ -364,9 +364,9 @@ export const TemporalAnalyticsSection: React.FC<TemporalAnalyticsSectionProps> =
         </ResponsiveContainer>
       </div>
 
-      <div className="pt-2 border-t border-[#EEF3ED] flex items-center justify-between text-[11px] text-[#78847C]">
+      <div className="pt-2 border-t border-[#D9F0EA] flex items-center justify-between text-[11px] text-[#78847C]">
         <span>Sampling interval: 15 minutes. High-precision continuous data logging.</span>
-        <span className="font-mono text-[#245640]">SAMPLE DATA ONLY</span>
+        <span className="font-mono text-[#087E75]">SAMPLE DATA ONLY</span>
       </div>
     </div>
   );

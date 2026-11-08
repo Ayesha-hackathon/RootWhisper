@@ -19,7 +19,7 @@ export const PlantSelector: React.FC<PlantSelectorProps> = ({
   onSelectPlant,
 }) => {
   return (
-    <div className="bg-[#FFFFFF] rounded-xl border border-[#E5EBE3] p-2 shadow-xs">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-2 shadow-xs">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
         {plants.map((plant) => {
           const isSelected = plant.id === selectedPlantId;
@@ -31,12 +31,12 @@ export const PlantSelector: React.FC<PlantSelectorProps> = ({
               onClick={() => onSelectPlant(plant.id)}
               className={`flex items-center gap-3 p-3 rounded-lg border text-left transition-all cursor-pointer ${
                 isSelected
-                  ? 'bg-[#EEF3ED] border-[#173F32] shadow-xs'
-                  : 'bg-[#F8F8F4] border-[#E5EBE3] hover:border-[#A8BDA8] hover:bg-white'
+                  ? 'bg-[#D9F0EA] border-[#123B36] shadow-xs'
+                  : 'bg-[#F5FAF8] border-[#D4E7E1] hover:border-[#55B6A3] hover:bg-white'
               }`}
             >
               {/* Botanical Thumbnail */}
-              <div className="w-12 h-12 rounded-md bg-white border border-[#E5EBE3] p-1 flex items-center justify-center shrink-0 overflow-hidden">
+              <div className="w-12 h-12 rounded-md bg-white border border-[#D4E7E1] p-1 flex items-center justify-center shrink-0 overflow-hidden">
                 <img
                   src={plant.illustrationUrl}
                   alt={plant.commonName}
@@ -50,12 +50,12 @@ export const PlantSelector: React.FC<PlantSelectorProps> = ({
                 <div className="flex items-center justify-between gap-1 mb-0.5">
                   <span
                     className={`text-xs font-semibold truncate ${
-                      isSelected ? 'text-[#173F32]' : 'text-[#26342D]'
+                      isSelected ? 'text-[#123B36]' : 'text-[#26342D]'
                     }`}
                   >
                     {plant.commonName}
                   </span>
-                  <span className="font-mono text-[10px] px-1.5 py-0.2 rounded bg-white border border-[#E5EBE3] text-[#78847C] shrink-0 font-medium">
+                  <span className="font-mono text-[10px] px-1.5 py-0.2 rounded bg-white border border-[#D4E7E1] text-[#78847C] shrink-0 font-medium">
                     {plant.code}
                   </span>
                 </div>
@@ -66,13 +66,13 @@ export const PlantSelector: React.FC<PlantSelectorProps> = ({
 
                 <div className="mt-1 flex items-center gap-2 text-[10px]">
                   <span className="flex items-center gap-1 font-mono text-[#78847C]">
-                    <Wifi className="w-2.5 h-2.5 text-[#245640]" />
+                    <Wifi className="w-2.5 h-2.5 text-[#087E75]" />
                     {plant.nodeId}
                   </span>
-                  <span className="text-[#A8BDA8]">·</span>
+                  <span className="text-[#55B6A3]">·</span>
                   <span
                     className={`font-semibold ${
-                      isStress ? 'text-[#C95D58]' : 'text-[#245640]'
+                      isStress ? 'text-[#C95D58]' : 'text-[#087E75]'
                     }`}
                   >
                     {isStress ? 'Stress Alert' : 'Nominal'}

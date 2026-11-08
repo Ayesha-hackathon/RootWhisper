@@ -56,18 +56,18 @@ export const CurrentPlantScreeningCard: React.FC<CurrentPlantScreeningCardProps>
   const isDataInconclusive = effectiveOutcome === 'INCONCLUSIVE';
 
   return (
-    <div className="bg-[#FFFFFF] rounded-xl border border-[#E5EBE3] p-5 shadow-xs space-y-4">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-5 shadow-xs space-y-4">
       {/* Plant Selector Bar & Diagnostic Simulation Strip */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-[#EEF3ED]">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-[#D9F0EA]">
         {/* Plant Selector */}
-        <div className="flex items-center gap-1.5 p-1 bg-[#F4F7F3] rounded-lg border border-[#E5EBE3]">
+        <div className="flex items-center gap-1.5 p-1 bg-[#EDF7F4] rounded-lg border border-[#D4E7E1]">
           {plants.map((plant) => (
             <button
               key={plant.id}
               onClick={() => onSelectPlant(plant.id)}
               className={`px-3 py-1.5 text-xs font-semibold rounded transition-colors cursor-pointer flex items-center gap-1.5 ${
                 selectedPlant.id === plant.id
-                  ? 'bg-white text-[#173F32] shadow-xs'
+                  ? 'bg-white text-[#123B36] shadow-xs'
                   : 'text-[#78847C] hover:text-[#26342D]'
               }`}
             >
@@ -80,7 +80,7 @@ export const CurrentPlantScreeningCard: React.FC<CurrentPlantScreeningCardProps>
         {/* Diagnostic Simulator for testing all 4 categories */}
         <div className="flex items-center gap-1.5 text-xs">
           <span className="text-[11px] text-[#78847C] font-mono">Test Outcome:</span>
-          <div className="flex items-center gap-1 p-0.5 bg-[#F4F7F3] rounded border border-[#E5EBE3]">
+          <div className="flex items-center gap-1 p-0.5 bg-[#EDF7F4] rounded border border-[#D4E7E1]">
             <button
               onClick={() => {
                 setSimulatedOutcome('auto');
@@ -88,7 +88,7 @@ export const CurrentPlantScreeningCard: React.FC<CurrentPlantScreeningCardProps>
               }}
               className={`px-2 py-0.5 text-[10px] font-mono rounded cursor-pointer ${
                 simulatedOutcome === 'auto' && dataQualityState === 'Valid'
-                  ? 'bg-[#173F32] text-white font-semibold'
+                  ? 'bg-[#123B36] text-white font-semibold'
                   : 'text-[#78847C]'
               }`}
             >
@@ -101,7 +101,7 @@ export const CurrentPlantScreeningCard: React.FC<CurrentPlantScreeningCardProps>
               }}
               className={`px-2 py-0.5 text-[10px] font-mono rounded cursor-pointer ${
                 effectiveOutcome === 'NORMAL' && dataQualityState === 'Valid'
-                  ? 'bg-[#245640] text-white font-semibold'
+                  ? 'bg-[#087E75] text-white font-semibold'
                   : 'text-[#78847C]'
               }`}
             >
@@ -169,7 +169,7 @@ export const CurrentPlantScreeningCard: React.FC<CurrentPlantScreeningCardProps>
                 Data Quality: {dataQualityState}
               </span>
             </div>
-            <h3 className="text-base font-bold text-[#173F32]">
+            <h3 className="text-base font-bold text-[#123B36]">
               {outcomeDef.description}
             </h3>
             <p className="text-xs text-[#26342D] mt-0.5 max-w-2xl leading-relaxed">
@@ -188,13 +188,13 @@ export const CurrentPlantScreeningCard: React.FC<CurrentPlantScreeningCardProps>
       {/* 4 Crucial Display Metrics Required by User */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {/* 1. Expected Leaf Temperature */}
-        <div className="p-3.5 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3]">
+        <div className="p-3.5 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1]">
           <div className="flex items-center justify-between text-[#78847C] text-[11px] mb-1">
             <span className="font-medium">Expected Leaf Temp</span>
-            <span className="font-mono text-[10px] text-[#245640]">Model Output</span>
+            <span className="font-mono text-[10px] text-[#087E75]">Model Output</span>
           </div>
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold font-mono text-[#173F32] tabular-nums">
+            <span className="text-2xl font-bold font-mono text-[#123B36] tabular-nums">
               {isDataInconclusive ? '--' : selectedPlant.aiBaseline.expectedLeafTemp.toFixed(1)}
             </span>
             <span className="text-xs font-mono text-[#78847C]">°C</span>
@@ -205,7 +205,7 @@ export const CurrentPlantScreeningCard: React.FC<CurrentPlantScreeningCardProps>
         </div>
 
         {/* 2. Observed Leaf Temperature */}
-        <div className="p-3.5 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3]">
+        <div className="p-3.5 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1]">
           <div className="flex items-center justify-between text-[#78847C] text-[11px] mb-1">
             <span className="font-medium">Observed Leaf Temp</span>
             <span className="font-mono text-[10px] text-[#78847C]">MLX90614</span>
@@ -222,7 +222,7 @@ export const CurrentPlantScreeningCard: React.FC<CurrentPlantScreeningCardProps>
         </div>
 
         {/* 3. Temperature Residual */}
-        <div className="p-3.5 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3]">
+        <div className="p-3.5 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1]">
           <div className="flex items-center justify-between text-[#78847C] text-[11px] mb-1">
             <span className="font-medium">Temperature Residual</span>
             <span className="font-mono text-[10px] text-[#C95D58]">T_obs − T_exp</span>
@@ -234,7 +234,7 @@ export const CurrentPlantScreeningCard: React.FC<CurrentPlantScreeningCardProps>
                   ? 'text-[#78847C]'
                   : selectedPlant.aiBaseline.temperatureResidual > 1.8
                   ? 'text-[#C95D58]'
-                  : 'text-[#245640]'
+                  : 'text-[#087E75]'
               }`}
             >
               {isDataInconclusive
@@ -251,13 +251,13 @@ export const CurrentPlantScreeningCard: React.FC<CurrentPlantScreeningCardProps>
         </div>
 
         {/* 4. Supporting Soil-Moisture Evidence */}
-        <div className="p-3.5 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3]">
+        <div className="p-3.5 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1]">
           <div className="flex items-center justify-between text-[#78847C] text-[11px] mb-1">
             <span className="font-medium">Soil Moisture Evidence</span>
-            <span className="font-mono text-[10px] text-[#173F32]">Separate Evidence</span>
+            <span className="font-mono text-[10px] text-[#123B36]">Separate Evidence</span>
           </div>
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold font-mono text-[#173F32] tabular-nums">
+            <span className="text-2xl font-bold font-mono text-[#123B36] tabular-nums">
               {isDataInconclusive ? '--' : selectedPlant.soilMoisture.toFixed(1)}
             </span>
             <span className="text-xs font-mono text-[#78847C]">%</span>

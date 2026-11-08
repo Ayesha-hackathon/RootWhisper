@@ -29,15 +29,15 @@ export const ScreeningHistoryTable: React.FC = () => {
   });
 
   return (
-    <div className="bg-[#FFFFFF] rounded-xl border border-[#E5EBE3] p-5 shadow-xs space-y-4">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-5 shadow-xs space-y-4">
       {/* Table Header & Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#EEF3ED]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D9F0EA]">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-base font-semibold text-[#173F32] tracking-tight">
+            <h2 className="text-base font-semibold text-[#123B36] tracking-tight">
               Screening History & Audit Trail
             </h2>
-            <span className="font-mono text-[10px] text-[#245640] bg-[#EEF3ED] px-2 py-0.5 rounded font-semibold">
+            <span className="font-mono text-[10px] text-[#087E75] bg-[#D9F0EA] px-2 py-0.5 rounded font-semibold">
               Searchable Archive
             </span>
           </div>
@@ -54,7 +54,7 @@ export const ScreeningHistoryTable: React.FC = () => {
             placeholder="Search plant, ID, notes..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-8 pr-3 py-1.5 text-xs bg-[#F8F8F4] border border-[#E5EBE3] rounded-lg text-[#26342D] placeholder-[#78847C] focus:outline-none focus:border-[#A8BDA8]"
+            className="w-full pl-8 pr-3 py-1.5 text-xs bg-[#F5FAF8] border border-[#D4E7E1] rounded-lg text-[#26342D] placeholder-[#78847C] focus:outline-none focus:border-[#55B6A3]"
           />
         </div>
       </div>
@@ -67,8 +67,8 @@ export const ScreeningHistoryTable: React.FC = () => {
             onClick={() => setFilterOutcome(cat)}
             className={`px-2.5 py-1 text-[11px] font-mono rounded-md transition-colors cursor-pointer ${
               filterOutcome === cat
-                ? 'bg-[#173F32] text-white font-semibold shadow-xs'
-                : 'bg-[#F4F7F3] text-[#78847C] hover:text-[#26342D] border border-[#E5EBE3]'
+                ? 'bg-[#123B36] text-white font-semibold shadow-xs'
+                : 'bg-[#EDF7F4] text-[#78847C] hover:text-[#26342D] border border-[#D4E7E1]'
             }`}
           >
             {cat}
@@ -77,9 +77,9 @@ export const ScreeningHistoryTable: React.FC = () => {
       </div>
 
       {/* Table */}
-      <div className="border border-[#E5EBE3] rounded-lg overflow-x-auto">
+      <div className="border border-[#D4E7E1] rounded-lg overflow-x-auto">
         <table className="w-full text-left text-xs min-w-[700px]">
-          <thead className="bg-[#F8F8F4] border-b border-[#E5EBE3] text-[#78847C] font-mono text-[11px]">
+          <thead className="bg-[#F5FAF8] border-b border-[#D4E7E1] text-[#78847C] font-mono text-[11px]">
             <tr>
               <th className="p-3">Evaluation ID</th>
               <th className="p-3">Timestamp</th>
@@ -93,7 +93,7 @@ export const ScreeningHistoryTable: React.FC = () => {
               <th className="p-3">Evidence Notes</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#EEF3ED] text-[#26342D]">
+          <tbody className="divide-y divide-[#D9F0EA] text-[#26342D]">
             {filteredHistory.length === 0 ? (
               <tr>
                 <td colSpan={10} className="p-8 text-center text-xs text-[#78847C]">
@@ -104,8 +104,8 @@ export const ScreeningHistoryTable: React.FC = () => {
               filteredHistory.map((row) => {
                 const outcomeDef = OUTCOME_DEFINITIONS[row.outcome];
                 return (
-                  <tr key={row.id} className="hover:bg-[#FBFDFB] transition-colors">
-                    <td className="p-3 font-mono font-semibold text-[#173F32] whitespace-nowrap">
+                  <tr key={row.id} className="hover:bg-[#EEF7F4] transition-colors">
+                    <td className="p-3 font-mono font-semibold text-[#123B36] whitespace-nowrap">
                       {row.id}
                     </td>
                     <td className="p-3 font-mono text-[11px] text-[#78847C] whitespace-nowrap">
@@ -134,14 +134,14 @@ export const ScreeningHistoryTable: React.FC = () => {
                           ? 'text-[#C95D58]'
                           : row.residual !== null && row.residual > 0.5
                           ? 'text-[#C58A35]'
-                          : 'text-[#245640]'
+                          : 'text-[#087E75]'
                       }`}
                     >
                       {row.residual !== null
                         ? `${row.residual > 0 ? `+${row.residual.toFixed(1)}` : row.residual.toFixed(1)}°C`
                         : '--'}
                     </td>
-                    <td className="p-3 text-right font-mono tabular-nums text-[#173F32]">
+                    <td className="p-3 text-right font-mono tabular-nums text-[#123B36]">
                       {row.soilMoistureEvidence !== null ? `${row.soilMoistureEvidence.toFixed(1)}%` : '--'}
                     </td>
                     <td className="p-3 font-mono text-[11px] text-[#78847C] whitespace-nowrap">
@@ -158,9 +158,9 @@ export const ScreeningHistoryTable: React.FC = () => {
         </table>
       </div>
 
-      <div className="pt-2 border-t border-[#EEF3ED] flex items-center justify-between text-[11px] text-[#78847C]">
+      <div className="pt-2 border-t border-[#D9F0EA] flex items-center justify-between text-[11px] text-[#78847C]">
         <span>Showing {filteredHistory.length} verified screening evaluations.</span>
-        <span className="font-mono text-[#245640]">SAMPLE DATA ARCHIVE</span>
+        <span className="font-mono text-[#087E75]">SAMPLE DATA ARCHIVE</span>
       </div>
     </div>
   );

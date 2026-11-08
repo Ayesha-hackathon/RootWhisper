@@ -34,8 +34,8 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({ plantId }) =
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5EBE3] shadow-md text-xs">
-          <p className="font-semibold text-[#173F32] mb-1.5 border-b border-[#EEF3ED] pb-1 font-mono">
+        <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#D4E7E1] shadow-md text-xs">
+          <p className="font-semibold text-[#123B36] mb-1.5 border-b border-[#D9F0EA] pb-1 font-mono">
             {label}
           </p>
           <div className="space-y-1">
@@ -59,15 +59,15 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({ plantId }) =
   };
 
   return (
-    <div className="bg-[#FFFFFF] rounded-xl border border-[#E5EBE3] p-5 shadow-xs space-y-4">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-5 shadow-xs space-y-4">
       {/* Header and Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-[#EEF3ED]">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-[#D9F0EA]">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-base font-semibold text-[#173F32] tracking-tight">
+            <h2 className="text-base font-semibold text-[#123B36] tracking-tight">
               Sensor Telemetry Historical Trends
             </h2>
-            <span className="font-mono text-[10px] text-[#78847C] bg-[#F8F8F4] border border-[#E5EBE3] px-2 py-0.5 rounded">
+            <span className="font-mono text-[10px] text-[#78847C] bg-[#F5FAF8] border border-[#D4E7E1] px-2 py-0.5 rounded">
               High Resolution Time Series
             </span>
           </div>
@@ -79,14 +79,14 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({ plantId }) =
         {/* Filters: Metric selector + Timeframe selector */}
         <div className="flex flex-wrap items-center gap-2">
           {/* Timeframe selector: 1h, 24h, 7d, 30d */}
-          <div className="flex items-center gap-1 p-1 bg-[#F4F7F3] rounded-lg border border-[#E5EBE3]">
+          <div className="flex items-center gap-1 p-1 bg-[#EDF7F4] rounded-lg border border-[#D4E7E1]">
             {(['1h', '24h', '7d', '30d'] as const).map((t) => (
               <button
                 key={t}
                 onClick={() => setTimeframe(t)}
                 className={`px-2.5 py-1 text-xs font-medium rounded transition-colors cursor-pointer ${
                   timeframe === t
-                    ? 'bg-white text-[#173F32] shadow-xs font-semibold'
+                    ? 'bg-white text-[#123B36] shadow-xs font-semibold'
                     : 'text-[#78847C] hover:text-[#26342D]'
                 }`}
               >
@@ -103,8 +103,8 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({ plantId }) =
           onClick={() => setActiveMetric('temperatures')}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
             activeMetric === 'temperatures'
-              ? 'bg-[#173F32] text-white'
-              : 'bg-[#F8F8F4] text-[#78847C] hover:text-[#26342D] border border-[#E5EBE3]'
+              ? 'bg-[#123B36] text-white'
+              : 'bg-[#F5FAF8] text-[#78847C] hover:text-[#26342D] border border-[#D4E7E1]'
           }`}
         >
           <Thermometer className="w-3.5 h-3.5" />
@@ -115,8 +115,8 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({ plantId }) =
           onClick={() => setActiveMetric('soil_moisture')}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
             activeMetric === 'soil_moisture'
-              ? 'bg-[#173F32] text-white'
-              : 'bg-[#F8F8F4] text-[#78847C] hover:text-[#26342D] border border-[#E5EBE3]'
+              ? 'bg-[#123B36] text-white'
+              : 'bg-[#F5FAF8] text-[#78847C] hover:text-[#26342D] border border-[#D4E7E1]'
           }`}
         >
           <Droplet className="w-3.5 h-3.5" />
@@ -127,8 +127,8 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({ plantId }) =
           onClick={() => setActiveMetric('humidity')}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
             activeMetric === 'humidity'
-              ? 'bg-[#173F32] text-white'
-              : 'bg-[#F8F8F4] text-[#78847C] hover:text-[#26342D] border border-[#E5EBE3]'
+              ? 'bg-[#123B36] text-white'
+              : 'bg-[#F5FAF8] text-[#78847C] hover:text-[#26342D] border border-[#D4E7E1]'
           }`}
         >
           <CloudRain className="w-3.5 h-3.5" />
@@ -139,8 +139,8 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({ plantId }) =
           onClick={() => setActiveMetric('light')}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
             activeMetric === 'light'
-              ? 'bg-[#173F32] text-white'
-              : 'bg-[#F8F8F4] text-[#78847C] hover:text-[#26342D] border border-[#E5EBE3]'
+              ? 'bg-[#123B36] text-white'
+              : 'bg-[#F5FAF8] text-[#78847C] hover:text-[#26342D] border border-[#D4E7E1]'
           }`}
         >
           <Sun className="w-3.5 h-3.5" />
@@ -152,16 +152,16 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({ plantId }) =
       <div className="h-72 w-full pt-2">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={historyData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#EEF3ED" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#D9F0EA" vertical={false} />
             <XAxis
               dataKey="timeLabel"
               tickLine={false}
-              stroke="#A8BDA8"
+              stroke="#55B6A3"
               tick={{ fill: '#78847C', fontSize: 11 }}
             />
             <YAxis
               tickLine={false}
-              stroke="#A8BDA8"
+              stroke="#55B6A3"
               tick={{ fill: '#78847C', fontSize: 11, fontFamily: 'monospace' }}
               domain={
                 activeMetric === 'temperatures'
@@ -192,16 +192,16 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({ plantId }) =
                   type="monotone"
                   dataKey="ambientTemperature"
                   name="Ambient Chamber Temp (AHT25)"
-                  stroke="#173F32"
+                  stroke="#123B36"
                   strokeWidth={2}
-                  dot={{ r: 2.5, fill: '#173F32' }}
+                  dot={{ r: 2.5, fill: '#123B36' }}
                   strokeDasharray="4 2"
                 />
                 <Line
                   type="monotone"
                   dataKey="expectedLeafTemp"
                   name="AI Expected Leaf Temp"
-                  stroke="#245640"
+                  stroke="#087E75"
                   strokeWidth={1.8}
                   strokeDasharray="2 2"
                   dot={false}
@@ -227,9 +227,9 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({ plantId }) =
                   type="monotone"
                   dataKey="soilMoisture"
                   name="Substrate Moisture (Capacitive)"
-                  stroke="#245640"
+                  stroke="#087E75"
                   strokeWidth={2.4}
-                  dot={{ r: 3, fill: '#245640' }}
+                  dot={{ r: 3, fill: '#087E75' }}
                   activeDot={{ r: 5 }}
                 />
                 <ReferenceLine
@@ -260,7 +260,7 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({ plantId }) =
                 />
                 <ReferenceLine
                   y={50.0}
-                  stroke="#A8BDA8"
+                  stroke="#55B6A3"
                   strokeDasharray="3 3"
                   label={{
                     value: 'Min Desirable RH (50%)',
@@ -288,11 +288,11 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({ plantId }) =
         </ResponsiveContainer>
       </div>
 
-      <div className="pt-2 border-t border-[#EEF3ED] flex items-center justify-between text-[11px] text-[#78847C]">
+      <div className="pt-2 border-t border-[#D9F0EA] flex items-center justify-between text-[11px] text-[#78847C]">
         <span>
           Viewing {timeframe.toUpperCase()} window for species calibration.
         </span>
-        <span className="font-mono text-[#245640]">
+        <span className="font-mono text-[#087E75]">
           Sample Telemetry Dataset
         </span>
       </div>

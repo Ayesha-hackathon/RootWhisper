@@ -59,11 +59,11 @@ export const PlantMonitoringView: React.FC<PlantMonitoringViewProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Breadcrumb & Action Strip */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[#EEF3ED]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[#D9F0EA]">
         <div className="flex items-center gap-3">
           <button
             onClick={onBackToDashboard}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#E5EBE3] bg-white text-xs font-medium text-[#26342D] hover:text-[#173F32] hover:bg-[#F8F8F4] transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D4E7E1] bg-white text-xs font-medium text-[#26342D] hover:text-[#123B36] hover:bg-[#F5FAF8] transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Dashboard Overview</span>
@@ -78,16 +78,16 @@ export const PlantMonitoringView: React.FC<PlantMonitoringViewProps> = ({
           <button
             onClick={handleScreening}
             disabled={isScreening}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold text-[#173F32] bg-white border border-[#E5EBE3] hover:border-[#A8BDA8] transition-colors cursor-pointer disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold text-[#123B36] bg-white border border-[#D4E7E1] hover:border-[#55B6A3] transition-colors cursor-pointer disabled:opacity-50"
           >
-            <Activity className="w-3.5 h-3.5 text-[#245640]" />
+            <Activity className="w-3.5 h-3.5 text-[#087E75]" />
             <span>{isScreening ? 'Screening...' : 'Scan Physiological State'}</span>
           </button>
 
           <button
             onClick={handleIrrigation}
             disabled={isIrrigating}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold text-white bg-[#173F32] hover:bg-[#245640] transition-colors cursor-pointer disabled:opacity-50 shadow-xs"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold text-white bg-[#123B36] hover:bg-[#087E75] transition-colors cursor-pointer disabled:opacity-50 shadow-xs"
           >
             <Droplets className="w-3.5 h-3.5" />
             <span>{isIrrigating ? 'Pulsing...' : 'Simulate Micro-Irrigation'}</span>

@@ -231,8 +231,8 @@ export const SensorDiagnosticsView: React.FC<SensorDiagnosticsViewProps> = ({
     <div className="space-y-6 animate-fade-in pb-12">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-lg bg-[#173F32] text-[#F8F8F4] text-xs font-medium shadow-lg border border-[#A8BDA8]/30 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#A8BDA8]" />
+        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-lg bg-[#123B36] text-[#F5FAF8] text-xs font-medium shadow-lg border border-[#55B6A3]/30 flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#55B6A3]" />
           <span>{toastMessage}</span>
         </div>
       )}
@@ -242,7 +242,7 @@ export const SensorDiagnosticsView: React.FC<SensorDiagnosticsViewProps> = ({
         <div className="flex items-center gap-3">
           <button
             onClick={onBackToDashboard}
-            className="flex items-center gap-1.5 py-1.5 px-3 rounded-lg border border-[#E5EBE3] hover:border-[#173F32] bg-white text-xs font-medium text-[#173F32] transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 py-1.5 px-3 rounded-lg border border-[#D4E7E1] hover:border-[#123B36] bg-white text-xs font-medium text-[#123B36] transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Dashboard</span>
@@ -250,7 +250,7 @@ export const SensorDiagnosticsView: React.FC<SensorDiagnosticsViewProps> = ({
           <div className="flex items-center gap-2 text-xs text-[#78847C]">
             <span>System Telemetry</span>
             <span aria-hidden="true">/</span>
-            <span className="text-[#173F32] font-semibold">Sensor Diagnostics</span>
+            <span className="text-[#123B36] font-semibold">Sensor Diagnostics</span>
           </div>
         </div>
 
@@ -259,18 +259,18 @@ export const SensorDiagnosticsView: React.FC<SensorDiagnosticsViewProps> = ({
           <button
             onClick={handleForceRefresh}
             disabled={isRefreshing}
-            className="flex items-center gap-1.5 py-1.5 px-3 rounded-lg border border-[#E5EBE3] hover:border-[#173F32] bg-white text-xs font-medium text-[#26342D] transition-colors cursor-pointer disabled:opacity-50"
+            className="flex items-center gap-1.5 py-1.5 px-3 rounded-lg border border-[#D4E7E1] hover:border-[#123B36] bg-white text-xs font-medium text-[#26342D] transition-colors cursor-pointer disabled:opacity-50"
             title="Poll fresh diagnostic packets"
           >
             <RefreshCw
-              className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-[#173F32]' : ''}`}
+              className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-[#123B36]' : ''}`}
             />
             <span>Refresh Telemetry</span>
           </button>
 
           <button
             onClick={handleExportJson}
-            className="flex items-center gap-1.5 py-1.5 px-3.5 rounded-lg bg-[#173F32] hover:bg-[#245640] text-white text-xs font-medium shadow-xs transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 py-1.5 px-3.5 rounded-lg bg-[#123B36] hover:bg-[#087E75] text-white text-xs font-medium shadow-xs transition-colors cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export Diagnostics</span>
@@ -279,11 +279,11 @@ export const SensorDiagnosticsView: React.FC<SensorDiagnosticsViewProps> = ({
       </div>
 
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-[#173F32] via-[#245640] to-[#173F32] text-[#F8F8F4] rounded-2xl p-6 sm:p-7 shadow-sm">
+      <div className="bg-gradient-to-r from-[#123B36] via-[#087E75] to-[#123B36] text-[#F5FAF8] rounded-2xl p-6 sm:p-7 shadow-sm">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1.5 max-w-2xl">
-            <div className="flex items-center gap-2 text-xs text-[#A8BDA8] font-mono">
-              <Cpu className="w-4 h-4 text-[#A8BDA8]" />
+            <div className="flex items-center gap-2 text-xs text-[#55B6A3] font-mono">
+              <Cpu className="w-4 h-4 text-[#55B6A3]" />
               <span>ESP32-S3 / DevKit V1 Hardware Fleet</span>
               <span aria-hidden="true">·</span>
               <span>Wi-Fi Telemetry Stream</span>
@@ -291,7 +291,7 @@ export const SensorDiagnosticsView: React.FC<SensorDiagnosticsViewProps> = ({
             <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
               Sensor Diagnostics Centre
             </h1>
-            <p className="text-xs sm:text-sm text-[#EEF3ED]/90 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#D9F0EA]/90 leading-relaxed">
               Comprehensive hardware telemetry, I2C bus health, packet transmission integrity, and sensor calibration curves across all three independent nodes.
             </p>
           </div>
@@ -299,11 +299,11 @@ export const SensorDiagnosticsView: React.FC<SensorDiagnosticsViewProps> = ({
           {/* Quick Metrics Badges */}
           <div className="flex flex-row md:flex-col gap-2 shrink-0 self-start md:self-auto font-mono text-xs">
             <div className="bg-white/10 backdrop-blur-xs px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
-              <Radio className="w-3.5 h-3.5 text-[#A8BDA8]" />
+              <Radio className="w-3.5 h-3.5 text-[#55B6A3]" />
               <span>3 Nodes Online</span>
             </div>
             <div className="bg-white/10 backdrop-blur-xs px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#A8BDA8]" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-[#55B6A3]" />
               <span>15 Channels Monitored</span>
             </div>
           </div>

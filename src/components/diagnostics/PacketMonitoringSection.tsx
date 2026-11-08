@@ -36,7 +36,7 @@ export const PacketMonitoringSection: React.FC<PacketMonitoringSectionProps> = (
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="text-base font-semibold text-[#173F32]">
+        <h3 className="text-base font-semibold text-[#123B36]">
           Data Packet & Freshness Monitoring
         </h3>
         <p className="text-xs text-[#78847C] mt-0.5">
@@ -47,12 +47,12 @@ export const PacketMonitoringSection: React.FC<PacketMonitoringSectionProps> = (
       {/* 4 Metric Summary Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* Metric 1 */}
-        <div className="bg-white p-4 rounded-xl border border-[#E5EBE3] shadow-xs">
+        <div className="bg-white p-4 rounded-xl border border-[#D4E7E1] shadow-xs">
           <div className="flex items-center justify-between text-xs text-[#78847C] mb-1">
             <span>Total Transmissions</span>
-            <Activity className="w-3.5 h-3.5 text-[#173F32]" />
+            <Activity className="w-3.5 h-3.5 text-[#123B36]" />
           </div>
-          <div className="font-mono text-2xl font-bold text-[#173F32] tabular-nums">
+          <div className="font-mono text-2xl font-bold text-[#123B36] tabular-nums">
             {totalTransmitted.toLocaleString()}
           </div>
           <div className="text-[11px] text-[#78847C] mt-1 font-mono">
@@ -61,22 +61,22 @@ export const PacketMonitoringSection: React.FC<PacketMonitoringSectionProps> = (
         </div>
 
         {/* Metric 2 */}
-        <div className="bg-white p-4 rounded-xl border border-[#E5EBE3] shadow-xs">
+        <div className="bg-white p-4 rounded-xl border border-[#D4E7E1] shadow-xs">
           <div className="flex items-center justify-between text-xs text-[#78847C] mb-1">
             <span>Fleet Delivery Rate</span>
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#245640]" />
+            <CheckCircle2 className="w-3.5 h-3.5 text-[#087E75]" />
           </div>
-          <div className="font-mono text-2xl font-bold text-[#245640] tabular-nums">
+          <div className="font-mono text-2xl font-bold text-[#087E75] tabular-nums">
             {(100 - aggregateLossRate).toFixed(2)}%
           </div>
-          <div className="text-[11px] text-[#245640] mt-1 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#245640]" />
+          <div className="text-[11px] text-[#087E75] mt-1 flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#087E75]" />
             <span>High reliability channel</span>
           </div>
         </div>
 
         {/* Metric 3 */}
-        <div className="bg-white p-4 rounded-xl border border-[#E5EBE3] shadow-xs">
+        <div className="bg-white p-4 rounded-xl border border-[#D4E7E1] shadow-xs">
           <div className="flex items-center justify-between text-xs text-[#78847C] mb-1">
             <span>Missing Packets</span>
             <AlertTriangle className="w-3.5 h-3.5 text-[#C58A35]" />
@@ -90,12 +90,12 @@ export const PacketMonitoringSection: React.FC<PacketMonitoringSectionProps> = (
         </div>
 
         {/* Metric 4 */}
-        <div className="bg-white p-4 rounded-xl border border-[#E5EBE3] shadow-xs">
+        <div className="bg-white p-4 rounded-xl border border-[#D4E7E1] shadow-xs">
           <div className="flex items-center justify-between text-xs text-[#78847C] mb-1">
             <span>CRC32 Validation</span>
-            <Radio className="w-3.5 h-3.5 text-[#173F32]" />
+            <Radio className="w-3.5 h-3.5 text-[#123B36]" />
           </div>
-          <div className="font-mono text-2xl font-bold text-[#173F32] tabular-nums">
+          <div className="font-mono text-2xl font-bold text-[#123B36] tabular-nums">
             99.99%
           </div>
           <div className="text-[11px] text-[#78847C] mt-1 font-mono">
@@ -107,10 +107,10 @@ export const PacketMonitoringSection: React.FC<PacketMonitoringSectionProps> = (
       {/* Two-Column Split: Telemetry Freshness Spectrum & Sequence Inspector */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Left: Freshness Monitoring Panel */}
-        <div className="bg-white p-5 rounded-xl border border-[#E5EBE3] shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-[#F0F4EF] pb-3">
+        <div className="bg-white p-5 rounded-xl border border-[#D4E7E1] shadow-xs space-y-4">
+          <div className="flex items-center justify-between border-b border-[#E1EFEA] pb-3">
             <div>
-              <h4 className="text-sm font-semibold text-[#173F32]">
+              <h4 className="text-sm font-semibold text-[#123B36]">
                 Data Freshness Spectrum
               </h4>
               <p className="text-xs text-[#78847C]">
@@ -126,7 +126,7 @@ export const PacketMonitoringSection: React.FC<PacketMonitoringSectionProps> = (
               const isOffline = n.status === 'offline';
               const isStale = n.status === 'stale';
               let freshnessLabel = 'Real-Time (<15s)';
-              let barColor = 'bg-[#245640]';
+              let barColor = 'bg-[#087E75]';
               let percent = 95;
 
               if (isOffline) {
@@ -139,15 +139,15 @@ export const PacketMonitoringSection: React.FC<PacketMonitoringSectionProps> = (
                 percent = 35;
               } else if (n.lastSeenSecondsAgo > 30) {
                 freshnessLabel = 'Delayed (30s–60s)';
-                barColor = 'bg-[#A8BDA8]';
+                barColor = 'bg-[#55B6A3]';
                 percent = 70;
               }
 
               return (
-                <div key={n.nodeId} className="p-3 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3]">
+                <div key={n.nodeId} className="p-3 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1]">
                   <div className="flex items-center justify-between text-xs mb-1.5">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono font-bold text-[#173F32]">
+                      <span className="font-mono font-bold text-[#123B36]">
                         {n.nodeId}
                       </span>
                       <span className="text-[#78847C]">{n.assignedPlantName}</span>
@@ -158,7 +158,7 @@ export const PacketMonitoringSection: React.FC<PacketMonitoringSectionProps> = (
                           ? 'text-[#C95D58]'
                           : isStale
                           ? 'text-[#C58A35]'
-                          : 'text-[#245640]'
+                          : 'text-[#087E75]'
                       }`}
                     >
                       {isOffline ? 'OFFLINE' : `${n.lastSeenSecondsAgo}s ago`}
@@ -166,7 +166,7 @@ export const PacketMonitoringSection: React.FC<PacketMonitoringSectionProps> = (
                   </div>
 
                   {/* Progress Bar */}
-                  <div className="h-2 w-full bg-[#E5EBE3] rounded-full overflow-hidden">
+                  <div className="h-2 w-full bg-[#D4E7E1] rounded-full overflow-hidden">
                     <div
                       className={`h-full transition-all duration-500 rounded-full ${barColor}`}
                       style={{ width: `${percent}%` }}
@@ -183,13 +183,13 @@ export const PacketMonitoringSection: React.FC<PacketMonitoringSectionProps> = (
           </div>
 
           {/* Freshness Legend */}
-          <div className="pt-2 border-t border-[#F0F4EF] flex items-center justify-between text-[11px] text-[#78847C]">
+          <div className="pt-2 border-t border-[#E1EFEA] flex items-center justify-between text-[11px] text-[#78847C]">
             <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#245640]" />
+              <span className="w-2 h-2 rounded-full bg-[#087E75]" />
               <span>&lt;15s Fresh</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#A8BDA8]" />
+              <span className="w-2 h-2 rounded-full bg-[#55B6A3]" />
               <span>15s–60s Nominal</span>
             </div>
             <div className="flex items-center gap-1.5">
@@ -204,11 +204,11 @@ export const PacketMonitoringSection: React.FC<PacketMonitoringSectionProps> = (
         </div>
 
         {/* Right: Missing Packet Sequence & Payload Structure */}
-        <div className="bg-white p-5 rounded-xl border border-[#E5EBE3] shadow-xs space-y-4 flex flex-col justify-between">
+        <div className="bg-white p-5 rounded-xl border border-[#D4E7E1] shadow-xs space-y-4 flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between border-b border-[#F0F4EF] pb-3">
+            <div className="flex items-center justify-between border-b border-[#E1EFEA] pb-3">
               <div>
-                <h4 className="text-sm font-semibold text-[#173F32]">
+                <h4 className="text-sm font-semibold text-[#123B36]">
                   Sequence Frame Tracker & Payload Schema
                 </h4>
                 <p className="text-xs text-[#78847C]">
@@ -217,14 +217,14 @@ export const PacketMonitoringSection: React.FC<PacketMonitoringSectionProps> = (
               </div>
 
               {/* Node selector buttons */}
-              <div className="flex items-center gap-1 p-0.5 bg-[#F4F7F3] rounded border border-[#E5EBE3] text-xs">
+              <div className="flex items-center gap-1 p-0.5 bg-[#EDF7F4] rounded border border-[#D4E7E1] text-xs">
                 {nodes.map((n) => (
                   <button
                     key={n.nodeId}
                     onClick={() => setSelectedNodeId(n.nodeId)}
                     className={`px-2 py-0.5 rounded font-mono text-[11px] transition-colors cursor-pointer ${
                       selectedNodeId === n.nodeId
-                        ? 'bg-white text-[#173F32] font-bold shadow-xs'
+                        ? 'bg-white text-[#123B36] font-bold shadow-xs'
                         : 'text-[#78847C] hover:text-[#26342D]'
                     }`}
                   >
@@ -240,70 +240,70 @@ export const PacketMonitoringSection: React.FC<PacketMonitoringSectionProps> = (
                 Recent Packet Stream (Last 6 Frames)
               </span>
               <div className="grid grid-cols-6 gap-2 text-center font-mono text-xs">
-                <div className="p-2 rounded bg-[#EEF3ED] border border-[#A8BDA8]/50 text-[#245640]">
+                <div className="p-2 rounded bg-[#D9F0EA] border border-[#55B6A3]/50 text-[#087E75]">
                   <div className="text-[10px] text-[#78847C]">Seq</div>
                   <div className="font-bold">#54215</div>
-                  <div className="text-[9px] text-[#245640]">200 OK</div>
+                  <div className="text-[9px] text-[#087E75]">200 OK</div>
                 </div>
-                <div className="p-2 rounded bg-[#EEF3ED] border border-[#A8BDA8]/50 text-[#245640]">
+                <div className="p-2 rounded bg-[#D9F0EA] border border-[#55B6A3]/50 text-[#087E75]">
                   <div className="text-[10px] text-[#78847C]">Seq</div>
                   <div className="font-bold">#54216</div>
-                  <div className="text-[9px] text-[#245640]">200 OK</div>
+                  <div className="text-[9px] text-[#087E75]">200 OK</div>
                 </div>
-                <div className="p-2 rounded bg-[#EEF3ED] border border-[#A8BDA8]/50 text-[#245640]">
+                <div className="p-2 rounded bg-[#D9F0EA] border border-[#55B6A3]/50 text-[#087E75]">
                   <div className="text-[10px] text-[#78847C]">Seq</div>
                   <div className="font-bold">#54217</div>
-                  <div className="text-[9px] text-[#245640]">200 OK</div>
+                  <div className="text-[9px] text-[#087E75]">200 OK</div>
                 </div>
                 <div className="p-2 rounded bg-[#FDF2F2] border border-[#C95D58]/40 text-[#C95D58]">
                   <div className="text-[10px] text-[#C95D58]">Seq</div>
                   <div className="font-bold">#54218</div>
                   <div className="text-[9px] font-semibold">DROPPED</div>
                 </div>
-                <div className="p-2 rounded bg-[#EEF3ED] border border-[#A8BDA8]/50 text-[#245640]">
+                <div className="p-2 rounded bg-[#D9F0EA] border border-[#55B6A3]/50 text-[#087E75]">
                   <div className="text-[10px] text-[#78847C]">Seq</div>
                   <div className="font-bold">#54219</div>
-                  <div className="text-[9px] text-[#245640]">200 OK</div>
+                  <div className="text-[9px] text-[#087E75]">200 OK</div>
                 </div>
-                <div className="p-2 rounded bg-[#EEF3ED] border border-[#245640] text-[#173F32] ring-1 ring-[#245640]/30">
-                  <div className="text-[10px] text-[#245640]">Seq</div>
+                <div className="p-2 rounded bg-[#D9F0EA] border border-[#087E75] text-[#123B36] ring-1 ring-[#087E75]/30">
+                  <div className="text-[10px] text-[#087E75]">Seq</div>
                   <div className="font-bold">#54220</div>
-                  <div className="text-[9px] text-[#245640] font-semibold">LATEST</div>
+                  <div className="text-[9px] text-[#087E75] font-semibold">LATEST</div>
                 </div>
               </div>
             </div>
 
             {/* Packet Payload Anatomy Box */}
-            <div className="mt-4 p-3 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3] space-y-2 font-mono text-xs">
+            <div className="mt-4 p-3 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1] space-y-2 font-mono text-xs">
               <div className="flex items-center justify-between text-[11px] text-[#78847C]">
                 <span>Telemetry Payload Format</span>
                 <span>JSON / 148 Bytes</span>
               </div>
-              <div className="bg-white p-2.5 rounded border border-[#E5EBE3] text-[11px] text-[#26342D] overflow-x-auto leading-relaxed">
-                <span className="text-[#173F32] font-semibold">&#123;</span>
+              <div className="bg-white p-2.5 rounded border border-[#D4E7E1] text-[11px] text-[#26342D] overflow-x-auto leading-relaxed">
+                <span className="text-[#123B36] font-semibold">&#123;</span>
                 <br />
                 &nbsp;&nbsp;<span className="text-[#78847C]">"node_id":</span> "{selectedNode.nodeId}",
                 &nbsp;&nbsp;<span className="text-[#78847C]">"seq":</span> 54220,
                 &nbsp;&nbsp;<span className="text-[#78847C]">"v_batt":</span> {selectedNode.batteryVoltage.toFixed(2)},
                 <br />
                 &nbsp;&nbsp;<span className="text-[#78847C]">"sensors":</span> &#123;
-                &nbsp;<span className="text-[#245640]">"sm_pct":</span> 34.2,
-                &nbsp;<span className="text-[#245640]">"mlx_leaf_c":</span> 26.8,
-                &nbsp;<span className="text-[#245640]">"aht_temp_c":</span> 24.2,
-                &nbsp;<span className="text-[#245640]">"aht_rh_pct":</span> 58.4,
-                &nbsp;<span className="text-[#245640]">"bh_lux":</span> 18450
+                &nbsp;<span className="text-[#087E75]">"sm_pct":</span> 34.2,
+                &nbsp;<span className="text-[#087E75]">"mlx_leaf_c":</span> 26.8,
+                &nbsp;<span className="text-[#087E75]">"aht_temp_c":</span> 24.2,
+                &nbsp;<span className="text-[#087E75]">"aht_rh_pct":</span> 58.4,
+                &nbsp;<span className="text-[#087E75]">"bh_lux":</span> 18450
                 &#125;,
                 <br />
                 &nbsp;&nbsp;<span className="text-[#78847C]">"crc32":</span> "0x89A4BF12"
                 <br />
-                <span className="text-[#173F32] font-semibold">&#125;</span>
+                <span className="text-[#123B36] font-semibold">&#125;</span>
               </div>
             </div>
           </div>
 
-          <div className="pt-2 border-t border-[#F0F4EF] flex items-center justify-between text-[11px] text-[#78847C]">
+          <div className="pt-2 border-t border-[#E1EFEA] flex items-center justify-between text-[11px] text-[#78847C]">
             <span>ESP32 Wi-Fi Transmission: HTTP POST /api/telemetry/v1</span>
-            <span className="font-mono text-[#245640] font-medium">Ready for Antigravity</span>
+            <span className="font-mono text-[#087E75] font-medium">Ready for Antigravity</span>
           </div>
         </div>
       </div>

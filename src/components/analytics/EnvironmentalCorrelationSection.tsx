@@ -29,8 +29,8 @@ export const EnvironmentalCorrelationSection: React.FC = () => {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5EBE3] shadow-md text-xs">
-          <p className="font-semibold text-[#173F32] mb-1.5 border-b border-[#EEF3ED] pb-1 font-mono">
+        <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#D4E7E1] shadow-md text-xs">
+          <p className="font-semibold text-[#123B36] mb-1.5 border-b border-[#D9F0EA] pb-1 font-mono">
             {label}
           </p>
           <div className="space-y-1">
@@ -53,15 +53,15 @@ export const EnvironmentalCorrelationSection: React.FC = () => {
   };
 
   return (
-    <div className="bg-[#FFFFFF] rounded-xl border border-[#E5EBE3] p-5 shadow-xs space-y-4">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-5 shadow-xs space-y-4">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#EEF3ED]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D9F0EA]">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-base font-semibold text-[#173F32] tracking-tight">
+            <h2 className="text-base font-semibold text-[#123B36] tracking-tight">
               Environmental & Physiological Correlations
             </h2>
-            <span className="font-mono text-[10px] text-[#173F32] bg-[#EEF3ED] px-2 py-0.5 rounded font-semibold">
+            <span className="font-mono text-[10px] text-[#123B36] bg-[#D9F0EA] px-2 py-0.5 rounded font-semibold">
               Energy Balance Analytics
             </span>
           </div>
@@ -81,12 +81,12 @@ export const EnvironmentalCorrelationSection: React.FC = () => {
           onClick={() => setMode('ambient_vs_leaf')}
           className={`p-2.5 rounded-lg border text-left transition-all cursor-pointer ${
             mode === 'ambient_vs_leaf'
-              ? 'bg-[#EEF3ED] border-[#173F32] text-[#173F32] shadow-xs'
-              : 'bg-[#F8F8F4] border-[#E5EBE3] text-[#78847C] hover:text-[#26342D]'
+              ? 'bg-[#D9F0EA] border-[#123B36] text-[#123B36] shadow-xs'
+              : 'bg-[#F5FAF8] border-[#D4E7E1] text-[#78847C] hover:text-[#26342D]'
           }`}
         >
           <div className="flex items-center gap-1.5 mb-1 font-semibold text-xs">
-            <Flame className="w-3.5 h-3.5 text-[#173F32]" />
+            <Flame className="w-3.5 h-3.5 text-[#123B36]" />
             <span>Ambient vs Leaf Temp</span>
           </div>
           <p className="text-[10px] text-[#78847C] line-clamp-1">
@@ -98,12 +98,12 @@ export const EnvironmentalCorrelationSection: React.FC = () => {
           onClick={() => setMode('humidity_vs_leaf')}
           className={`p-2.5 rounded-lg border text-left transition-all cursor-pointer ${
             mode === 'humidity_vs_leaf'
-              ? 'bg-[#EEF3ED] border-[#173F32] text-[#173F32] shadow-xs'
-              : 'bg-[#F8F8F4] border-[#E5EBE3] text-[#78847C] hover:text-[#26342D]'
+              ? 'bg-[#D9F0EA] border-[#123B36] text-[#123B36] shadow-xs'
+              : 'bg-[#F5FAF8] border-[#D4E7E1] text-[#78847C] hover:text-[#26342D]'
           }`}
         >
           <div className="flex items-center gap-1.5 mb-1 font-semibold text-xs">
-            <Droplets className="w-3.5 h-3.5 text-[#245640]" />
+            <Droplets className="w-3.5 h-3.5 text-[#087E75]" />
             <span>Humidity vs Leaf Temp</span>
           </div>
           <p className="text-[10px] text-[#78847C] line-clamp-1">
@@ -115,8 +115,8 @@ export const EnvironmentalCorrelationSection: React.FC = () => {
           onClick={() => setMode('light_vs_leaf')}
           className={`p-2.5 rounded-lg border text-left transition-all cursor-pointer ${
             mode === 'light_vs_leaf'
-              ? 'bg-[#EEF3ED] border-[#173F32] text-[#173F32] shadow-xs'
-              : 'bg-[#F8F8F4] border-[#E5EBE3] text-[#78847C] hover:text-[#26342D]'
+              ? 'bg-[#D9F0EA] border-[#123B36] text-[#123B36] shadow-xs'
+              : 'bg-[#F5FAF8] border-[#D4E7E1] text-[#78847C] hover:text-[#26342D]'
           }`}
         >
           <div className="flex items-center gap-1.5 mb-1 font-semibold text-xs">
@@ -132,8 +132,8 @@ export const EnvironmentalCorrelationSection: React.FC = () => {
           onClick={() => setMode('moisture_vs_cwsi')}
           className={`p-2.5 rounded-lg border text-left transition-all cursor-pointer ${
             mode === 'moisture_vs_cwsi'
-              ? 'bg-[#EEF3ED] border-[#173F32] text-[#173F32] shadow-xs'
-              : 'bg-[#F8F8F4] border-[#E5EBE3] text-[#78847C] hover:text-[#26342D]'
+              ? 'bg-[#D9F0EA] border-[#123B36] text-[#123B36] shadow-xs'
+              : 'bg-[#F5FAF8] border-[#D4E7E1] text-[#78847C] hover:text-[#26342D]'
           }`}
         >
           <div className="flex items-center gap-1.5 mb-1 font-semibold text-xs">
@@ -150,24 +150,24 @@ export const EnvironmentalCorrelationSection: React.FC = () => {
       <div className="h-72 w-full pt-1">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={data} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#EEF3ED" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#D9F0EA" vertical={false} />
             <XAxis
               dataKey="label"
               tickLine={false}
-              stroke="#A8BDA8"
+              stroke="#55B6A3"
               tick={{ fill: '#78847C', fontSize: 10 }}
             />
             <YAxis
               yAxisId="left"
               tickLine={false}
-              stroke="#A8BDA8"
+              stroke="#55B6A3"
               tick={{ fill: '#78847C', fontSize: 11, fontFamily: 'monospace' }}
             />
             <YAxis
               yAxisId="right"
               orientation="right"
               tickLine={false}
-              stroke="#A8BDA8"
+              stroke="#55B6A3"
               tick={{ fill: '#78847C', fontSize: 11, fontFamily: 'monospace' }}
             />
             <Tooltip content={<CustomTooltip />} />
@@ -181,7 +181,7 @@ export const EnvironmentalCorrelationSection: React.FC = () => {
                   type="monotone"
                   dataKey="ambientTemp"
                   name="Ambient Temp (°C)"
-                  stroke="#173F32"
+                  stroke="#123B36"
                   strokeWidth={2.2}
                   dot={{ r: 3 }}
                 />
@@ -204,7 +204,7 @@ export const EnvironmentalCorrelationSection: React.FC = () => {
                   yAxisId="right"
                   dataKey="humidity"
                   name="Relative Humidity (%)"
-                  fill="#A8BDA8"
+                  fill="#55B6A3"
                   opacity={0.4}
                   radius={[4, 4, 0, 0]}
                 />
@@ -251,7 +251,7 @@ export const EnvironmentalCorrelationSection: React.FC = () => {
                   type="monotone"
                   dataKey="soilMoisture"
                   name="Soil Moisture (%)"
-                  stroke="#245640"
+                  stroke="#087E75"
                   strokeWidth={2.2}
                   dot={{ r: 3 }}
                 />
@@ -282,25 +282,25 @@ export const EnvironmentalCorrelationSection: React.FC = () => {
       </div>
 
       {/* Domain Scientific Footnote */}
-      <div className="p-3 bg-[#F8F8F4] rounded-lg border border-[#EEF3ED] text-xs text-[#26342D] leading-relaxed">
+      <div className="p-3 bg-[#F5FAF8] rounded-lg border border-[#D9F0EA] text-xs text-[#26342D] leading-relaxed">
         {mode === 'ambient_vs_leaf' && (
           <p>
-            <span className="font-semibold text-[#173F32]">Analytical Note:</span> Under nominal hydration, leaf temperature operates 0.5°C to 1.5°C below ambient air due to latent cooling. As root moisture declines, stomatal constriction forces leaf temperature above ambient air (+2.6°C delta).
+            <span className="font-semibold text-[#123B36]">Analytical Note:</span> Under nominal hydration, leaf temperature operates 0.5°C to 1.5°C below ambient air due to latent cooling. As root moisture declines, stomatal constriction forces leaf temperature above ambient air (+2.6°C delta).
           </p>
         )}
         {mode === 'humidity_vs_leaf' && (
           <p>
-            <span className="font-semibold text-[#173F32]">Analytical Note:</span> Lower chamber relative humidity increases atmospheric vapor pressure deficit (VPD), elevating transpiration demand and accelerating stomatal fatigue when substrate reserves fall below 35%.
+            <span className="font-semibold text-[#123B36]">Analytical Note:</span> Lower chamber relative humidity increases atmospheric vapor pressure deficit (VPD), elevating transpiration demand and accelerating stomatal fatigue when substrate reserves fall below 35%.
           </p>
         )}
         {mode === 'light_vs_leaf' && (
           <p>
-            <span className="font-semibold text-[#173F32]">Analytical Note:</span> High illumination (&gt;15,000 lux) creates radiant surface heating. Hydrated canopies dissipate this heat seamlessly through stomatal conductance, whereas stressed leaves overheat rapidly.
+            <span className="font-semibold text-[#123B36]">Analytical Note:</span> High illumination (&gt;15,000 lux) creates radiant surface heating. Hydrated canopies dissipate this heat seamlessly through stomatal conductance, whereas stressed leaves overheat rapidly.
           </p>
         )}
         {mode === 'moisture_vs_cwsi' && (
           <p>
-            <span className="font-semibold text-[#173F32]">Analytical Note:</span> The non-linear hydraulic inflection occurs around 35% soil moisture for Tulsi, where the Crop Water Stress Index rises sharply from 0.22 to &gt;0.64 before visible wilting appears.
+            <span className="font-semibold text-[#123B36]">Analytical Note:</span> The non-linear hydraulic inflection occurs around 35% soil moisture for Tulsi, where the Crop Water Stress Index rises sharply from 0.22 to &gt;0.64 before visible wilting appears.
           </p>
         )}
       </div>

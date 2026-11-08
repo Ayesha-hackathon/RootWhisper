@@ -35,7 +35,7 @@ export const SensorCard: React.FC<SensorCardProps> = ({
   let effectiveValidity: DataValidityState = sensor.validity;
   let displayValue: string = sensor.value !== null ? `${sensor.value}` : '--';
   let validityLabel = 'Valid';
-  let validityBadgeClass = 'bg-[#EEF3ED] text-[#245640] border-[#A8BDA8]/40';
+  let validityBadgeClass = 'bg-[#D9F0EA] text-[#087E75] border-[#55B6A3]/40';
   let lastUpdateText = sensor.lastUpdated;
   let statusNoteText = sensor.statusNote || optimalNote || sensor.nominalRangeText;
 
@@ -62,16 +62,16 @@ export const SensorCard: React.FC<SensorCardProps> = ({
   }
 
   return (
-    <div className="bg-[#FFFFFF] rounded-xl border border-[#E5EBE3] p-4 shadow-xs flex flex-col justify-between h-full min-h-[170px] transition-all hover:border-[#A8BDA8]">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-4 shadow-xs flex flex-col justify-between h-full min-h-[170px] transition-all hover:border-[#55B6A3]">
       {/* Top row: Sensor Name & Hardware Model */}
       <div>
         <div className="flex items-start justify-between gap-2 mb-2">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#F8F8F4] border border-[#E5EBE3] flex items-center justify-center text-[#173F32]">
+            <div className="w-8 h-8 rounded-lg bg-[#F5FAF8] border border-[#D4E7E1] flex items-center justify-center text-[#123B36]">
               <Icon className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-xs font-semibold text-[#173F32] tracking-tight">
+              <h3 className="text-xs font-semibold text-[#123B36] tracking-tight">
                 {sensor.name}
               </h3>
               <p className="text-[10px] font-mono text-[#78847C]">
@@ -99,7 +99,7 @@ export const SensorCard: React.FC<SensorCardProps> = ({
                   ? 'text-[#9CA3AF]'
                   : effectiveValidity === 'stale'
                   ? 'text-[#C58A35]'
-                  : 'text-[#173F32]'
+                  : 'text-[#123B36]'
               }`}
             >
               {displayValue}
@@ -117,7 +117,7 @@ export const SensorCard: React.FC<SensorCardProps> = ({
       </div>
 
       {/* Footer: Diagnostic Note & Last Update */}
-      <div className="pt-2.5 border-t border-[#EEF3ED] text-[11px] space-y-1">
+      <div className="pt-2.5 border-t border-[#D9F0EA] text-[11px] space-y-1">
         <p className="text-[#26342D] text-[10px] leading-tight line-clamp-1">
           {statusNoteText}
         </p>

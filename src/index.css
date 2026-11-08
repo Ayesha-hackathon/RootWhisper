@@ -4,12 +4,12 @@
   --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --color-forest: #173F32;
-  --color-emerald-deep: #245640;
-  --color-sage: #A8BDA8;
-  --color-sage-light: #EEF3ED;
-  --color-sage-subtle: #F4F7F3;
-  --color-ivory: #F8F8F4;
+  --color-forest: #123B36;
+  --color-emerald-deep: #087E75;
+  --color-sage: #55B6A3;
+  --color-sage-light: #D9F0EA;
+  --color-sage-subtle: #EDF7F4;
+  --color-ivory: #F5FAF8;
   --color-charcoal: #26342D;
   --color-muted: #78847C;
   --color-alert: #C95D58;
@@ -19,7 +19,7 @@
 :root {
   font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   color: #26342D;
-  background-color: #F8F8F4;
+  background-color: #EAF2ED;
 }
 
 /* Custom crisp scrollbars for dense data views */
@@ -31,7 +31,7 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #A8BDA8;
+  background: #55B6A3;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {

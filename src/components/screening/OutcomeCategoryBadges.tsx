@@ -26,8 +26,8 @@ export const OUTCOME_DEFINITIONS: Record<
   NORMAL: {
     label: 'NORMAL',
     description: 'No persistent concerning pattern identified.',
-    badgeStyle: 'bg-[#EEF3ED] text-[#245640] border-[#A8BDA8]/50',
-    borderStyle: 'border-[#245640]',
+    badgeStyle: 'bg-[#D9F0EA] text-[#087E75] border-[#55B6A3]/50',
+    borderStyle: 'border-[#087E75]',
     icon: CheckCircle2,
     criteria: 'Leaf temperature matches energy-balance prediction within baseline tolerance. Latent evaporative cooling active.',
   },
@@ -74,8 +74,8 @@ export const OutcomeCategoryBadges: React.FC<OutcomeCategoryBadgesProps> = ({
             onClick={() => onSelectCategory && onSelectCategory(categoryKey)}
             className={`p-3.5 rounded-xl border bg-white transition-all flex flex-col justify-between ${
               isActive
-                ? `${item.borderStyle} shadow-xs ring-1 ring-[#173F32]/10`
-                : 'border-[#E5EBE3] hover:border-[#A8BDA8]'
+                ? `${item.borderStyle} shadow-xs ring-1 ring-[#123B36]/10`
+                : 'border-[#D4E7E1] hover:border-[#55B6A3]'
             } ${onSelectCategory ? 'cursor-pointer' : ''}`}
           >
             <div>
@@ -83,13 +83,13 @@ export const OutcomeCategoryBadges: React.FC<OutcomeCategoryBadgesProps> = ({
                 <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${item.badgeStyle}`}>
                   {item.label}
                 </span>
-                <Icon className={`w-4 h-4 ${isActive ? 'text-[#173F32]' : 'text-[#78847C]'}`} />
+                <Icon className={`w-4 h-4 ${isActive ? 'text-[#123B36]' : 'text-[#78847C]'}`} />
               </div>
-              <p className="text-xs font-semibold text-[#173F32] mb-1">
+              <p className="text-xs font-semibold text-[#123B36] mb-1">
                 {item.description}
               </p>
             </div>
-            <p className="text-[10px] text-[#78847C] pt-2 border-t border-[#EEF3ED] mt-2 line-clamp-2 leading-relaxed">
+            <p className="text-[10px] text-[#78847C] pt-2 border-t border-[#D9F0EA] mt-2 line-clamp-2 leading-relaxed">
               {item.criteria}
             </p>
           </div>

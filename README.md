@@ -93,7 +93,7 @@ rootwhisper-frontend/
 - **Framework**: React 19 + TypeScript (Strict Type Safety)
 - **Bundler & Dev Server**: Vite 8
 - **Styling**: Tailwind CSS v4 (`@tailwindcss/vite`)
-- **Visual Palette**: Premium Botanical Intelligence (`#173F32` Forest Green, `#245640` Emerald, `#A8BDA8` Sage, `#F8F8F4` Warm Ivory, `#26342D` Charcoal)
+- **Visual Palette**: Official ECO-TECH Visual Identity (`#123B36` Deep Forest, `#087E75` Eco Teal, `#55B6A3` Fresh Teal, `#D9F0EA` Mint, `#F5FAF8` Background, `#26342D` Charcoal, `#78847C` Secondary Text)
 - **Data Visualizations**: Recharts
 - **Icons**: Lucide React
 - **Typography**: Plus Jakarta Sans (Display/Prose) & JetBrains Mono (Telemetry/Tabular figures)

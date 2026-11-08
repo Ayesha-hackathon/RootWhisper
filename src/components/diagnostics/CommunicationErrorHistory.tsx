@@ -51,13 +51,13 @@ export const CommunicationErrorHistory: React.FC<CommunicationErrorHistoryProps>
   }, [errors, severityFilter, nodeFilter, searchQuery]);
 
   return (
-    <div className="bg-white rounded-xl border border-[#E5EBE3] shadow-xs overflow-hidden">
+    <div className="bg-white rounded-xl border border-[#D4E7E1] shadow-xs overflow-hidden">
       {/* Header */}
-      <div className="p-4 sm:p-5 border-b border-[#F0F4EF] space-y-3.5">
+      <div className="p-4 sm:p-5 border-b border-[#E1EFEA] space-y-3.5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-base font-semibold text-[#173F32]">
+              <h3 className="text-base font-semibold text-[#123B36]">
                 Communication & Hardware Error History
               </h3>
               <span className="text-xs font-mono text-[#78847C]">
@@ -74,7 +74,7 @@ export const CommunicationErrorHistory: React.FC<CommunicationErrorHistoryProps>
             <div className="flex items-center gap-2 self-start sm:self-auto">
               <button
                 onClick={() => onSimulateError('sentinel')}
-                className="py-1 px-2.5 rounded text-xs font-medium border border-[#E5EBE3] hover:border-[#C95D58] bg-white text-[#C95D58] hover:bg-[#FDF2F2] transition-colors cursor-pointer"
+                className="py-1 px-2.5 rounded text-xs font-medium border border-[#D4E7E1] hover:border-[#C95D58] bg-white text-[#C95D58] hover:bg-[#FDF2F2] transition-colors cursor-pointer"
                 title="Simulate MLX90614 -99.0°C fault intercept"
               >
                 + Inject -99.0°C Fault
@@ -93,19 +93,19 @@ export const CommunicationErrorHistory: React.FC<CommunicationErrorHistoryProps>
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search error type, frame, or description..."
-              className="w-full pl-9 pr-3 py-1.5 text-xs bg-[#F8F8F4] border border-[#E5EBE3] rounded-lg text-[#26342D] placeholder-[#78847C] focus:outline-none focus:border-[#173F32]"
+              className="w-full pl-9 pr-3 py-1.5 text-xs bg-[#F5FAF8] border border-[#D4E7E1] rounded-lg text-[#26342D] placeholder-[#78847C] focus:outline-none focus:border-[#123B36]"
             />
           </div>
 
           {/* Filter Pills */}
           <div className="flex items-center gap-2 text-xs flex-wrap">
             {/* Severity Tabs */}
-            <div className="flex items-center gap-1 p-0.5 bg-[#F4F7F3] rounded-lg border border-[#E5EBE3]">
+            <div className="flex items-center gap-1 p-0.5 bg-[#EDF7F4] rounded-lg border border-[#D4E7E1]">
               <button
                 onClick={() => setSeverityFilter('all')}
                 className={`px-2 py-1 rounded text-xs transition-colors cursor-pointer ${
                   severityFilter === 'all'
-                    ? 'bg-white text-[#173F32] font-semibold shadow-xs'
+                    ? 'bg-white text-[#123B36] font-semibold shadow-xs'
                     : 'text-[#78847C] hover:text-[#26342D]'
                 }`}
               >
@@ -135,7 +135,7 @@ export const CommunicationErrorHistory: React.FC<CommunicationErrorHistoryProps>
                 onClick={() => setSeverityFilter('nominal')}
                 className={`px-2 py-1 rounded text-xs transition-colors cursor-pointer ${
                   severityFilter === 'nominal'
-                    ? 'bg-white text-[#245640] font-semibold shadow-xs'
+                    ? 'bg-white text-[#087E75] font-semibold shadow-xs'
                     : 'text-[#78847C] hover:text-[#26342D]'
                 }`}
               >
@@ -147,7 +147,7 @@ export const CommunicationErrorHistory: React.FC<CommunicationErrorHistoryProps>
             <select
               value={nodeFilter}
               onChange={(e) => setNodeFilter(e.target.value)}
-              className="py-1 px-2.5 text-xs bg-[#F8F8F4] border border-[#E5EBE3] rounded-lg text-[#26342D] focus:outline-none focus:border-[#173F32] cursor-pointer"
+              className="py-1 px-2.5 text-xs bg-[#F5FAF8] border border-[#D4E7E1] rounded-lg text-[#26342D] focus:outline-none focus:border-[#123B36] cursor-pointer"
             >
               <option value="all">All Nodes</option>
               <option value="TULSI_01">TULSI_01</option>
@@ -162,7 +162,7 @@ export const CommunicationErrorHistory: React.FC<CommunicationErrorHistoryProps>
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-[#FAFAF8] border-b border-[#E5EBE3] text-[11px] font-semibold text-[#78847C] uppercase tracking-wider">
+            <tr className="bg-[#F0F7F4] border-b border-[#D4E7E1] text-[11px] font-semibold text-[#78847C] uppercase tracking-wider">
               <th className="py-3 px-4">Timestamp</th>
               <th className="py-3 px-3">Node ID</th>
               <th className="py-3 px-3">Severity</th>
@@ -172,11 +172,11 @@ export const CommunicationErrorHistory: React.FC<CommunicationErrorHistoryProps>
               <th className="py-3 px-3 text-right">Status</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#F0F4EF] text-xs">
+          <tbody className="divide-y divide-[#E1EFEA] text-xs">
             {filteredErrors.length === 0 ? (
               <tr>
                 <td colSpan={7} className="py-8 text-center text-[#78847C]">
-                  <CheckCircle2 className="w-8 h-8 text-[#245640] mx-auto mb-2 opacity-50" />
+                  <CheckCircle2 className="w-8 h-8 text-[#087E75] mx-auto mb-2 opacity-50" />
                   <p className="font-medium text-xs">No communication errors found.</p>
                   <p className="text-[11px] text-[#78847C] mt-0.5">
                     All ESP32 telemetry frames are transmitting within nominal CRC32 bounds.
@@ -191,8 +191,8 @@ export const CommunicationErrorHistory: React.FC<CommunicationErrorHistoryProps>
                 return (
                   <tr
                     key={err.id}
-                    className={`hover:bg-[#F8F8F4] transition-colors ${
-                      isCrit ? 'bg-[#FDF2F2]/30' : isWarn ? 'bg-[#FBF4E8]/20' : ''
+                    className={`hover:bg-[#F5FAF8] transition-colors ${
+                      isCrit ? 'bg-[#FDF2F2]/30' : isWarn ? 'bg-[#FFF8EB]/20' : ''
                     }`}
                   >
                     {/* Timestamp */}
@@ -201,7 +201,7 @@ export const CommunicationErrorHistory: React.FC<CommunicationErrorHistoryProps>
                     </td>
 
                     {/* Node ID */}
-                    <td className="py-3 px-3 font-mono font-semibold text-xs text-[#173F32]">
+                    <td className="py-3 px-3 font-mono font-semibold text-xs text-[#123B36]">
                       {err.nodeId}
                     </td>
 
@@ -214,21 +214,21 @@ export const CommunicationErrorHistory: React.FC<CommunicationErrorHistoryProps>
                         </span>
                       )}
                       {isWarn && (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-[#FBF4E8] text-[#C58A35]">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-[#FFF8EB] text-[#C58A35]">
                           <AlertTriangle className="w-3 h-3 text-[#C58A35]" />
                           WARNING
                         </span>
                       )}
                       {!isCrit && !isWarn && (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-[#EEF3ED] text-[#245640]">
-                          <Info className="w-3 h-3 text-[#245640]" />
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-[#D9F0EA] text-[#087E75]">
+                          <Info className="w-3 h-3 text-[#087E75]" />
                           NOMINAL
                         </span>
                       )}
                     </td>
 
                     {/* Error Type */}
-                    <td className="py-3 px-3 font-medium text-[#173F32] whitespace-nowrap">
+                    <td className="py-3 px-3 font-medium text-[#123B36] whitespace-nowrap">
                       {err.errorType}
                     </td>
 
@@ -249,8 +249,8 @@ export const CommunicationErrorHistory: React.FC<CommunicationErrorHistoryProps>
 
                     {/* Status */}
                     <td className="py-3 px-3 text-right whitespace-nowrap">
-                      <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#245640]">
-                        <CheckCircle2 className="w-3 h-3 text-[#245640]" />
+                      <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#087E75]">
+                        <CheckCircle2 className="w-3 h-3 text-[#087E75]" />
                         Resolved
                       </span>
                     </td>
@@ -263,14 +263,14 @@ export const CommunicationErrorHistory: React.FC<CommunicationErrorHistoryProps>
       </div>
 
       {/* Footer */}
-      <div className="p-3 bg-[#FAFAF8] border-t border-[#F0F4EF] flex items-center justify-between text-xs text-[#78847C]">
+      <div className="p-3 bg-[#F0F7F4] border-t border-[#E1EFEA] flex items-center justify-between text-xs text-[#78847C]">
         <span>
           Auto-purging resolved non-critical logs after 72 hours.
         </span>
         {onClearResolved && (
           <button
             onClick={onClearResolved}
-            className="text-[11px] text-[#173F32] hover:underline font-medium cursor-pointer"
+            className="text-[11px] text-[#123B36] hover:underline font-medium cursor-pointer"
           >
             Clear Resolved
           </button>

@@ -32,8 +32,8 @@ export const SensorTrendChart: React.FC<SensorTrendChartProps> = ({ data }) => {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5EBE3] shadow-md text-xs">
-          <p className="font-semibold text-[#173F32] mb-1.5 border-b border-[#EEF3ED] pb-1 font-mono">
+        <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#D4E7E1] shadow-md text-xs">
+          <p className="font-semibold text-[#123B36] mb-1.5 border-b border-[#D9F0EA] pb-1 font-mono">
             {label}
           </p>
           <div className="space-y-1">
@@ -63,15 +63,15 @@ export const SensorTrendChart: React.FC<SensorTrendChartProps> = ({ data }) => {
   };
 
   return (
-    <div className="bg-[#FFFFFF] rounded-xl border border-[#E5EBE3] p-5 shadow-xs">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#D4E7E1] p-5 shadow-xs">
       {/* Chart Header & Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-3 border-b border-[#EEF3ED]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-3 border-b border-[#D9F0EA]">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-base font-semibold text-[#173F32] tracking-tight">
+            <h2 className="text-base font-semibold text-[#123B36] tracking-tight">
               Physiological & Environmental Dynamics
             </h2>
-            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-[#EEF3ED] text-[#245640]">
+            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-[#D9F0EA] text-[#087E75]">
               24-Hour Telemetry
             </span>
           </div>
@@ -84,12 +84,12 @@ export const SensorTrendChart: React.FC<SensorTrendChartProps> = ({ data }) => {
         </div>
 
         {/* Metric Selector Tabs */}
-        <div className="flex flex-wrap items-center gap-1 p-1 bg-[#F4F7F3] rounded-lg border border-[#E5EBE3]">
+        <div className="flex flex-wrap items-center gap-1 p-1 bg-[#EDF7F4] rounded-lg border border-[#D4E7E1]">
           <button
             onClick={() => setMetricMode('delta_temp')}
             className={`px-3 py-1 text-xs font-medium rounded transition-colors cursor-pointer ${
               metricMode === 'delta_temp'
-                ? 'bg-white text-[#173F32] shadow-xs font-semibold'
+                ? 'bg-white text-[#123B36] shadow-xs font-semibold'
                 : 'text-[#78847C] hover:text-[#26342D]'
             }`}
           >
@@ -99,7 +99,7 @@ export const SensorTrendChart: React.FC<SensorTrendChartProps> = ({ data }) => {
             onClick={() => setMetricMode('moisture')}
             className={`px-3 py-1 text-xs font-medium rounded transition-colors cursor-pointer ${
               metricMode === 'moisture'
-                ? 'bg-white text-[#173F32] shadow-xs font-semibold'
+                ? 'bg-white text-[#123B36] shadow-xs font-semibold'
                 : 'text-[#78847C] hover:text-[#26342D]'
             }`}
           >
@@ -109,7 +109,7 @@ export const SensorTrendChart: React.FC<SensorTrendChartProps> = ({ data }) => {
             onClick={() => setMetricMode('cwsi')}
             className={`px-3 py-1 text-xs font-medium rounded transition-colors cursor-pointer ${
               metricMode === 'cwsi'
-                ? 'bg-white text-[#173F32] shadow-xs font-semibold'
+                ? 'bg-white text-[#123B36] shadow-xs font-semibold'
                 : 'text-[#78847C] hover:text-[#26342D]'
             }`}
           >
@@ -119,7 +119,7 @@ export const SensorTrendChart: React.FC<SensorTrendChartProps> = ({ data }) => {
             onClick={() => setMetricMode('ambient')}
             className={`px-3 py-1 text-xs font-medium rounded transition-colors cursor-pointer ${
               metricMode === 'ambient'
-                ? 'bg-white text-[#173F32] shadow-xs font-semibold'
+                ? 'bg-white text-[#123B36] shadow-xs font-semibold'
                 : 'text-[#78847C] hover:text-[#26342D]'
             }`}
           >
@@ -132,16 +132,16 @@ export const SensorTrendChart: React.FC<SensorTrendChartProps> = ({ data }) => {
       <div className="h-72 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#EEF3ED" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#D9F0EA" vertical={false} />
             <XAxis
               dataKey="timeLabel"
               tickLine={false}
-              stroke="#A8BDA8"
+              stroke="#55B6A3"
               tick={{ fill: '#78847C', fontSize: 11 }}
             />
             <YAxis
               tickLine={false}
-              stroke="#A8BDA8"
+              stroke="#55B6A3"
               tick={{ fill: '#78847C', fontSize: 11, fontFamily: 'monospace' }}
               domain={
                 metricMode === 'delta_temp'
@@ -203,18 +203,18 @@ export const SensorTrendChart: React.FC<SensorTrendChartProps> = ({ data }) => {
                   type="monotone"
                   dataKey="hibiscusDelta"
                   name="Hibiscus Leaf ΔT"
-                  stroke="#245640"
+                  stroke="#087E75"
                   strokeWidth={2}
-                  dot={{ r: 3, fill: '#245640' }}
+                  dot={{ r: 3, fill: '#087E75' }}
                   activeDot={{ r: 5 }}
                 />
                 <Line
                   type="monotone"
                   dataKey="moneyPlantDelta"
                   name="Money Plant Leaf ΔT"
-                  stroke="#A8BDA8"
+                  stroke="#55B6A3"
                   strokeWidth={2}
-                  dot={{ r: 3, fill: '#A8BDA8' }}
+                  dot={{ r: 3, fill: '#55B6A3' }}
                   activeDot={{ r: 5 }}
                 />
               </>
@@ -234,7 +234,7 @@ export const SensorTrendChart: React.FC<SensorTrendChartProps> = ({ data }) => {
                   type="monotone"
                   dataKey="hibiscusMoisture"
                   name="Hibiscus Soil Moisture"
-                  stroke="#245640"
+                  stroke="#087E75"
                   strokeWidth={2.2}
                   dot={{ r: 3 }}
                 />
@@ -242,7 +242,7 @@ export const SensorTrendChart: React.FC<SensorTrendChartProps> = ({ data }) => {
                   type="monotone"
                   dataKey="moneyPlantMoisture"
                   name="Money Plant Soil Moisture"
-                  stroke="#173F32"
+                  stroke="#123B36"
                   strokeWidth={2.2}
                   dot={{ r: 3 }}
                 />
@@ -263,7 +263,7 @@ export const SensorTrendChart: React.FC<SensorTrendChartProps> = ({ data }) => {
                   type="monotone"
                   dataKey="hibiscusCwsi"
                   name="Hibiscus CWSI"
-                  stroke="#245640"
+                  stroke="#087E75"
                   strokeWidth={2}
                   dot={{ r: 3 }}
                 />
@@ -271,7 +271,7 @@ export const SensorTrendChart: React.FC<SensorTrendChartProps> = ({ data }) => {
                   type="monotone"
                   dataKey="moneyPlantCwsi"
                   name="Money Plant CWSI"
-                  stroke="#A8BDA8"
+                  stroke="#55B6A3"
                   strokeWidth={2}
                   dot={{ r: 3 }}
                 />
@@ -284,7 +284,7 @@ export const SensorTrendChart: React.FC<SensorTrendChartProps> = ({ data }) => {
                   type="monotone"
                   dataKey="ambientTemp"
                   name="Ambient Temp (°C)"
-                  stroke="#173F32"
+                  stroke="#123B36"
                   strokeWidth={2}
                   dot={{ r: 2 }}
                 />
@@ -303,14 +303,14 @@ export const SensorTrendChart: React.FC<SensorTrendChartProps> = ({ data }) => {
       </div>
 
       {/* Chart Footer Insight */}
-      <div className="mt-3 pt-3 border-t border-[#EEF3ED] flex items-center justify-between text-xs text-[#78847C]">
+      <div className="mt-3 pt-3 border-t border-[#D9F0EA] flex items-center justify-between text-xs text-[#78847C]">
         <div className="flex items-center gap-1.5">
-          <Info className="w-3.5 h-3.5 text-[#173F32]" />
+          <Info className="w-3.5 h-3.5 text-[#123B36]" />
           <span>
             Antigravity Invariant: Tulsi shows stomatal restriction commencing at 08:00 as leaf temperature surpasses ambient air (+2.6°C).
           </span>
         </div>
-        <span className="font-mono text-[11px] text-[#245640]">
+        <span className="font-mono text-[11px] text-[#087E75]">
           Sample Data Feed
         </span>
       </div>

@@ -95,15 +95,15 @@ export const SensorCalibrationOverview: React.FC = () => {
     <div className="space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
-          <h3 className="text-base font-semibold text-[#173F32]">
+          <h3 className="text-base font-semibold text-[#123B36]">
             Sensor Array Calibration & Metrological Status
           </h3>
           <p className="text-xs text-[#78847C] mt-0.5">
             Hardware calibration curves, emissivity parameters, and drift offsets across the 4 attached sensor modules.
           </p>
         </div>
-        <div className="flex items-center gap-1.5 text-xs text-[#245640] font-medium bg-[#EEF3ED] px-3 py-1 rounded-lg border border-[#A8BDA8]/40">
-          <ShieldCheck className="w-4 h-4 text-[#245640]" />
+        <div className="flex items-center gap-1.5 text-xs text-[#087E75] font-medium bg-[#D9F0EA] px-3 py-1 rounded-lg border border-[#55B6A3]/40">
+          <ShieldCheck className="w-4 h-4 text-[#087E75]" />
           <span>All 4 Sensor Modules Calibrated</span>
         </div>
       </div>
@@ -114,31 +114,31 @@ export const SensorCalibrationOverview: React.FC = () => {
           return (
             <div
               key={idx}
-              className="bg-white p-5 rounded-xl border border-[#E5EBE3] shadow-xs flex flex-col justify-between space-y-4"
+              className="bg-white p-5 rounded-xl border border-[#D4E7E1] shadow-xs flex flex-col justify-between space-y-4"
             >
               <div>
                 {/* Header */}
-                <div className="flex items-start justify-between gap-3 border-b border-[#F0F4EF] pb-3">
+                <div className="flex items-start justify-between gap-3 border-b border-[#E1EFEA] pb-3">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-[#EEF3ED] flex items-center justify-center text-[#173F32]">
+                    <div className="w-8 h-8 rounded-lg bg-[#D9F0EA] flex items-center justify-center text-[#123B36]">
                       <Icon className="w-4 h-4" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-[#173F32]">
+                      <h4 className="text-sm font-semibold text-[#123B36]">
                         {p.sensorType}
                       </h4>
                       <div className="flex items-center gap-2 text-xs text-[#78847C]">
                         <span>{p.model}</span>
                         <span aria-hidden="true">·</span>
-                        <span className="font-mono text-[10px] text-[#245640] bg-[#EEF3ED] px-1.5 py-0.2 rounded">
+                        <span className="font-mono text-[10px] text-[#087E75] bg-[#D9F0EA] px-1.5 py-0.2 rounded">
                           {p.bus}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-[#EEF3ED] text-[#245640] shrink-0">
-                    <CheckCircle2 className="w-3 h-3 text-[#245640]" />
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-[#D9F0EA] text-[#087E75] shrink-0">
+                    <CheckCircle2 className="w-3 h-3 text-[#087E75]" />
                     {p.status}
                   </span>
                 </div>
@@ -149,7 +149,7 @@ export const SensorCalibrationOverview: React.FC = () => {
                     <span className="font-semibold text-[#26342D]">Method:</span> {p.calibrationMethod}
                   </div>
 
-                  <div className="p-3 bg-[#F8F8F4] rounded-lg border border-[#E5EBE3] grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
+                  <div className="p-3 bg-[#F5FAF8] rounded-lg border border-[#D4E7E1] grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
                     {p.parameters.map((param, pIdx) => (
                       <div key={pIdx}>
                         <span className="text-[10px] text-[#78847C] block font-sans">
@@ -169,9 +169,9 @@ export const SensorCalibrationOverview: React.FC = () => {
               </div>
 
               {/* Card Footer: Dates */}
-              <div className="pt-2 border-t border-[#F0F4EF] flex items-center justify-between text-[11px] text-[#78847C]">
+              <div className="pt-2 border-t border-[#E1EFEA] flex items-center justify-between text-[11px] text-[#78847C]">
                 <span>Last Verified: <strong className="font-mono font-medium text-[#26342D]">{p.lastCalibrated}</strong></span>
-                <span>Next Re-Zeroing: <strong className="font-mono font-medium text-[#245640]">{p.nextScheduled}</strong></span>
+                <span>Next Re-Zeroing: <strong className="font-mono font-medium text-[#087E75]">{p.nextScheduled}</strong></span>
               </div>
             </div>
           );
