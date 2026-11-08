@@ -396,7 +396,7 @@ Contactless Radiometric IR Thermography & Plant Screening
     is_oauth, _, oauth_cfg = get_gmail_oauth_config()
     if is_oauth:
         return send_email_via_gmail_api(
-            to_email=to_email,
+            to_email=to_email.strip().lower(),
             subject="Reset Your Password - RootWhisper",
             html_content=html_body,
             text_content=text_body,

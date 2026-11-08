@@ -31,7 +31,7 @@ def get_gmail_oauth_config() -> Tuple[bool, list, Dict[str, str]]:
     client_id = os.environ.get("GMAIL_CLIENT_ID", "").strip()
     client_secret = os.environ.get("GMAIL_CLIENT_SECRET", "").strip()
     refresh_token = os.environ.get("GMAIL_REFRESH_TOKEN", "").strip()
-    sender_email = os.environ.get("GMAIL_SENDER_EMAIL", os.environ.get("SMTP_USER", "")).strip()
+    sender_email = os.environ.get("GMAIL_SENDER_EMAIL", os.environ.get("SMTP_USER", "rootwhisper184@gmail.com")).strip() or "rootwhisper184@gmail.com"
 
     # Load from backend/.env if missing from environment
     if not (client_id and client_secret and refresh_token):
@@ -60,14 +60,12 @@ def get_gmail_oauth_config() -> Tuple[bool, list, Dict[str, str]]:
         missing.append("GMAIL_CLIENT_SECRET")
     if not refresh_token:
         missing.append("GMAIL_REFRESH_TOKEN")
-    if not sender_email:
-        missing.append("GMAIL_SENDER_EMAIL")
 
     cfg = {
         "client_id": client_id,
         "client_secret": client_secret,
         "refresh_token": refresh_token,
-        "sender_email": sender_email,
+        "sender_email": sender_email or "rootwhisper184@gmail.com",
     }
     return len(missing) == 0, missing, cfg
 
@@ -175,11 +173,14 @@ def send_email_via_gmail_api(
     if not ok:
         return False, f"Could not acquire Gmail API access token: {token_or_err}"
 
+    clean_to = to_email.strip().lower()
+    clean_sender = (cfg.get("sender_email") or "rootwhisper184@gmail.com").strip()
+
     # Build MIME message
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
-    msg["From"] = f"{sender_name} <{cfg['sender_email']}>"
-    msg["To"] = to_email
+    msg["From"] = f"{sender_name} <{clean_sender}>"
+    msg["To"] = clean_to
     msg.attach(MIMEText(text_content, "plain", "utf-8"))
     msg.attach(MIMEText(html_content, "html", "utf-8"))
 

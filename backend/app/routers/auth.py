@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Request, Response, status, Header
 from sqlalchemy.orm import Session
-from sqlalchemy import desc
+from sqlalchemy import desc, func
 
 from backend.app.database import get_db
 from backend.app.models.user import User, PasswordResetToken
@@ -90,7 +90,9 @@ def register_user(
 ):
     """Registers a new human user with secure Argon2id password hashing."""
     # Check for existing email (case-insensitive)
-    existing = db.query(User).filter(User.email == payload.email).first()
+    existing = db.query(User).filter(
+        func.lower(func.trim(User.email)) == func.lower(func.trim(payload.email))
+    ).first()
     if existing:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
@@ -101,7 +103,7 @@ def register_user(
     hashed = hash_password(payload.password)
 
     new_user = User(
-        email=payload.email,
+        email=payload.email.strip().lower(),
         full_name=payload.full_name.strip(),
         hashed_password=hashed,
         is_active=True,
@@ -152,7 +154,9 @@ def login_user(
             detail=f"Too many failed login attempts. For security, please wait {remaining} seconds before trying again."
         )
 
-    user = db.query(User).filter(User.email == payload.email).first()
+    user = db.query(User).filter(
+        func.lower(func.trim(User.email)) == func.lower(func.trim(payload.email))
+    ).first()
     if not user or not verify_password(payload.password, user.hashed_password):
         record_failed_login(rate_key)
         raise HTTPException(
@@ -230,8 +234,10 @@ def forgot_password_endpoint(
 
     record_forgot_password_attempt(rate_key)
 
-    user = db.query(User).filter(User.email == payload.email).first()
-    if not user:
+    user = db.query(User).filter(
+        func.lower(func.trim(User.email)) == func.lower(func.trim(payload.email))
+    ).first()
+    if not user or not user.is_active:
         # Standard anti-enumeration: do not disclose whether email exists
         return {
             "status": "SUCCESS",
@@ -249,14 +255,15 @@ def forgot_password_endpoint(
     db.add(reset_record)
     db.commit()
 
-    # Dispatch email via Gmail SMTP
+    # Dispatch email via Google Gmail API over HTTPS (Port 443) or fallback SMTP
     sent, msg = send_password_reset_email(user.email, raw_token, recipient_name=user.full_name)
 
     if not sent:
-        # Honest error reporting when SMTP server cannot deliver
+        import logging
+        logging.error("Failed to deliver password reset email to %s: %s", user.email, msg)
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail=msg
+            detail="Unable to dispatch password recovery email at this time. Please try again shortly."
         )
 
     return {
