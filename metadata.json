@@ -1,0 +1,6 @@
+{
+  "name": "RootWhisper — Plant Water-Stress Screening",
+  "description": "Species-Aware AI Framework for Early Plant Water-Stress Screening Through Adaptive Physiological Fingerprinting.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
